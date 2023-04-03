@@ -1,0 +1,21 @@
+.khajiit-footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px 0px 0px 40px;
+
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  background-color: #0b4649;
+
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 18px;
+
+  letter-spacing: -0.05em;
+
+  color: #ffffff;
+}
