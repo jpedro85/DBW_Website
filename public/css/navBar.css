@@ -1,33 +1,88 @@
+.navBar {
+  /* Position */
+  position: relative;
+
+  /* Display */
+  display: flex;
+  flex-wrap: wrap;
+  flex-basis: auto;
+  flex-grow: 1;
+  align-items: center;
+  height: 64px;
+
+  /* To expand the navBar on the same line */
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+
+  /* Background Color */
+  background-color: #0b4649;
+  color: white;
+
+  /* Removes the padding and margin */
+  margin: 0;
+  padding: 0;
+
+  /* Shadow effect */
+  box-shadow: 0 4px 20px 0 rgb(0 0 0 / 40%);
+}
+
+/* So the content sticks to the right side of the screen */
+.navBar-right {
+  display: flex;
+  flex-direction: row;
+  padding-left: 0;
+  margin-bottom: 0;
+  margin-right: auto;
+}
+
+/* Class so that every content inside the div sticks to the left side side of the screen */
+.navBar-left {
+  display: flex;
+  flex-direction: column;
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+  margin-left: auto;
+}
+
+/* Css for the link inside the navBar */
+.navBar-link {
+  display: block;
+  padding: 0.5rem 0.5rem;
+  color: white;
+  font-size: 24px;
+  text-decoration: none;
+}
+
 #Logo {
-  width: 50px;
-  height: 50px;
+  background-color: black;
 }
 
-.bckg-color {
-    /* position: fixed;
-    top: 0; */
-    background-color: #0b4649;
-    padding: 0 !important;
-    /* display: block;
-    align-content: baseline;
-    height: 2.8em; */
-}
-
+/*  */
 #About-us {
-  background: #249ca4;
-  background-size: contain;
-  border-color: #249CA4 !important;
-  border: 5px solid;
+  background-color: black;
+  background-size: cover;
+
   border-radius: 0 0 0.75rem 0;
-  padding: 0 5rem 0 5rem !important;
+  border: 5px solid black;
+
+  height: 4rem;
+  padding: 0 4.95rem 0 4.95rem;
 }
 
+/*  */
 #Login {
-  background: #249CA4;
+  background: black;
   background-size: cover;
-  border-radius: 0px 0px 0px 15px;
-  border: 5px solid;
-  border-color: #249CA4 !important;
-  height: 100%;
-  padding: 0 4.95rem 0 4.95rem !important;
+
+  border-radius: 0 0 0 0.75rem;
+  border: 5px solid black;
+
+  height: 4rem;
+  padding: 0 4.95rem 0 4.95rem;
+}
+
+svg{
+  overflow: hidden;
+    vertical-align: middle;
 }

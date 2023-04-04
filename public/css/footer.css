@@ -1,9 +1,11 @@
 .khajiit-footer {
+  /* Makes a row and align the content to the center */
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 0px 0px 0px 40px;
+  padding: 0px 2.5rem 0px 2.5rem;
 
+  /* Makes the footer fixed on screen */
   position: fixed;
   left: 0;
   bottom: 0;
@@ -11,11 +13,52 @@
   height: 50px;
   background-color: #0b4649;
 
-  font-weight: 400;
+  /* Font CSS */
+  line-height: 18px !important;
+  letter-spacing: -0.05em !important;
+  color: #ffffff !important;
+}
+
+.contain {
+  align-items: center;
+  width: 100%;
+}
+
+.rows {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-right: -0.94rem;
+  margin-left: -0.94rem;
+}
+
+#Dev {
   font-size: 15px;
-  line-height: 18px;
+  text-align: left;
+}
 
-  letter-spacing: -0.05em;
+#copy-right {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
 
-  color: #ffffff;
+#social-media {
+  text-align: right;
+}
+
+#social-media > a {
+  margin-left: 1.2rem;
+}
+
+.columns {
+  /* Display and Position */
+  position: relative;
+  width: 100%;
+  padding-right: 0.15rem;
+  padding-left: 0.15rem;
+
+  /* To be able to have 3 columns */
+  flex: 0 0 33%;
+  max-width: 33%;
 }
