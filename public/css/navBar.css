@@ -82,7 +82,7 @@
   padding: 0 4.95rem 0 4.95rem;
 }
 
-svg{
+#Logo {
   overflow: hidden;
-    vertical-align: middle;
+  vertical-align: middle;
 }
