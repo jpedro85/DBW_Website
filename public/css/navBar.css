@@ -1,33 +1,78 @@
-#Logo {
-  width: 50px;
-  height: 50px;
+:root {
+  /* Variables */
+  --nav-background-color: #0b4649;
+  --nav-button-background-color: black;
 }
 
-.bckg-color {
-    /* position: fixed;
-    top: 0; */
-    background-color: #0b4649;
-    padding: 0 !important;
-    /* display: block;
-    align-content: baseline;
-    height: 2.8em; */
+nav {
+  /* Background */
+  background-color: var(--nav-background-color);
+
+  /* Display */
+  display: flex;
+  width: 100%;
+  height: 64px;
+
+  /* Shadow effect */
+  box-shadow: 0 4px 20px 0 rgb(0 0 0 / 40%);
 }
 
-#About-us {
-  background: #249ca4;
-  background-size: contain;
-  border-color: #249CA4 !important;
-  border: 5px solid;
-  border-radius: 0 0 0.75rem 0;
-  padding: 0 5rem 0 5rem !important;
+nav > .nav-section {
+  /* Display */
+  display: flex;
+  align-content: center;
+  justify-content: center;
 }
 
-#Login {
-  background: #249CA4;
+* {
+  /* Changes the way it sees the padding and border for the element size*/
+  box-sizing: border-box;
+}
+
+nav > .nav-section > button > a {
+  /* Font Style */
+  font-family: "Roboto";
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 0.75rem;
+  color: white;
+  text-decoration: none;
+}
+
+#nav-logo-about-us-section > button {
+  /* Display */
+  background: var(--nav-button-background-color);
   background-size: cover;
-  border-radius: 0px 0px 0px 15px;
-  border: 5px solid;
-  border-color: #249CA4 !important;
-  height: 100%;
-  padding: 0 4.95rem 0 4.95rem !important;
+  border-radius: 0 0 0.75rem 0;
+  border: 0;
+  padding: 0 4.95rem 0 4.95rem;
+}
+
+#nav-login-section {
+  /* Makes it so the Login section sticks to the right */
+  flex-grow: 1;
+  justify-content: flex-end;
+}
+
+#nav-login-section > button {
+  /* Display */
+  background: var(--nav-button-background-color);
+  background-size: cover;
+  border-radius: 0 0 0 0.75rem;
+  border: 0;
+  padding: 0 1.25rem 0 4.375rem;
+}
+
+#nav-login-section > button > a > svg {
+  /* Aligns the svg to the middle of the button */
+  vertical-align: middle;
+}
+
+#nav-login-section > button > a {
+    /* Display */
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 2.8rem;
 }
