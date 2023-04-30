@@ -4,7 +4,7 @@
         <div class="navBarLoged_in-Logo">
             <a id="navLink_Home" href="/" > 
                 <div>
-                    <svg class="ButtonBlack "
+                    <svg id="navLink_Home_content" class="ButtonBlack "
                     id="Logo"
                     width="65"
                     height="64"
@@ -14,12 +14,7 @@
                     xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
 
-                    <% if( page=0 ) {  %>
-                    <rect id="navLink_Home_rect" width="65" height="64" />
-                    <% } else { %>
-                    <rect id="navLink_Home_rect" width="65" height="64" fill= "#70f5ff" />
-                    <% } %>
-
+                    <rect width="65" height="64" />
                     <rect 
                         x="10"
                         y="4.01172"
@@ -59,13 +54,6 @@
         <a id="navLink_Play" class="last_left navButtonSimple ButtonBlack" href="/" >Play</a> 
     </div>
     <div class="right">
-
-        <% if( page=0 ) {  %>
-            <!-- botao balck on -->
-            <% } else { %>
-            <!-- botao balck normal -->
-        <% } %>
-
         <a id="navLink_Profile" class="last_right navButtonCompound ButtonBlack" href="/" >
             <div>
                 Profile

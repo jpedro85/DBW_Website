@@ -24,6 +24,11 @@
     color: black ;
 }
 
+.ButtonBlackActive {
+    background-color: #55d1da;
+    color: black ;
+}
+
 /* Button Blue default*/
 .ButtonDarkBlue{
     cursor: pointer;
