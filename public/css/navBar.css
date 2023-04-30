@@ -12,6 +12,14 @@ nav {
   display: flex;
   width: 100%;
   height: 64px;
+ 
+  /* Position*/
+  position: fixed;
+  top: 0px;
+  z-index: 998;
+  
+  /* Shadow effect */
+  box-shadow: 0 4px 20px 0 rgb(0 ,0 ,0 , 80%);
 
   /* Shadow effect */
   box-shadow: 0 4px 20px 0 rgb(0 ,0 ,0 , 60%);
@@ -44,15 +52,6 @@ nav > .nav-section > button:hover > a {
   color: rgb(0, 0, 0);
 }
 
-#nav-logo-about-us-section > button {
-  /* Display */
-  /*background: var(--nav-button-background-color);
-  background-size: cover;*/
-  border-radius: 0 0 0.75rem 0;
-  border: none;
-  padding: 0 4.95rem 0 4.95rem;
-}
-
 #nav-login-section {
   /* Makes it so the Login section sticks to the right */
   flex-grow: 1;
@@ -80,4 +79,102 @@ nav > .nav-section > button:hover > a {
     justify-content: flex-end;
     align-items: center;
     gap: 2.8rem;
+}
+
+#nav_AboutUs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 250px;
+  height: 100%;
+  align-content: center;
+
+  width: 250px;
+  height: 64px;
+  border-bottom-right-radius: 15px;
+  border: 0;
+  font-family: "Roboto";
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 0.75rem;
+  text-decoration: none;
+}
+
+@media only screen and (min-width: 600px) {
+  #navLink_Menu {
+      display: none;
+  }
+
+  #MenuCascata {
+      display: none;
+  }
+
+  .MenuCascataButton{
+      display: none;
+  }
+
+  .navBarLoged_in {
+      position: fixed;
+      top: 0px;
+      z-index: 998;
+      width: 100%;
+      height: 64px;
+      background-color: var(--nav-background-color);
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: row ;
+      /* Shadow effect */
+      box-shadow: 0 4px 20px 0 rgb(0 ,0 ,0 , 80%);
+  }
+}
+
+@media only screen and (max-width: 600px) {
+
+  #nav_AboutUs {
+    display: none;
+  }
+
+  #navLink_LogIn {
+      border-bottom-left-radius: 15px ;
+  }
+
+  #navLink_AboutUs {
+      display: none;
+  }
+
+  #navLink_Menu {
+    display: flex;
+    justify-content: center;
+    width: 60px;
+    border-bottom-right-radius: 15px;
+  }
+  
+  #navLink_Menu svg {
+    margin-top: 17px;
+  }
+
+  #MenuCascata {
+      position: fixed;
+      top: 64px;
+      display :  flex;
+      z-index: 999;
+      flex-direction: column;
+      width: 100%;
+     /* border-top: 1px solid #FFFFFF;*/
+  }
+  
+  #MenuCascata > a {
+      text-decoration: none;
+      padding-top: 5px;
+  }
+
+  .MenuCascataButton {
+      display : Block;
+      height: 50px;
+      vertical-align: middle;
+      justify-content: center;
+      box-shadow: 0 8px 20px 0 rgb(0 ,0 ,0 , 80%);
+  }
+
+
 }

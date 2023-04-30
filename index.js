@@ -26,9 +26,8 @@ const PORT = 3000;
  * Routes
  **/
 //////////////////
-
 const indexRoute = require("./routes/indexRoute");
-
+const aboutUsRoute = require("./routes/aboutUsRoute");
 
 // Our anonymous function that contains our sockets
 // let serverSocket = require("./public/js/socket/socketServerSide");
@@ -53,6 +52,7 @@ app.use(express.static(__dirname + "/public"));
 app.use(express.urlencoded({ extended: true }));
 // Create the route to the index page
 app.use(indexRoute);
+app.use(aboutUsRoute);
 
 /////////////////////////
 /**
@@ -63,8 +63,10 @@ app.use(indexRoute);
 // serverSocket(io);
 
 server.listen(PORT, function (err) {
-  if (err) console.log("Ups, something went wrong: " + err);
-  else console.log("Listening at Port:" + PORT);
+  if (err) 
+    console.log("Ups, something went wrong: " + err);
+  else 
+    console.log("Listening at Port:" + PORT);
 });
 
 // On event connection we search any entry sockets

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Khajiit</title>
+    <link rel="icon" type="image/x-icon" href="/images/Khajiit.ico" />
+    <link rel="stylesheet" href="/css/aboutUS.css" />
+    <link rel="stylesheet" href="/css/buttons.css" />
+    <link rel="stylesheet" href="/css/scrollBar.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <% log = false %> <% if(log) {%> <%-
+    include("../views/partials/navBarLoged_in.ejs") %> <% } else {%> <%-
+    include("../views/partials/navBar.ejs") %> <% } %>
+    <div class="scrollbar AboutUsContent">
+      <div id="Part1" class="row title">
+        <div class="col-lg-12">About Us</div>
+      </div>
+      <div class="row">
+        <div id="AboutUsTextBack" class="col-lg-12">
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Assumenda
+          unde et dolor natus facilis. Sit molestiae voluptatum accusantium
+          quisquam, vel maxime? Harum consequuntur temporibus nulla porro ullam
+          blanditiis perferendis ad.
+        </div>
+      </div>
+      <div id="Part2" class="row title">
+        <div class="col-lg-12">The Team</div>
+      </div>
+      <div id="AboutUsteam" class="row">
+        <div class="col-lg-12">
+          <div class="row row-gap-5">
+            <div class="info col-lg-4 col-md-6 col-sm-12">
+              <div>
+                <p class="infoTitle">Back-end</p>
+                <hr />
+              </div>
+              <div>
+                <div class="infoImageConteiner">
+                    <mask id="imageBackEnd" class="infoImage"></mask>
+                </div>
+                <p class="infoName">João Pedro</p>
+                <hr />
+              </div>
+              <p class="infoText">
+                Vestibulum quis ante quis velit pharetra pellentesque
+                pellentesque quis purus. Vestibulum porta facilisis risus. Donec
+                tincidunt orci risus. Cras luctus mi lectus, vitae sollicitudin
+                nisl posuere in. Phasellus eros risus, pretium vitae euismod
+                lobortis, vulputate sit amet augue. Sed eleifend libero
+              </p>
+            </div>
+            <div class="info col-lg-4 col-md-6 col-sm-12">
+              <div>
+                <p class="infoTitle">Front-end</p>
+                <hr />
+              </div>
+              <div>
+                <div class="infoImageConteiner">
+                  <mask  id="imageFrontEnd" class="infoImage"></mask >
+                </div>
+                <p class="infoName">Pedro Ferreira</p>
+                <hr />
+              </div>
+              <p class="infoText">
+                Vestibulum quis ante quis velit pharetra pellentesque
+                pellentesque quis purus. Vestibulum porta facilisis risus. Donec
+                tincidunt orci risus. Cras luctus mi lectus, vitae sollicitudin
+                nisl posuere in. Phasellus eros risus, pretium vitae euismod
+                lobortis, vulputate sit amet augue. Sed eleifend libero
+              </p>
+            </div>
+            <div class="info col-lg-4 col-md-6 col-sm-12">
+              <div>
+                <p class="infoTitle">Designer</p>
+                <hr />
+              </div>
+              <div>
+                <div class="infoImageConteiner">
+                  <mask  id="imageDesigner" class="infoImage"></mask >
+                </div>
+                <p class="infoName">Ricardo Vieira</p>
+                <hr />
+              </div>
+              <p class="infoText">
+                Vestibulum quis ante quis velit pharetra pellentesque
+                pellentesque quis purus. Vestibulum porta facilisis risus. Donec
+                tincidunt orci risus. Cras luctus mi lectus, vitae sollicitudin
+                nisl posuere in. Phasellus eros risus, pretium vitae euismod
+                lobortis, vulputate sit amet augue. Sed eleifend libero
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%- include("../views/partials/footer.ejs") %>
+    <script src="https://code.jquery.com/jquery-3.6.4.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

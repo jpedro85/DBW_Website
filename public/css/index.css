@@ -18,6 +18,7 @@
   background-size: cover;
   background-repeat: no-repeat;
   overflow-x: hidden;
+  overflow: overlay;
 }
 
 .head-content> h2 > a {
