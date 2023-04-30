@@ -1,0 +1,88 @@
+/* Button Black default*/
+.ButtonBlack {
+    cursor: pointer;
+    background-color: #000000;
+    border: none;
+    color: #FFFFFF ;
+    padding: 0 0 0 0 ;
+    text-align: center;
+    font-size: 26px;
+    font-family: "Roboto";
+    font-weight: bold;
+    margin: 0 0 0 0 ;
+    transition: 0.3s;
+}
+
+/* Button Black when mouse hover*/
+.ButtonBlack:hover {
+    background-color: #1CA1AA;
+    color: black ;
+}
+
+.ButtonBlack:active {
+    background-color: #70f5ff;
+    color: black ;
+}
+
+/* Button Blue default*/
+.ButtonDarkBlue{
+    cursor: pointer;
+    background-color: #095C61;
+    border: none;
+    color: #FFFFFF;
+    padding: 0, 0 ,0,0 ;
+    text-align: center;
+    font-size: 26px;
+    font-family: "Roboto";
+    font-weight: bold;
+    margin: 0,0,0,0 ;
+    transition: 0.3s;
+}
+/* Button Blue when mouse hover*/
+.ButtonDarkBlue:hover {
+    background-color: #1CA1AA;
+    color: black;
+}
+
+
+/* Button Blue default*/
+.ButtonLightBlue{
+    cursor: pointer;
+    background-color: #199099;
+    border: none;
+    color: #FFFFFF;
+    padding: 0 0 0 0 ;
+    text-align: center;
+    font-size: 26px;
+    font-family: "Roboto";
+    font-weight: bold;
+    transition: 0.3s;
+    
+}
+/* Button Blue when mouse hover*/
+.ButtonLightBlue:hover {
+    background-color: #70f5ff;
+    outline: 5px solid #4dc5ce;
+    outline-offset: 5px;
+    color: black;
+}
+
+/* Button Red default*/
+.ButtonRed{
+    cursor: pointer;
+    background-color: #FF4242;
+    border: none;
+    color: #FFFFFF;
+    padding: 0, 0 ,0,0 ;
+    text-align: center;
+    font-size: 26px;
+    font-family: "Roboto";
+    font-weight: bold;
+    margin: 0,0,0,0 ;
+    transition: 0.3s;
+}
+/* Button Red when mouse hover*/
+.ButtonRed:hover {
+    background-color: #ff2f2f;
+    /*color: black;*/
+}

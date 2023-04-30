@@ -1,0 +1,174 @@
+:root {
+    /* Variables */
+    --nav-background-color: #0b4649;
+}
+
+/*@media only screen and (min-width: 500px) {*/
+    
+    .navBarLoged_in {
+        position: fixed;
+        top: 0px;
+        z-index: 998;
+        width: 100%;
+        height: 64px;
+        background-color: var(--nav-background-color);
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: row ;
+        /* Shadow effect */
+        box-shadow: 0 4px 20px 0 rgb(0 ,0 ,0 , 80%);
+    }
+
+    .navBarLoged_in a {
+        font-family: "Roboto";
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 0.75rem;
+        color: #FFFFFF;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+
+    .navBarLoged_in a:hover {
+        color: #000000;
+    }
+
+    .navBarLoged_in .left {
+        display: flex;
+        width: 50%;
+    }
+
+    .navBarLoged_in .right {
+        display: flex;
+        width: 50%;
+        justify-content: end;
+    }
+
+
+    .navButtonSimple {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 250px;
+        height: 100%;
+        align-content: center;
+    }
+
+    .navButtonCompound {
+        display: flex;
+        flex-direction: row ;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        width: 250px;
+        height: 100%;
+        align-content: center;
+        vertical-align: middle;
+    }
+    
+    .navButtonCompound svg{
+        margin-right: 20px;
+        margin-left: 25px;
+    }
+
+    .navButtonCompound:hover svg{
+        fill: black;
+        
+    }
+
+    .navButtonCompound div{
+        padding-top: 10px;
+        margin-right: 25px;
+    }
+
+    .last_left {
+        border-bottom-right-radius: 15px;
+    }
+
+    .last_right {
+        border-bottom-left-radius: 15px;
+    }
+
+    @media only screen and (min-width: 1024px) {
+        #navLink_Menu {
+            display: none;
+        }
+
+        #MenuCascata {
+            display: none;
+        }
+
+        .MenuCascataButton{
+            display: none;
+        }
+
+        .navBarLoged_in {
+            position: fixed;
+            top: 0px;
+            z-index: 998;
+            width: 100%;
+            height: 64px;
+            background-color: var(--nav-background-color);
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: row ;
+            /* Shadow effect */
+            box-shadow: 0 4px 20px 0 rgb(0 ,0 ,0 , 80%);
+        }
+    }
+
+    @media only screen and (max-width: 1024px) {
+
+        #navLink_Profile {
+            display: none;
+        }
+
+        #navLink_LogOut {
+            border-bottom-left-radius: 15px ;
+        }
+
+        #navLink_AboutUs {
+            display: none;
+        }
+
+        #navLink_Play {
+            display: none;
+        }
+
+        #navLink_Menu {
+            display: flex;
+            justify-content: center;
+            width: 60px;
+        }
+
+        #navLink_Menu svg {
+            margin-top: 17px;
+        }
+
+        #MenuCascata {
+            position: fixed;
+            top: 64px;
+            display :  flex;
+            z-index: 999;
+            flex-direction: column;
+            width: 100%;
+           /* border-top: 1px solid #FFFFFF;*/
+        }
+        
+        #MenuCascata > a {
+            text-decoration: none;
+            padding-top: 5px;
+        }
+
+        .MenuCascataButton {
+            display : Block;
+            height: 50px;
+            vertical-align: middle;
+            justify-content: center;
+        }
+
+        .MenuCascataButton:last-of-type {
+            box-shadow: 0 4px 20px 0 rgb(0 ,0 ,0 , 80%);
+        }
+
+    }
+/*}*/

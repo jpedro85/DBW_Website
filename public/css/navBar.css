@@ -14,7 +14,7 @@ nav {
   height: 64px;
 
   /* Shadow effect */
-  box-shadow: 0 4px 20px 0 rgb(0 0 0 / 40%);
+  box-shadow: 0 4px 20px 0 rgb(0 ,0 ,0 , 60%);
 }
 
 nav > .nav-section {
@@ -37,14 +37,19 @@ nav > .nav-section > button > a {
   line-height: 0.75rem;
   color: white;
   text-decoration: none;
+  transition: 0.3s;
+}
+
+nav > .nav-section > button:hover > a {
+  color: rgb(0, 0, 0);
 }
 
 #nav-logo-about-us-section > button {
   /* Display */
-  background: var(--nav-button-background-color);
-  background-size: cover;
+  /*background: var(--nav-button-background-color);
+  background-size: cover;*/
   border-radius: 0 0 0.75rem 0;
-  border: 0;
+  border: none;
   padding: 0 4.95rem 0 4.95rem;
 }
 
@@ -56,8 +61,8 @@ nav > .nav-section > button > a {
 
 #nav-login-section > button {
   /* Display */
-  background: var(--nav-button-background-color);
-  background-size: cover;
+/*  background: var(--nav-button-background-color);
+  background-size: cover;*/
   border-radius: 0 0 0 0.75rem;
   border: 0;
   padding: 0 3.65rem 0 4.375rem;
