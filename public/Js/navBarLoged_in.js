@@ -1,5 +1,6 @@
 let aboutUs_class = "ButtonBlack";
 let play_class = "ButtonBlack";
+let play_hreft = "/play/Options";
 let profile_class = "ButtonBlack";
 
 switch(window.location.pathname){
@@ -10,11 +11,14 @@ switch(window.location.pathname){
         document.getElementById("navLink_AboutUs").classList.replace("ButtonBlack","ButtonBlackActive");
         aboutUs_class = "ButtonBlackActive";
         break;
-    case "/play/settings":
-    case "/play/gameRoom":
-            document.getElementById("navLink_Play").classList.replace("ButtonBlack","ButtonBlackActive");
-            play_class = "ButtonBlackActive";
-            break;
+    case "/play/Options":
+    case "/play/Game":
+        let navLink_Play = document.getElementById("navLink_Play")
+        navLink_Play.classList.replace("ButtonBlack","ButtonBlackActive");
+        navLink_Play.href = window.location.pathname;
+        play_hreft = window.location.pathname;
+        play_class = "ButtonBlackActive";
+        break;
     case "/profile":
         document.getElementById("navLink_AboutUs").classList.replace("ButtonBlack","ButtonBlackActive");
         profile_class = "ButtonBlackActive";
@@ -34,8 +38,8 @@ menuButton.addEventListener("click", (event) => {
         navLogedIn.insertAdjacentHTML("afterend",`
         <div id="MenuCascata" class="ButtonBlack">
             <a class="MenuCascataButton ${aboutUs_class}" id="navLink_Home" href="/about-us" >About Us</a>
-            <a class="MenuCascataButton ${play_class}" id="navLink_Home" href="/" >Profile</a>
-            <a class="MenuCascataButton ${play_class}" id="navLink_Home" href="/" >Play</a>
+            <a class="MenuCascataButton ${profile_class}" id="navLink_Home" href="/" >Profile</a>
+            <a class="MenuCascataButton ${play_class}" id="navLink_Home" href="${play_hreft}" >Play</a>
         </div>
         `);
     }else{

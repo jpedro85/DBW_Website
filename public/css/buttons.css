@@ -1,3 +1,21 @@
+:root {
+    --select-background-color: #095c61;
+    --select-color: #fff;
+    --select-border-color: #84f8ff;
+    --select-clicked-border-color: var(--select-border-color);
+    --select-box-shadow-color: var(--select-clicked-border-color);
+    --select-hover-background: #1CA1AA;;
+    --select-caret-color: #65e9fb;
+    --select-menu-background: #0b4b4e;
+    --select-menu-border-color: #363a43;
+    --select-menu-box-shadow-color: rgba(0, 0, 0, 0.2);
+    --select-menu-color: #9fa5b5;
+    --select-menu-li-hover-background-color: #1CA1AA;
+    --select-menu-active-background-color: #073235;
+    --selected-background-color: #093e41;
+    --select-border-radius: 10px;
+}
+
 /* Button Black default*/
 .ButtonBlack {
     cursor: pointer;
@@ -34,18 +52,28 @@
     cursor: pointer;
     background-color: #095C61;
     border: none;
-    color: #FFFFFF;
-    padding: 0, 0 ,0,0 ;
+    color: #FFFFFF ;
+    padding: 0 ;
     text-align: center;
     font-size: 26px;
     font-family: "Roboto";
     font-weight: bold;
-    margin: 0,0,0,0 ;
+    margin: 0 ;
     transition: 0.3s;
 }
 /* Button Blue when mouse hover*/
 .ButtonDarkBlue:hover {
     background-color: #1CA1AA;
+    color: black ;
+}
+
+.ButtonDarkBlue:active {
+    background-color: #70f5ff;
+    color: black ;
+}
+
+.ButtonDarkBlueActive {
+    background-color: #55d1da;
     color: black;
 }
 
@@ -91,3 +119,155 @@
     background-color: #ff2f2f;
     /*color: black;*/
 }
+
+/* text input */
+.inputText{
+    background-color: #095C61;
+    display: flex;
+    border: 1px solid #84F8FF;
+    border-radius: 10px;
+    
+}
+.inputText-Input{
+    background-color: #093E41;
+    border-radius: 10px;
+    flex-grow: 1;
+    padding: 0 8px;
+    font-size: 14px;
+    border: 1px solid rgb(0,0,0,0);
+    color: white;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 18px;
+    width: 80%;
+}
+.inputText-Button{
+    display: flex;
+    background-color: transparent;
+    width: 20%;
+    height: 100%;
+    border: none;
+    align-items: center ;
+    justify-content: center;
+}
+
+.inputText-Input:focus{
+    outline: none !important;
+    border: 1px solid #70f5ff;
+    box-shadow: 0 0 0.8em var(--select-box-shadow-color);
+}
+.inputText-Button:focus{
+    outline: none !important;
+}
+
+/* dropdown Button */
+.dropdown {
+    /* Display */
+    position: relative;
+    margin: 0;
+    /* No selecting on text */
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  
+  .dropdown * {
+    box-sizing: border-box;
+  }
+  
+  .select {
+      /* Display Color */
+    background-color: var(--select-background-color);
+    color: var(--select-color);
+    /* Display */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.2em;
+    border: 1px var(--select-border-color) solid;
+    border-radius: var(--select-border-radius);
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .selected {
+    background-color: var(--selected-background-color);
+    padding: 0.5em;
+    border-top-left-radius: var(--select-border-radius);
+    border-bottom-left-radius: var(--select-border-radius);
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* Clicked Styles */
+  
+  .select-clicked {
+    border: 1px var(--select-clicked-border-color) solid;
+    box-shadow: 0 0 0.8em var(--select-box-shadow-color);
+  }
+  
+  .select:hover {
+    background: var(--select-hover-background);
+  }
+  
+  .caret {
+    display: flex;
+    justify-content: center;
+    width: 3em;
+    transition: 0.3s;
+    color: var(--select-caret-color);
+  }
+
+  .caret:hover {
+    color: #000000;
+  }
+  
+  /* Rotate Styles */
+  .caret-rotate {
+    transform: rotate(180deg) translateX(+5%) translateY(5%);
+  }
+  
+  .menu {
+    list-style: none;
+    padding: 0.2em 0.5em;
+    background: var(--select-menu-background);
+    border: 1px var(--select-menu-border-color) solid;
+    box-shadow: 0 0.5em 1em var(--select-menu-box-shadow-color);
+    border-radius: 0.5em;
+    color: var(--select-menu-color);
+    position: absolute;
+    top: 3em;
+    left: 50%;
+    width: 100%;
+    transform: translateX(-50%);
+    opacity: 0;
+    display: none;
+    transition: 0.2s;
+    z-index: 1;
+  }
+  
+  .menu li {
+    padding: 0.7em 0.5em;
+    margin: 0.3em 0;
+    border-radius: 0.5em;
+    cursor: pointer;
+  }
+  
+  .menu li:hover {
+    background: var(--select-menu-li-hover-background-color);
+    color: white;
+  }
+  
+  /* Active style */
+  .active {
+    background: var(--select-menu-active-background-color);
+  }
+  
+  /* Open Style */
+  .menu-open {
+    display: block;
+    opacity: 1;
+  }

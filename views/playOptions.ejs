@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Khajiit</title>
+    <link rel="icon" type="image/x-icon" href="/images/Khajiit.ico" />
+    <link rel="stylesheet" href="/css/playOptions.css" />
+    <link rel="stylesheet" href="/css/buttons.css" />
+    <link rel="stylesheet" href="/css/scrollBar.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <%- include("../views/partials/navBarLoged_in.ejs") %>
+    <div id="conteiner-main">
+      <div id="conteiner-frame">
+        <div id="conteiner-buttons">
+          <button
+            id="btn-create-room"
+            class="conteiner-buttons-content ButtonDarkBlue"
+          >
+            Create Private
+          </button>
+          <button
+            id="btn-join-room"
+            class="conteiner-buttons-content ButtonDarkBlue"
+          >
+            Join
+          </button>
+        </div>
+        <div id="conteiner-tab-create-room" class="conteiner-tab">
+          <div class="conteiner-tab-settings">
+            <div id="settings-title-matchsettigns" class="top-border settings-title">
+              <span>Match Settings</span>
+            </div>
+            <div class="conteiner-tab-element-row row row-gap-3">
+              <div
+                class="conteiner-tab-element-col col-lg-4 col-md-6 col-sm-12"
+              >
+                <div class="tab-element">
+                  <p class="tab-element-text">Match Type</p>
+                  <div
+                    id="dropdownMatchType"
+                    class="dropdown settings-options1"
+                  >
+                    <div class="select">
+                      <span class="selected">Voted Theme</span>
+                      <div class="caret">
+                        <svg width="1em" height="1em" viewBox="0 0 19 13">
+                          <path
+                            d="M10.9606 0.740852C10.1666 -0.137362 8.78765 -0.137362 7.9936 0.740853L0.800608 8.69626C-0.362144 9.98225 0.550402 12.0376 2.28412 12.0376H16.6701C18.4038 12.0376 19.3164 9.98225 18.1536 8.69626L10.9606 0.740852Z"
+                            fill="var(--select-caret-color)"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                    <ul class="menu">
+                      <li class="active">Voted Theme</li>
+                      <li>Random</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="conteiner-tab-element-col col-lg-4 col-md-6 col-sm-12"
+              >
+                <div class="tab-element">
+                  <p class="tab-element-text">Questions</p>
+                  <div
+                    id="dropdownMatchType"
+                    class="dropdown settings-options1"
+                  >
+                    <div class="select">
+                      <span class="selected">10</span>
+                      <div class="caret">
+                        <svg width="1em" height="1em" viewBox="0 0 19 13">
+                          <path
+                            d="M10.9606 0.740852C10.1666 -0.137362 8.78765 -0.137362 7.9936 0.740853L0.800608 8.69626C-0.362144 9.98225 0.550402 12.0376 2.28412 12.0376H16.6701C18.4038 12.0376 19.3164 9.98225 18.1536 8.69626L10.9606 0.740852Z"
+                            fill="var(--select-caret-color)"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                    <ul class="menu">
+                      <li class="active">10</li>
+                      <li>20</li>
+                      <li>30</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="conteiner-tab-element-col col-lg-4 col-md-6 col-sm-12"
+              >
+                <div class="tab-element">
+                  <p class="tab-element-text">Difficulty</p>
+                  <div
+                    id="dropdownMatchType"
+                    class="dropdown settings-options1"
+                  >
+                    <div class="select">
+                      <span class="selected">Easy</span>
+                      <div class="caret">
+                        <svg width="1em" height="1em" viewBox="0 0 19 13">
+                          <path
+                            d="M10.9606 0.740852C10.1666 -0.137362 8.78765 -0.137362 7.9936 0.740853L0.800608 8.69626C-0.362144 9.98225 0.550402 12.0376 2.28412 12.0376H16.6701C18.4038 12.0376 19.3164 9.98225 18.1536 8.69626L10.9606 0.740852Z"
+                            fill="var(--select-caret-color)"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                    <ul class="menu">
+                      <li class="active">Easy</li>
+                      <li>Medium</li>
+                      <li>Hard</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="conteiner-tab-settings">
+            <div id="settings-title-playersettigns" class="settings-title">
+              <span>Player Settings</span>
+            </div>
+            <div class="conteiner-tab-element-row row row-gap-3">
+              <div
+                class="conteiner-tab-element-col col-lg-4 col-md-6 col-sm-12"
+              >
+                <div class="tab-element">
+                  <p class="tab-element-text">Max Players</p>
+                  <div class="settings-options2 inputText">
+                    <div
+                    id="dropdownMatchType"
+                    class="dropdown settings-options1"
+                  >
+                    <div class="select">
+                      <span class="selected">10</span>
+                      <div class="caret">
+                        <svg width="1em" height="1em" viewBox="0 0 19 13">
+                          <path
+                            d="M10.9606 0.740852C10.1666 -0.137362 8.78765 -0.137362 7.9936 0.740853L0.800608 8.69626C-0.362144 9.98225 0.550402 12.0376 2.28412 12.0376H16.6701C18.4038 12.0376 19.3164 9.98225 18.1536 8.69626L10.9606 0.740852Z"
+                            fill="currentColor"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                    <ul class="menu">
+                      <li>2</li>
+                      <li>4</li>
+                      <li>8</li>
+                      <li class="active" >10</li>
+                      <li>16</li>
+                      <li>20</li>
+                      <li>25</li>
+                      <li>30</li>
+                    </ul>
+                  </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="conteiner-tab-element-col col-lg-4 col-md-6 col-sm-12"
+              >
+                <div class="tab-element">
+                  <p class="tab-element-text">Join Code</p>
+                  <div class="settings-options inputText ButtonDarkBlue">
+                    <input type="text" class="inputText-Input" />
+                    <div class="inputText-Button">
+                      <svg
+                        width="15"
+                        height="20"
+                        viewBox="0 0 15 20"
+                        fill="currentColor"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M1.76471 20C1.27941 20 0.863825 19.804 0.517942 19.412C0.17206 19.02 -0.000586737 18.5493 1.49805e-06 18V4H1.76471V18H11.4706V20H1.76471ZM5.29412 16C4.80882 16 4.39324 15.804 4.04735 15.412C3.70147 15.02 3.52882 14.5493 3.52941 14V2C3.52941 1.45 3.70235 0.979001 4.04824 0.587002C4.39412 0.195002 4.80941 -0.000664969 5.29412 1.69779e-06H13.2353C13.7206 1.69779e-06 14.1362 0.196002 14.4821 0.588002C14.8279 0.980002 15.0006 1.45067 15 2V14C15 14.55 14.8271 15.021 14.4812 15.413C14.1353 15.805 13.72 16.0007 13.2353 16H5.29412Z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="conteiner-tab-settings3">
+            <div id="settings-title-match" class="settings-title">
+              <span>Match</span>
+            </div>
+            <div id="conteiner-btn-create">
+              <button id="btn-create" class="ButtonLightBlue">
+                Create Match
+              </button>
+            </div>
+            <div id="settings-title-bottom" class="settings-title"></div>
+          </div>
+        </div>
+        <div id="conteiner-tab-join-room" class="conteiner-tab">
+            <div id="joint-top" class="conteiner-tab-settings">
+                <div id="settings-title-playersettigns" class="top-border settings-title">
+                  <span>Match</span>
+                </div>
+            </div>
+            <div class="conteiner-tab-settings">
+                <div class="conteiner-tab-element-col col-lg- col-md-12 col-sm-12">
+                    <div id="tab-element-EnterCode" class="tab-element">
+                        <p class="tab-element-text">Enter match code !</p>
+                        <div class="settings-options inputText ButtonDarkBlue">
+                          <input type="text" class="inputText-Input" />
+                          <!-- <button> -->
+                              <div class="inputText-Button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M5 21q-.825 0-1.413-.588T3 19V5q0-.825.588-1.413T5 3h4.175q.275-.875 1.075-1.438T12 1q1 0 1.788.563T14.85 3H19q.825 0 1.413.588T21 5v14q0 .825-.588 1.413T19 21H5Zm0-2h14V5h-2v3H7V5H5v14Zm7-14q.425 0 .713-.288T13 4q0-.425-.288-.713T12 3q-.425 0-.713.288T11 4q0 .425.288.713T12 5Z"/></svg>
+                              </div>
+                          <!-- </button> -->
+                        </div>
+                      </div>
+                </div>
+            </div>
+            <div id="conteiner-tab-settings3">
+                <div id="conteiner-btn-create">
+                  <button id="btn-join" class="ButtonLightBlue">Join</button>
+                </div>
+            </div>
+            <div id="settings-title-playersettigns" class="last-border settings-title"></div>
+        </div>
+      </div>
+    </div>
+    <%- include("../views/partials/footer.ejs") %>
+    <script src="../js/buttons.js"></script>
+    <script src="../js/playSettings.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
