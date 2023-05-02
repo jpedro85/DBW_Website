@@ -9,14 +9,11 @@
       background-repeat: no-repeat;
       overflow-x: hidden;
       overflow: overlay;
-      /*pading*/
-      padding-top: 74px;
+      /*spacing*/
+      padding-top: 114px;
       padding-bottom: 60px;
       padding-left: 50px;
       padding-right: 50px;
-    
-      display: flex;
-      align-items: center;
 }
 
 @media only screen and (max-width: 500px) {
@@ -278,4 +275,16 @@
     line-height: 40px !important;
     height: 2.5em;
     width: 50%;
+}
+
+#JoinCode-Copy {
+    width: 60px;
+}
+
+#JoinCode-Copy {
+    width: 60px;
+}
+
+#JoinCode-Paste {
+    width: 60px;
 }

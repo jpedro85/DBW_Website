@@ -77,6 +77,12 @@
     color: black;
 }
 
+.ButtonDarkBlueSemFundo {
+    color: #21bdc9;
+}
+.ButtonDarkBlueSemFundo:hover {
+    color: black;
+}
 
 /* Button Blue default*/
 .ButtonLightBlue{
@@ -128,6 +134,7 @@
     border-radius: 10px;
     
 }
+
 .inputText-Input{
     background-color: #093E41;
     border-radius: 10px;
@@ -143,6 +150,7 @@
     line-height: 18px;
     width: 80%;
 }
+
 .inputText-Button{
     display: flex;
     background-color: transparent;
