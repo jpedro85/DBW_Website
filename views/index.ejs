@@ -5,20 +5,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Khajiit</title>
-    <link rel="icon" type="image/x-icon" href="/images/Khajiit.ico">
+    <link rel="icon" type="image/x-icon" href="/images/Khajiit.ico" />
     <link rel="stylesheet" href="/css/index.css" />
     <link rel="stylesheet" href="/css/buttons.css" />
     <link rel="stylesheet" href="/css/scrollBar.css" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"> 
+    <link rel="stylesheet" href="/css/Overlay.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+    />
   </head>
   <body>
-    <% log = true  %>
-    <% if(log) {%>
-      <%- include("../views/partials/navBarLoged_in.ejs") %>
-    <% } else {%>
-      <%- include("../views/partials/navBar.ejs") %>
-    <% }%>
+    <% log = true %> <% if(log) {%> <%-
+    include("../views/partials/navBarLoged_in.ejs") %> <% } else {%> <%-
+    include("../views/partials/navBar.ejs") %> <% }%>
     <div class="bckg">
       <div class="front">
         <div class="row">
@@ -26,11 +30,11 @@
             <h2>
               Start now by
               <a href="/login">Login</a> or
-              <a href="/sign-up"
-                >Creating an Account</a
-              >
+              <a href="/sign-up">Creating an Account</a>
             </h2>
-            <button class="play-bttn ButtonLightBlue" onclick="plyaRedirect()">Play Now</button>
+            <button class="play-bttn ButtonLightBlue" onclick="plyaRedirect()">
+              Play Now
+            </button>
           </div>
         </div>
         <div class="row">
@@ -56,9 +60,56 @@
         </div>
       </div>
     </div>
-
+    <div class="Popup">
+      <div class="Login-Popup">
+        <div class="Close-Login-Popup" id="Close-Login">&times;</div>
+        <div class="form">
+          <h2>Log in</h2>
+          <div class="form-element">
+            <label for="username">Username</label>
+            <input type="text" id="username" placeholder="Enter Username" />
+          </div>
+          <div class="form-element">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter Password" />
+          </div>
+          <div class="form-element">
+            <button class="Login-Button-Popup" id="Log-In-Button">Log In</button>
+          </div>
+          <div class="form-element">
+            <button class="Signup-Popup-Button" id="Signup-Popup-Button">Sign Up Now</button>
+          </div>
+        </div>
+      </div>
+      <div class="Signup-Popup">
+        <div class="Close-Signup-Popup" id="Close-Signup">&times;</div>
+        <div class="form">
+          <h2>Create Account</h2>
+          <div class="form-element">
+            <label for="username">Username</label>
+            <input type="text" id="username" placeholder="Enter Username" />
+          </div>
+          <div class="form-element">
+            <label for="email">Email</label>
+            <input type="text" id="email" placeholder="Enter Email" />
+          </div>
+          <div class="form-element">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter Password" />
+          </div>
+          <div class="form-element">
+            <label for="password">Confirm Password</label>
+            <input type="password" id="password-confirm" placeholder="Confirm Password" />
+          </div>
+          <div class="form-element">
+            <button class="Signup-Button-Confirm" id="Signup-Button-Confirm">Next Step</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <%- include("../views/partials/footer.ejs") %>
     <script src="/js/index.js"></script>
+    <script src="/js/Overlay.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
   </body>
