@@ -1,0 +1,26 @@
+::-webkit-scrollbar {
+    z-index: 999;
+    border: none;
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 50px;
+    background: rgb(0 ,0 ,0 , 40%); 
+    width: 8px;
+}
+  
+::-webkit-scrollbar-thumb:hover {
+    background: #000000a6; 
+    opacity: 0.40;
+}
+
+::-webkit-scrollbar-track {
+    background-color: rgb(0 ,0 ,0 , 0%) !important;
+    margin-top: 64px;
+    margin-bottom: 50px;
+}
+
+::-webkit-scrollbar-button {
+    background-color: rgb(0 ,0 ,0 , 0%);
+}

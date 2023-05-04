@@ -1,0 +1,286 @@
+#conteiner-main {
+    /* Image Background */
+      background-image: url("../images/BackgroundImg.png");
+      /* background-size: 100% 100%; */
+      background-size: cover;
+      /* Background Image size fills the whole Screen */
+      width: 100vw;
+      height: 100vh;
+      background-repeat: no-repeat;
+      overflow-x: hidden;
+      overflow: overlay;
+      /*spacing*/
+      padding-top: 114px;
+      padding-bottom: 100px;
+      padding-left: 50px;
+      padding-right: 50px;
+}
+
+@media only screen and (max-width: 500px) {
+
+    #conteiner-buttons {
+        padding: 5px 5px 5px 5px;
+        border-radius: 10px;
+        display: inline-flex;
+        flex-direction: column;
+        gap: 5px;
+        flex-grow: 1;
+        width: 100%;
+        height: 128px ; 
+    }
+
+    #conteiner-frame {
+        background-color: rgb(4, 31, 49,80%);
+        border: 2px solid #143951;
+        border-radius: 10px;
+        width: 100%;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+        height: max-content;
+    }
+
+    .conteiner-tab {
+        display: flex;
+        flex-direction: column;
+        flex-basis: 100%;
+        flex-grow: 1;
+        width: 100%;
+        min-height: 700px;
+    }
+}
+
+@media only screen and (min-width: 500px) and (max-width: 1400px) {
+    #conteiner-frame {
+        background-color: rgb(4, 31, 49,80%);
+        border: 2px solid #143951;
+        border-radius: 10px;
+        width: 100%;
+        min-height: 100%;
+        height: max-content;
+        display: flex;
+        flex-direction: column;
+    }
+
+    #conteiner-buttons {
+        padding: 5px 5px 5px 5px;
+        border-radius: 10px;
+        display: inline-flex;
+        flex-direction: row;
+        gap: 5px;
+        width: 100%;
+        height: 64px ; 
+    }
+
+    .conteiner-tab {
+        display: flex;
+        flex-direction: column;
+        flex-basis: 100%;
+        flex-grow: 1;
+        width: 100%;
+        min-height: 700px;
+    }
+}
+
+
+
+@media only screen and (min-width: 1400px) {
+  
+    #conteiner-frame {
+        background-color: rgb(4, 31, 49,80%);
+        border: 2px solid #143951;
+        border-radius: 10px;
+        width: 100%;
+        height: 100%;
+        display: flex;
+    }
+
+    #conteiner-buttons {
+        padding: 5px 5px 5px 5px;
+        border-radius: 10px;
+        display: inline-flex;
+        flex-direction: column;
+        gap: 5px;
+        flex-grow: 1;
+        width: 20%;
+    }
+ 
+    .conteiner-tab {
+        display: flex;
+        flex-direction: column;
+        flex-basis: 100%;
+        flex-grow: 1;
+        width: 80%;
+        height: 100%;
+    }
+
+    .top-border {
+        border-top-right-radius: 9px;
+    }
+    
+    .botton-border {
+        border-bottom-right-radius: 9px;
+    }
+}
+
+.conteiner-buttons-content {
+    flex-basis: 100%;
+    flex-grow: 1;
+    border-radius: 10px;
+}
+
+.conteiner-tab-settings {
+    height: 25%;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.conteiner-tab-element-row {
+    flex-grow: 1;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin: 0 !important;
+}
+
+.conteiner-tab-element-col-main {
+    display: flex;
+}
+
+.conteiner-tab-element-col {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tab-element{
+    align-items: center;
+    justify-content: center;
+}
+
+.tab-element-text{
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 18px;
+    color: #FFFFFF;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#conteiner-tab-settings3 {   
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    border-bottom-right-radius: 10px ;
+}
+
+#conteiner-btn-create {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+.settings-title {
+    background-color: #143951;
+    height: 50px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 18px;
+    color: #FFFFFF;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.settings-options1 {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 18px;
+    width: 15em ;
+    height: 40px;
+}
+
+.settings-options2 {
+    width: 18.6em;
+    height: 40px;
+}
+
+.settings-options {
+    width: 11.50em;
+    height: 40px;
+}
+
+.settings-title-matchsettigns {
+    /* box-shadow: 0 8px 20px 0px rgba(0, 0, 0, 0.2); */
+    border-bottom: 4px solid rgb(0, 0, 0, 0.3);
+    flex-shrink: 0;
+}
+
+#settings-title-match {
+    /* box-shadow: 0 0px 20px 0px rgba(0, 0, 0, 0.2); */
+    border-bottom: 4px solid rgb(0, 0, 0, 0.3);
+    border-top: 4px solid rgb(0, 0, 0, 0.3);
+    flex-shrink: 0;
+}
+
+.settings-title-bottom {
+    /* box-shadow: 0 -8px 20px 0px rgba(0, 0, 0, 0.2); */
+    border-top: 4px solid rgb(0, 0, 0, 0.3);
+    flex-shrink: 0;
+}
+
+#btn-create {
+    border-radius: 10px;
+    font-weight: 700 !important;
+    font-size: 40px  !important;
+    line-height: 40px !important;
+    height: 2.5em;
+    width: 50%;
+}
+
+#tab-element-EnterCode {
+    padding-top: 8%;
+    padding-bottom: 20%;
+    vertical-align: middle;
+}
+
+#joint-top {
+    height: 50px;
+}
+
+#joint-code-and-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#btn-join {
+    border-radius: 10px;
+    font-weight: 700 !important;
+    font-size: 40px  !important;
+    line-height: 40px !important;
+    height: 2.5em;
+    width: 50%;
+}
+
+#JoinCode-Copy {
+    width: 60px;
+    padding: 0;
+}
+
+#JoinCode-Paste {
+    width: 60px;
+}
