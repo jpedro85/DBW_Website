@@ -11,7 +11,7 @@
       overflow: overlay;
       /*spacing*/
       padding-top: 114px;
-      padding-bottom: 60px;
+      padding-bottom: 100px;
       padding-left: 50px;
       padding-right: 50px;
 }
@@ -37,7 +37,7 @@
         flex-grow: 1;
         display: flex;
         flex-direction: column;
-        min-height: 720px;
+        min-height: 100%;
         height: max-content;
     }
 
@@ -47,7 +47,7 @@
         flex-basis: 100%;
         flex-grow: 1;
         width: 100%;
-        min-height: 720px;
+        min-height: 700px;
     }
 }
 
@@ -57,7 +57,7 @@
         border: 2px solid #143951;
         border-radius: 10px;
         width: 100%;
-        min-height: 720px;
+        min-height: 100%;
         height: max-content;
         display: flex;
         flex-direction: column;
@@ -79,7 +79,7 @@
         flex-basis: 100%;
         flex-grow: 1;
         width: 100%;
-        min-height: 720px;
+        min-height: 700px;
     }
 }
 
@@ -92,8 +92,7 @@
         border: 2px solid #143951;
         border-radius: 10px;
         width: 100%;
-        min-height: 720px;
-        height: max-content;
+        height: 100%;
         display: flex;
     }
 
@@ -105,8 +104,6 @@
         gap: 5px;
         flex-grow: 1;
         width: 20%;
-        min-height: 720px;
-        height: 100%; 
     }
  
     .conteiner-tab {
@@ -115,7 +112,7 @@
         flex-basis: 100%;
         flex-grow: 1;
         width: 80%;
-        min-height: 720px;
+        height: 100%;
     }
 
     .top-border {
@@ -175,7 +172,6 @@
 }
 
 #conteiner-tab-settings3 {   
-    height: 50%;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -187,8 +183,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    flex-grow: 1;
 }
 
 .settings-title {
@@ -226,21 +223,23 @@
     height: 40px;
 }
 
-#settings-title-matchsettigns {
-    box-shadow: 0 8px 20px 0px rgba(0, 0, 0, 0.2);
-}
-
-#settings-title-playersettigns {
-    box-shadow: 0 0px 20px 0px rgba(0, 0, 0, 0.2);
+.settings-title-matchsettigns {
+    /* box-shadow: 0 8px 20px 0px rgba(0, 0, 0, 0.2); */
+    border-bottom: 4px solid rgb(0, 0, 0, 0.3);
+    flex-shrink: 0;
 }
 
 #settings-title-match {
-    box-shadow: 0 0px 20px 0px rgba(0, 0, 0, 0.2);
+    /* box-shadow: 0 0px 20px 0px rgba(0, 0, 0, 0.2); */
+    border-bottom: 4px solid rgb(0, 0, 0, 0.3);
+    border-top: 4px solid rgb(0, 0, 0, 0.3);
+    flex-shrink: 0;
 }
 
-#settings-title-bottom {
-    box-shadow: 0 -8px 20px 0px rgba(0, 0, 0, 0.2);
-    border-bottom-right-radius: 8px ;
+.settings-title-bottom {
+    /* box-shadow: 0 -8px 20px 0px rgba(0, 0, 0, 0.2); */
+    border-top: 4px solid rgb(0, 0, 0, 0.3);
+    flex-shrink: 0;
 }
 
 #btn-create {
@@ -279,10 +278,7 @@
 
 #JoinCode-Copy {
     width: 60px;
-}
-
-#JoinCode-Copy {
-    width: 60px;
+    padding: 0;
 }
 
 #JoinCode-Paste {

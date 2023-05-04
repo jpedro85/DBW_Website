@@ -68,19 +68,12 @@
 }
 
 .ButtonDarkBlue:active {
-    background-color: #70f5ff;
+    background-color: #70f5ff; 
     color: black ;
 }
 
 .ButtonDarkBlueActive {
     background-color: #55d1da;
-    color: black;
-}
-
-.ButtonDarkBlueSemFundo {
-    color: #21bdc9;
-}
-.ButtonDarkBlueSemFundo:hover {
     color: black;
 }
 
@@ -98,6 +91,7 @@
     transition: 0.3s;
     
 }
+
 /* Button Blue when mouse hover*/
 .ButtonLightBlue:hover {
     background-color: #70f5ff;
@@ -109,21 +103,23 @@
 /* Button Red default*/
 .ButtonRed{
     cursor: pointer;
-    background-color: #FF4242;
+    background-color: #CB2027;
     border: none;
     color: #FFFFFF;
     padding: 0, 0 ,0,0 ;
-    text-align: center;
-    font-size: 26px;
-    font-family: "Roboto";
-    font-weight: bold;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 18px;
     margin: 0,0,0,0 ;
     transition: 0.3s;
 }
 /* Button Red when mouse hover*/
 .ButtonRed:hover {
-    background-color: #ff2f2f;
-    /*color: black;*/
+    background-color: rgb(248, 99, 99);
+    box-shadow: 0 0 20px 0 rgba(248, 99, 99, 0.8);
+    color: #000000;
 }
 
 /* text input */
@@ -159,6 +155,11 @@
     border: none;
     align-items: center ;
     justify-content: center;
+    color: #21bdc9;
+}
+
+.inputText-Button:hover {
+   color: #000000;
 }
 
 .inputText-Input:focus{
@@ -230,7 +231,7 @@
   }
 
   .caret:hover {
-    color: #000000;
+    color: #000000 !important;
   }
   
   /* Rotate Styles */

@@ -25,6 +25,18 @@ dropdowns.forEach((dropdown) => {
     caret.classList.toggle("caret-rotate");
     // Add the open style to the menu element
     menu.classList.toggle("menu-open");
+
+    // close the other droopbuttons
+    dropdowns.forEach( (other_dropdown)=>{
+
+      // if the comparing button distint from the base one we want to close it
+      if(dropdown.id != other_dropdown.id){
+          // closes the other_dropdown if is open
+          closeDroopButton(other_dropdown);
+      };
+
+    });
+
   });
 
   // Loop through all option elements
@@ -47,4 +59,35 @@ dropdowns.forEach((dropdown) => {
       option.classList.add("active");
     });
   });
+
 });
+
+// this functuon allow-us to close all open droopbuttons
+function closeAllDroopButtons() {
+
+  dropdowns.forEach((dropdown)=>{
+    closeDroopButton(dropdown)
+  });
+
+}
+
+// closes the droopbutton if is open 
+// doesnt check if argument is a droopbutton
+function closeDroopButton(dropdown) {
+
+  // vars to keep select the select element from the dropbutton
+  const select = dropdown.querySelector(".select");
+      
+  if( select.classList.contains("select-clicked") ){
+
+    // vars to keep the other elementes of the dropbutton
+    const caret = dropdown.querySelector(".caret");
+    const menu = dropdown.querySelector(".menu");
+
+    // remove the class active from the elements
+    select.classList.remove("select-clicked");
+    caret.classList.remove("caret-rotate");
+    menu.classList.remove("menu-open");
+
+  }
+}
