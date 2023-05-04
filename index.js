@@ -30,6 +30,7 @@ const indexRoute = require("./routes/indexRoute");
 const aboutUsRoute = require("./routes/aboutUsRoute");
 const playOptionsRoute = require("./routes/playOptionsRoute");
 const playGameRounte = require("./routes/playGameRoute");
+const profileRoute = require("./routes/profileRoute");
 // Our anonymous function that contains our sockets
 // let serverSocket = require("./public/js/socket/socketServerSide");
 
@@ -56,6 +57,7 @@ app.use(indexRoute);
 app.use(aboutUsRoute);
 app.use(playOptionsRoute);
 app.use(playGameRounte);
+app.use(profileRoute);
 /////////////////////////
 /**
  * Server Launch
