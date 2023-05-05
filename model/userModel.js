@@ -13,3 +13,4 @@ userSchema.plugin(passportLocalMongoose);
 
 // Creates a model called User using UserSchema ands exports it
 module.exports = mongoose.model("User", userSchema);
+

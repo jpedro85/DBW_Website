@@ -280,3 +280,31 @@
     display: block;
     opacity: 1;
   }
+
+  .textButton {
+    border: none;
+    background-color: transparent;
+  }
+
+  .textButton:hover {
+    color: #85b8d6;
+  }
+
+  .BlueTransparent-Button {
+    display: block;
+    font-size: 25px;
+    line-height: 30px;
+    border: none;
+    background: transparent;
+    color: #358AD8;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.BlueTransparent-Button:hover {
+  color: #19538a;
+}
+
+.BlueTransparent-Button:active {
+  color: #FFFFFF;
+}
