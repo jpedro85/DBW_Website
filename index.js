@@ -18,7 +18,7 @@ const localStrategy = require("passport-local");
 // Imports Session
 const session = require("express-session");
 // Imports user model
-const user = require("./model/userModel");
+const fetchedUser = require("./model/userModel");
 const app = express();
 
 /////////////////////////
@@ -102,11 +102,11 @@ app.use(passport.initialize());
 // Its used to restore a users session
 app.use(passport.session());
 // Authenticate is added automatically by the plugin
-passport.use(new localStrategy(user.authenticate()));
+passport.use(new localStrategy(fetchedUser.authenticate()));
 // Saves a user session
-passport.serializeUser(user.serializeUser());
+passport.serializeUser(fetchedUser.serializeUser());
 // Removes a user from the session
-passport.deserializeUser(user.deserializeUser());
+passport.deserializeUser(fetchedUser.deserializeUser());
 
 /////////////////////////
 /**

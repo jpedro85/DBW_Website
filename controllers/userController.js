@@ -1,5 +1,4 @@
 // Imports the user model from mongoDB
-const { model } = require("mongoose");
 const databaseUser = require("../model/userModel");
 
 /**
@@ -10,16 +9,20 @@ const databaseUser = require("../model/userModel");
  *
  **/
 const registerUserOnMongoDB = async function (request, response) {
-  const { email, username, password } = request.body;
+  const { signup_username, signup_email, signup_password } = request.body;
   try {
     // Creates a new User
-    const user = new databaseUser({ email, username });
+    const user = new databaseUser({
+      email: signup_email,
+      username: signup_username,
+    });
     // Saves the data in the database
-    await databaseUser.register(user, password);
+    await databaseUser.register(user, signup_password);
     // Redirects after all processes to the main page
     response.redirect("/");
   } catch (registerError) {
     console.error(registerError);
+    response.redirect("/")
   }
 };
 
@@ -39,8 +42,7 @@ const logoutUser = function (request, response, next) {
   });
 };
 
+
+
 // Exports the functions
-model.exports = {
-  registerUserOnMongoDB,
-  logoutUser,
-};
+module.exports = { registerUserOnMongoDB, logoutUser };

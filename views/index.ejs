@@ -20,9 +20,11 @@
     />
   </head>
   <body>
-    <% log = true %> <% if(log) {%> <%-
-    include("../views/partials/navBarLoged_in.ejs") %> <% } else {%> <%-
-    include("../views/partials/navBar.ejs") %> <% }%>
+    <% if(isUserLogged) {%>
+       <%-include("../views/partials/navBarLoged_in.ejs")%> 
+    <% } else {%> 
+      <%-include("../views/partials/navBar.ejs") %>
+    <% }%>
     <div class="bckg">
       <div class="front">
         <div class="row">
@@ -64,68 +66,95 @@
       <div class="Login-Popup">
         <div class="Close-Login-Popup" id="Close-Login">&times;</div>
         <div class="form">
-          <h2>Log in</h2>
+          <form action="/" method="post">
+            <h2>Log in</h2>
+            <div class="form-element">
+              <label for="username">Username</label>
+              <input name="username" type="text" id="username" placeholder="Enter Username" />
+            </div>
+            <div class="form-element">
+              <label for="password">Password</label>
+              <input name="password" type="password" id="password" placeholder="Enter Password" />
+            </div>
+            <div class="form-element">
+              <button class="Login-Button-Popup" id="Log-In-Button">
+                Log In
+              </button>
+            </div>
+          </form>
           <div class="form-element">
-            <label for="username">Username</label>
-            <input type="text" id="username" placeholder="Enter Username" />
-          </div>
-          <div class="form-element">
-            <label for="password">Password</label>
-            <input type="password" id="password" placeholder="Enter Password" />
-          </div>
-          <div class="form-element">
-            <button class="Login-Button-Popup" id="Log-In-Button">Log In</button>
-          </div>
-          <div class="form-element">
-            <button class="Signup-Popup-Button" id="Signup-Popup-Button">Sign Up Now</button>
+            <button class="Signup-Popup-Button" id="Signup-Popup-Button">
+              Sign Up Now
+            </button>
           </div>
         </div>
       </div>
       <div class="Signup-Popup">
         <div class="Close-Signup-Popup" id="Close-Signup">&times;</div>
         <div class="form">
-          <h2>Create Account</h2>
-          <div class="form-element">
-            <label for="username">Username</label>
-            <input type="text" id="username" placeholder="Enter Username" />
-          </div>
-          <div class="form-element">
-            <label for="email">Email</label>
-            <input type="text" id="email" placeholder="Enter Email" />
-          </div>
-          <div class="form-element">
-            <label for="password">Password</label>
-            <input type="password" id="password" placeholder="Enter Password" />
-          </div>
-          <div class="form-element">
-            <label for="password">Confirm Password</label>
-            <input type="password" id="password-confirm" placeholder="Confirm Password" />
-          </div>
-          <div class="form-element">
-            <button class="Signup-Button-Confirm" id="Signup-Button-Confirm">Next Step</button>
-          </div>
+          <form action="/" method="POST">
+            <h2>Create Account</h2>
+            <div class="form-element">
+              <label for="username">Username</label>
+              <input name="signup_username" type="text" id="username" placeholder="Enter Username" />
+            </div>
+            <div class="form-element">
+              <label for="email">Email</label>
+              <input name="signup_email" type="text" id="email" placeholder="Enter Email" />
+            </div>
+            <div class="form-element">
+              <label for="password">Password</label>
+              <input name="signup_password" type="password" id="password" placeholder="Enter Password" />
+            </div>
+            <div class="form-element">
+              <label for="password">Confirm Password</label>
+              <input
+                name="signup_repeat_password"
+                type="password"
+                id="password-confirm"
+                placeholder="Confirm Password"
+              />
+            </div>
+            <div class="form-element">
+              <button class="Signup-Button-Confirm" id="Signup-Button-Confirm">
+                Next Step
+              </button>
+            </div>
+          </form>
         </div>
       </div>
       <div class="Signup-Confirm">
-        <div class="Close-Signup-Confirm" id="Close-Signup-Confirm">&times;</div>
+        <div class="Close-Signup-Confirm" id="Close-Signup-Confirm">
+          &times;
+        </div>
         <div class="form">
           <h2>Confirm Email</h2>
           <div class="form-element">
-            <label for="confirm">Please enter the code that has been send to your email.</label>
-            <input type="text" id="email-confirm">
+            <label for="confirm"
+              >Please enter the code that has been send to your email.</label
+            >
+            <input type="text" id="email-confirm" />
           </div>
           <div class="form-element">
-            <button class="Signup-Confirm-Email" id="Signup-Confirm-Email">Confirm Email</button>
+            <button class="Signup-Confirm-Email" id="Signup-Confirm-Email">
+              Confirm Email
+            </button>
           </div>
         </div>
       </div>
       <div class="Account-Created">
-        <div class="Close-Account-Created" id="Close-Account-Created">&times;</div>
+        <div class="Close-Account-Created" id="Close-Account-Created">
+          &times;
+        </div>
         <div class="form">
           <h2>Account Created</h2>
           <div class="form-element">
-            <label for="Succes-Account">The account as bean Successfully Created!</label>
-            <button class="Account-Created-Succes" id="Account-Created-Succes">Continue to Home</button>
+            <label for="Succes-Account"
+              >The account as bean Successfully Created!</label
+            >
+            <button class="Account-Created-Succes" id="Account-Created-Succes">
+              Continue to Home
+            </button>
           </div>
         </div>
       </div>
