@@ -1,0 +1,344 @@
+/*--------------------------------- Main Pop up--------------------------------- */
+.Popup{
+    display: none;
+    opacity: 0;
+    background: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: top 0ms ease-in-out 200ms,
+                opacity 200ms ease-in-out 0ms, 
+                transform 20ms ease-in-out 0ms;
+                
+}
+
+.Popup.active{
+    display: block;
+    z-index: 1000;
+    opacity: 1;
+    transition: top 0ms ease-in-out 0ms,
+                opacity 200ms ease-in-out 0ms, 
+                transform 20ms ease-in-out 0ms;
+}
+
+/*---------------------------------LOG IN--------------------------------- */
+.Login-Popup{
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    opacity: 0;
+    transform: translate(-50%,-50%);
+    width: 700px;
+    padding: 20px 30px;
+    background: #081818;
+    box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 15);
+    border-radius: 10px;
+    transition: top 0ms ease-in-out 200ms,
+                opacity 200ms ease-in-out 0ms, 
+                transform 20ms ease-in-out 0ms;
+}
+
+.Login-Popup.active{
+    display: block;
+    opacity: 1;
+    transform:translate(-50%,-50%);
+    transition: top 0ms ease-in-out 0ms,
+                opacity 200ms ease-in-out 0ms, 
+                transform 20ms ease-in-out 0ms;
+}
+
+.Close-Login-Popup{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 15px;
+    height: 15px;
+    color: grey;
+    text-align: center;
+    line-height: 15px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 25px;
+}
+
+.Login-Popup .form h2{
+    text-align: center;
+    color: lightgray;
+    margin: 10px 0px 20px;
+    font-size: 25px;
+}
+
+.Login-Popup .form .form-element{
+    margin: 15px 0px;
+}
+
+.Login-Popup .form .form-element label{
+    font-size: 18px;
+    color: white;
+}
+
+.Login-Popup .form .form-element input[type="text"],
+.Login-Popup .form .form-element input[type="password"]{
+    margin-top: 5px;
+    display: block;
+    width: 100%;
+    padding: 10px;
+    outline: none;
+    border: 1px solid #1E3031;
+    border-radius: 5px;
+    background: #1E3031;
+}
+
+.Login-Popup .form .form-element .Login-Button-Popup{
+    width: 100%;
+    height: 40px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    background: #1CA1AA;
+    color: white;
+    cursor: pointer;
+}
+
+.Login-Popup .form .form-element .Signup-Popup-Button{
+    display: block;
+    font-size: 15px;
+    border: none;
+    background: transparent;
+    color: #358AD8;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* ---------------------------------SIGN UP--------------------------------- */
+.Signup-Popup{
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    opacity: 0;
+    transform: translate(-50%,-50%);
+    width: 700px;
+    padding: 20px 30px;
+    background: #081818;
+    box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 15);
+    border-radius: 10px;
+    transition: top 0ms ease-in-out 200ms,
+                opacity 200ms ease-in-out 0ms, 
+                transform 20ms ease-in-out 0ms;
+}
+
+.Signup-Popup.active{
+    display: block;
+    opacity: 1;
+    transform:translate(-50%,-50%);
+    transition: top 0ms ease-in-out 0ms,
+                opacity 200ms ease-in-out 0ms, 
+                transform 20ms ease-in-out 0ms;
+}
+
+.Close-Signup-Popup{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 15px;
+    height: 15px;
+    color: grey;
+    text-align: center;
+    line-height: 15px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 25px;
+}
+
+.Signup-Popup .form h2{
+    text-align: center;
+    color: lightgray;
+    margin: 10px 0px 20px;
+    font-size: 25px;
+}
+
+.Signup-Popup .form .form-element{
+    margin: 15px 0px;
+}
+
+.Signup-Popup .form .form-element label{
+    font-size: 18px;
+    color: white;
+}
+
+.Signup-Popup .form .form-element input[type="text"],
+.Signup-Popup .form .form-element input[type="password"]{
+    margin-top: 5px;
+    display: block;
+    width: 100%;
+    padding: 10px;
+    outline: none;
+    border: 1px solid #1E3031;
+    border-radius: 5px;
+    background: #1E3031;
+}
+
+.Signup-Popup .form .form-element .Signup-Button-Confirm{
+    width: 100%;
+    height: 40px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    background: #1CA1AA;
+    color: white;
+    cursor: pointer;
+}
+
+/* ---------------------------------SIGN UP CONFIRM--------------------------------- */
+
+.Signup-Confirm{
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    opacity: 0;
+    transform: translate(-50%,-50%);
+    width: 700px;
+    padding: 20px 30px;
+    background: #081818;
+    box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 15);
+    border-radius: 10px;
+    transition: top 0ms ease-in-out 200ms,
+                opacity 200ms ease-in-out 0ms, 
+                transform 20ms ease-in-out 0ms;
+}
+
+.Signup-Confirm.active{
+    display: block;
+    opacity: 1;
+    transform:translate(-50%,-50%);
+    transition: top 0ms ease-in-out 0ms,
+                opacity 200ms ease-in-out 0ms, 
+                transform 20ms ease-in-out 0ms;
+}
+
+.Close-Signup-Confirm{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 15px;
+    height: 15px;
+    color: grey;
+    text-align: center;
+    line-height: 15px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 25px;
+}
+
+.Signup-Confirm .form h2{
+    text-align: center;
+    color: lightgray;
+    margin: 10px 0px 20px;
+    font-size: 25px;
+}
+
+.Signup-Confirm .form .form-element{
+    margin: 15px 0px;
+}
+
+.Signup-Confirm .form .form-element label{
+    font-size: 18px;
+    color: white;
+}
+
+.Signup-Confirm .form .form-element input[type="text"]{
+    margin-top: 5px;
+    display: block;
+    width: 100%;
+    padding: 10px;
+    outline: none;
+    border: 1px solid #1E3031;
+    border-radius: 5px;
+    background: #1E3031;
+}
+
+.Signup-Confirm .form .form-element .Signup-Confirm-Email{
+    width: 100%;
+    height: 40px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    background: #1CA1AA;
+    color: white;
+    cursor: pointer;
+}
+/* ---------------------------------ACCOUNT CREATED--------------------------------- */
+
+.Account-Created{
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    opacity: 0;
+    transform: translate(-50%,-50%);
+    width: 700px;
+    padding: 20px 30px;
+    background: #081818;
+    box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 15);
+    border-radius: 10px;
+    transition: top 0ms ease-in-out 200ms,
+                opacity 200ms ease-in-out 0ms, 
+                transform 20ms ease-in-out 0ms;
+}
+
+.Account-Created.active{
+    display: block;
+    opacity: 1;
+    transform:translate(-50%,-50%);
+    transition: top 0ms ease-in-out 0ms,
+                opacity 200ms ease-in-out 0ms, 
+                transform 20ms ease-in-out 0ms;
+}
+
+.Close-Account-Created{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 15px;
+    height: 15px;
+    color: grey;
+    text-align: center;
+    line-height: 15px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 25px;
+}
+
+.Account-Created .form h2{
+    text-align: center;
+    color: lightgray;
+    margin: 10px 0px 20px;
+    font-size: 25px;
+}
+
+.Account-Created .form .form-element{
+    margin: 15px 0px;
+}
+
+.Account-Created .form .form-element label{
+    font-size: 18px;
+    color: white;
+}
+
+.Account-Created .form .form-element .Account-Created-Succes{
+    width: 100%;
+    height: 40px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    background: #1CA1AA;
+    color: white;
+    cursor: pointer;
+}
