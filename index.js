@@ -51,7 +51,7 @@ const aboutUsRoute = require("./routes/aboutUsRoute");
 const playOptionsRoute = require("./routes/playOptionsRoute");
 const playGameRoute = require("./routes/playGameRoute");
 // to be decided
-const userRoute = require("./routes/userRoute");
+// const userRoute = require("./routes/userRoute");
 
 // Our anonymous function that contains our sockets
 //let serverSocket = require("./public/js/socket/socketServerSide");
@@ -79,11 +79,7 @@ app.use(methodOverride("_method"));
 // Transform JSON to object
 app.use(express.json());
 
-// Create the route to the index page
-app.use(indexRoute);
-app.use(aboutUsRoute);
-app.use(playOptionsRoute);
-app.use(playGameRoute);
+
 
 /////////////////////////
 /**
@@ -133,18 +129,14 @@ mongoose
 
 // Create the route to the index page
 app.use(indexRoute);
-// Create the route to the javaScript page
-app.use(javaScriptRoute);
-// Create the route to the bookForm page
-app.use(bookFormRoute);
-// Create the route to the form page
-app.use(formRoute);
-// Create the route to the socket page
-app.use(socketRoute);
-// Create the route to the fetch page
-app.use(fetchRoute);
+// Create the route to the about us page
+app.use(aboutUsRoute);
+// Creates the route to the playOptions page
+app.use(playOptionsRoute);
+// Create the route to the playGame page
+app.use(playGameRoute);
 // Create route to user
-app.use(userRoute);
+// app.use(userRoute);
 
 /////////////////////////
 /**
