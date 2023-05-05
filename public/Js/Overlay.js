@@ -21,3 +21,33 @@ document.querySelector(".Signup-Popup #Close-Signup").addEventListener("click",f
     document.querySelector(".Signup-Popup").classList.remove("active");
     document.querySelector(".Popup").classList.remove("active");
 });
+
+/*Function that de-activates the Sign up menu and activates the Sign up confirm menu when pressed to sign in*/
+document.querySelector(".Signup-Popup #Signup-Button-Confirm").addEventListener("click",function(){
+    document.querySelector(".Signup-Popup").classList.remove("active");
+    document.querySelector(".Signup-Confirm").classList.add("active");
+});
+
+/*Function that de-activates de sign up confirm menu when pressed the close button*/
+document.querySelector(".Signup-Confirm #Close-Signup-Confirm").addEventListener("click",function(){
+    document.querySelector(".Signup-Confirm").classList.remove("active");
+    document.querySelector(".Popup").classList.remove("active");
+});
+
+/*Function that de-activates the Sign up confirm menu and activates the Account Created menu when pressed to Confirm email*/
+document.querySelector(".Signup-Confirm #Signup-Confirm-Email").addEventListener("click",function(){
+    document.querySelector(".Signup-Confirm").classList.remove("active");
+    document.querySelector(".Account-Created").classList.add("active");
+});
+
+/*Function that de-activates de Account Created menu when pressed the close button*/
+document.querySelector(".Account-Created #Close-Account-Created").addEventListener("click",function(){
+    document.querySelector(".Account-Created").classList.remove("active");
+    document.querySelector(".Popup").classList.remove("active");
+});
+
+/*Function that de-activates de Account Created  menu when pressed the Continue to home button*/
+document.querySelector(".Account-Created #Account-Created-Succes").addEventListener("click",function(){
+    document.querySelector(".Account-Created").classList.remove("active");
+    document.querySelector(".Popup").classList.remove("active");
+});
