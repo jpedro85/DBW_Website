@@ -19,7 +19,9 @@
     />
   </head>
   <body>
-    <%- include("../views/partials/navBarLoged_in.ejs") %>
+    <% log = true  %>
+    <% if(log) {%>
+      <%- include("../views/partials/navBarLoged_in.ejs") %>
     <div id="conteiner-main">
       <div id="conteiner-frame">
         <div id="conteiner-buttons">
@@ -265,6 +267,14 @@
         </div>
       </div>
     </div>
+    <% } else {%>
+      <%- include("../views/partials/navBar.ejs") %>
+      <div id="conteiner-main">
+        <div id="notloged">
+            <div id="notLogedtext" >You need to be loged in to access this page !</div>
+        </div>
+      </div>
+    <% }%>
     <%- include("../views/partials/footer.ejs") %>
     <script src="/js/buttons.js"></script>
     <script src="/js/playOptions.js"></script>

@@ -49,6 +49,7 @@ const PORT = 3000;
 const indexRoute = require("./routes/indexRoute");
 const aboutUsRoute = require("./routes/aboutUsRoute");
 const playOptionsRoute = require("./routes/playOptionsRoute");
+const profileRoute = require("./routes/profileRoute");
 const playGameRoute = require("./routes/playGameRoute");
 // to be decided
 // const userRoute = require("./routes/userRoute");
@@ -135,6 +136,8 @@ app.use(aboutUsRoute);
 app.use(playOptionsRoute);
 // Create the route to the playGame page
 app.use(playGameRoute);
+// create the route to the profile page
+app.use(profileRoute);
 // Create route to user
 // app.use(userRoute);
 
