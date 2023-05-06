@@ -14,31 +14,14 @@ const databaseUser = require("../model/userModel");
  */
 router.get("/", indexController);
 
-// // If there is no request.user mean there is no user authenticated or logged so he can do the registration
-// router.post("/", (request, response) => {
-//   console.log(request.user);
-//   if (!request.user) {
-//     userController.registerUserOnMongoDB;
-//   }
-//   return;
-// });
-// Will try to to authenticate the user login with the database
-// router.post(
-//   "/",
-//   passport.authenticate("local", { failureRedirect: "/about-us" }),
-//   function (request, response) {
-//     response.render("index", { isUserLogged: true });
-//   }
-// );
-
 router.post("/", (request, response, next) => {
   const requestFormType = request.body.formType;
   const wantsToLogin = "login";
   const wantsToRegister = "register";
   try {
+    // Checks if the post request is a login or registration
     if (wantsToLogin === requestFormType) {
       // Authenticates the user if not valid do ... if valid renders page while logged
-      // If there is no request.user mean there is no user authenticated or logged so he can do the registration
       passport.authenticate(
         "local",
         { failureRedirect: "/about-us" },
