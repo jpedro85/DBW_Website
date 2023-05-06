@@ -62,3 +62,4 @@ document.querySelector("#AcountCreated-continue").addEventListener("click" , () 
     Popup_AcountCreated.classList.remove("active");
     conteiner.classList.remove("active");
 })
+

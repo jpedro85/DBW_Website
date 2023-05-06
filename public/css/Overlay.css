@@ -1,6 +1,6 @@
 /*--------------------------------- Main Pop up--------------------------------- */
 .Popup-conteiner{
-    display: none ;
+    display: none !important ;
     opacity: 0;
     background: rgba(0, 0, 0, 0.6);
     min-width: 100vw;
@@ -21,7 +21,7 @@
 }
 
 .Popup-conteiner.active{
-    display: block;
+    display: block !important;
     z-index: 1000;
     opacity: 1;
     transition: top 0ms ease-in-out 0ms,
@@ -116,6 +116,7 @@
 .Popup .form .form-element input[type="password"]::placeholder {
     color: #FFFFFF;
     opacity: 80%;
+    padding-left: 10px;
 }
 
 .Popup .form .form-element input[type="text"]:focus,
