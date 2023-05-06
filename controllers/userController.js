@@ -42,5 +42,22 @@ const logoutUser = function (request, response, next) {
   });
 };
 
+/**
+ * This is an auxiliary function to remove the duplication of the verification 
+ * of the user whether is logged or not to show the corresponding navbar
+ *
+ * @param   {[type]}  request  
+ * @param   {[type]}  response  
+ * @param   {String}  page      this parameter is going to be the page you want to render. Generally a String
+ *
+ * @return  {[type]}            Renders the page you choose with its corresponding navBar
+ */
+const renderPageWithAuthStatus = function(request, response, page) {
+  // Check wether the user is logged or not
+  const isUserLogged = request.isAuthenticated();
+  //shows the ejs page on the site and use the model to fill dynamically
+  response.render(page, { isUserLogged: isUserLogged });
+}
+
 // Exports the functions
-module.exports = { registerUserOnMongoDB, logoutUser };
+module.exports = { registerUserOnMongoDB, logoutUser, renderPageWithAuthStatus };
