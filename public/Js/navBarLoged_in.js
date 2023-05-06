@@ -20,7 +20,7 @@ switch(window.location.pathname){
         play_class = "ButtonBlackActive";
         break;
     case "/profile":
-        document.getElementById("navLink_Profile").classList.replace("ButtonBlack","ButtonBlackActive");
+        document.getElementById("navLink_AboutUs").classList.replace("ButtonBlack","ButtonBlackActive");
         profile_class = "ButtonBlackActive";
         break;
 }
