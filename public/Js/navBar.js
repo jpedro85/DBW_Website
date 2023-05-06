@@ -32,4 +32,4 @@ menuButton.addEventListener("click", (event) => {
             menu.remove();
     }
     
-});
+}); 
