@@ -91,3 +91,21 @@ function closeDroopButton(dropdown) {
 
   }
 }
+
+
+
+//stop inputText propagation
+// const allInputs = document.querySelectorAll(".settings-options")
+
+// console.log(allInputs)
+
+// allInputs.forEach ( (input) => {
+    
+//   input.addEventListener("mousemove" , (event) => { 
+    
+//     event.stopPropagation(); 
+//     console.log(event);
+
+  
+//   } , true);
+// });
