@@ -80,3 +80,8 @@
 .front {
   padding-top: 64px;
 }
+
+
+.fontSpaColor {
+  color: var(--head-content-link-color);
+}

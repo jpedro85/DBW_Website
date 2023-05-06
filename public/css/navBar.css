@@ -28,9 +28,27 @@ nav {
 nav > .nav-section {
   /* Display */
   display: flex;
-  align-content: center;
-  justify-content: center;
+
 }
+
+#button-login {
+  display: flex;
+  flex-direction: row;
+  justify-content: end !important;
+  align-items: center !important;
+  gap: 20px;
+  width: 250px;
+  padding: 0 !important;
+}
+
+#button-login-img {
+  width: 50px;
+  height: 30px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+
 
 * {
   /* Changes the way it sees the padding and border for the element size*/
