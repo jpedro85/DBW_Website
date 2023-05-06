@@ -22,9 +22,21 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+const randomEmailCode = function () {
+  const chars =
+    "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+  const string_length = 8;
+  let randomEmailCode = "";
+  for (let i = 0; i < string_length; i++) {
+    let rnum = Math.floor(Math.random() * chars.length);
+    randomEmailCode += chars.substring(rnum, rnum + 1);
+  }
+  return randomEmailCode;
+};
+
 // send mail with defined transport object
-const confirmEmail = function (destinationEmail, emailCode) {
-  transporter.sendMail({
+const confirmEmail = async function (destinationEmail, emailCode) {
+  await transporter.sendMail({
     from: '"Khajiit" <khajiit.business@gmail.com>', // sender address
     to: `${destinationEmail}`, // list of receivers
     subject: "Confirm your Email", // Subject line
@@ -32,4 +44,4 @@ const confirmEmail = function (destinationEmail, emailCode) {
   });
 };
 
-module.exports = confirmEmail;
+module.exports = {confirmEmail,randomEmailCode};

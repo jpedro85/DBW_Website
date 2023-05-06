@@ -8,8 +8,8 @@ const databaseUser = require("../model/userModel");
  * @param   {*}  response
  *
  **/
-const registerUserOnMongoDB = async function (request, response) {
-  const { signup_username, signup_email, signup_password } = request.body;
+const registerUserOnMongoDB = async function (request,response,userData) {
+  const { signup_username, signup_email, signup_password } = userData;
   try {
     // Creates a new User
     const user = new databaseUser({

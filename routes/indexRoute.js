@@ -9,7 +9,6 @@ const userController = require("../controllers/userController");
 const passport = require("passport");
 const databaseUser = require("../model/userModel");
 const emailController = require("../controllers/emailController.js");
-const confirmEmail = require("../controllers/emailController.js");
 
 /**
  * The GET or POST methods
@@ -27,24 +26,28 @@ router.post("/", async (request, response, next) => {
     // Checks if the post request is a login or registration
     if (wantsToLogin === requestFormType) {
       // Authenticates the user if not valid do ... if valid renders page while logged
-      passport.authenticate(
-        "local",
-        { failureRedirect: "/about-us" },
-        response.render("index", { isUserLogged: true })
+      passport.authenticate("local",response.render("index", { isUserLogged: true })
       )(request, response, next);
     } else if (firstStepRegistration === requestFormType) {
-      // Will try to to authenticate the user login with the database
-      //userController.registerUserOnMongoDB;
+      
+      /**
+       * Server side verification
+       */
+      
+      // If all is working saves the input data on variable
       userRegistrationData=request.body;
-      userRegistrationData.emailCode = "asd";
-      for (let index = 0; index < 100; index++) {
-      }
-      await confirmEmail(userRegistrationData.signup_email , userRegistrationData.emailCode);
+      // Generates a random emailCode that later will be sent
+      userRegistrationData.emailCode = emailController.randomEmailCode();
+      // It will send an email to with a code so we can verify its email
+      emailController.confirmEmail(userRegistrationData.signup_email , userRegistrationData.emailCode);
     }else if (secondStepRegistration===requestFormType) {
       // Will verify if code is correct
       const { emailCode } = request.body;
-      if (emailCode===userRegistrationData.emailCode) {
-        console.log(emailCode===userRegistrationData.emailCode);
+      if (userRegistrationData.emailCode === emailCode) {
+        // Will try to to register the user login with the database
+        userController.registerUserOnMongoDB(request,response,userRegistrationData);
+      }else{
+        // Handle the error here
       }
     }else {
       console.log("Invalid formType");
