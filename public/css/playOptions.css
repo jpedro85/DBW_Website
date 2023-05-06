@@ -284,25 +284,3 @@
 #JoinCode-Paste {
     width: 60px;
 }
-
-#notloged {
-    background-color: #c73939;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    height: 30%;
-    border-radius: 10px;
-    border: 2px solid #143951;
-
-}
-
-#notLogedtext {
-    height: max-content;
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 50px;
-    line-height: 28px;
-    color: #FFFFFF;
-}

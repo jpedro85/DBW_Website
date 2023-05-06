@@ -18,7 +18,7 @@ const localStrategy = require("passport-local");
 // Imports Session
 const session = require("express-session");
 // Imports user model
-const user = require("./model/userModel");
+const fetchedUser = require("./model/userModel");
 const app = express();
 
 /////////////////////////
@@ -49,7 +49,6 @@ const PORT = 3000;
 const indexRoute = require("./routes/indexRoute");
 const aboutUsRoute = require("./routes/aboutUsRoute");
 const playOptionsRoute = require("./routes/playOptionsRoute");
-const profileRoute = require("./routes/profileRoute");
 const playGameRoute = require("./routes/playGameRoute");
 // to be decided
 // const userRoute = require("./routes/userRoute");
@@ -103,11 +102,11 @@ app.use(passport.initialize());
 // Its used to restore a users session
 app.use(passport.session());
 // Authenticate is added automatically by the plugin
-passport.use(new localStrategy(user.authenticate()));
+passport.use(new localStrategy(fetchedUser.authenticate()));
 // Saves a user session
-passport.serializeUser(user.serializeUser());
+passport.serializeUser(fetchedUser.serializeUser());
 // Removes a user from the session
-passport.deserializeUser(user.deserializeUser());
+passport.deserializeUser(fetchedUser.deserializeUser());
 
 /////////////////////////
 /**
@@ -136,8 +135,6 @@ app.use(aboutUsRoute);
 app.use(playOptionsRoute);
 // Create the route to the playGame page
 app.use(playGameRoute);
-// create the route to the profile page
-app.use(profileRoute);
 // Create route to user
 // app.use(userRoute);
 

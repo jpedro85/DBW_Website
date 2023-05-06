@@ -20,9 +20,11 @@
     />
   </head>
   <body>
-    <% log = false %> <% if(log) {%> <%-
-    include("../views/partials/navBarLoged_in.ejs") %> <% } else {%> <%-
-    include("../views/partials/navBar.ejs") %> <% }%>
+    <% if(isUserLogged) {%>
+       <%-include("../views/partials/navBarLoged_in.ejs")%> 
+    <% } else {%> 
+      <%-include("../views/partials/navBar.ejs") %>
+    <% }%>
     <div class="bckg">
       <div class="front">
         <div class="row">
@@ -70,12 +72,13 @@
             </div>
             <div class="form-element">
               <label for="Popup-Login-username">Username</label>
-              <input type="text" id="Popup-Login-username" placeholder="Enter Username" />
+              <input name="username" type="text" id="Popup-Login-username" placeholder="Enter Username" />
             </div>
             <div class="form-element">
               <label for="Popup-Login-password">Password</label>
-              <input type="password" id="Popup-Login-password" placeholder="Enter Password" />
+              <input name="password" type="password" id="Popup-Login-password" placeholder="Enter Password" />
             </div>
+            <input type="hidden" value="login" name="formType">
             <div id="Popup-Popup-Login-error" class="form-element textErrorConteiner textError">
               errororororoorororoororr
             </div>
@@ -97,26 +100,27 @@
             </div>
             <div class="form-element">
               <label for="username">Username</label>
-              <input type="text" id="Popup-creatAcount-username" placeholder="Enter Username" />
+              <input name="signup_username" type="text" id="Popup-creatAcount-username" placeholder="Enter Username" />
             </div>
             <div id="Popup-creatAcount-error-username" class="form-element textErrorConteiner textError">
               errororororoorororoororr
             </div>
             <div class="form-element">
               <label for="email">Email</label>
-              <input type="text" id="Popup-creatAcount-email" placeholder="Enter Email" />
+              <input name="signup_email" type="text" id="Popup-creatAcount-email" placeholder="Enter Email" />
             </div>
             <div id="Popup-creatAcount-error-email" class="form-element textErrorConteiner textError">
               errororororoorororoororr
             </div>
             <div class="form-element">
               <label for="password">Password</label>
-              <input type="password" id="Popup-creatAcount-password" placeholder="Enter Password" />
+              <input name="signup_password" type="password" id="Popup-creatAcount-password" placeholder="Enter Password" />
             </div>
             <div class="form-element">
               <label for="password">Confirm Password</label>
-              <input type="password" id="Popup-creatAcount-password-confirm" placeholder="Confirm Password" />
+              <input name="signup_repeat_password" type="password" id="Popup-creatAcount-password-confirm" placeholder="Confirm Password" />
             </div>
+            <input type="hidden" value="register" name="formType">
             <div id="Popup-creatAcount-error-password" class="form-element textErrorConteiner textError">
               errororororoorororoororr
             </div>
