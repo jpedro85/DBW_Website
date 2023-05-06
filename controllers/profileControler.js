@@ -1,6 +1,7 @@
+const { renderPageWithAuthStatus } = require("../controllers/userController.js");
 // creating the profile handler
 const profileControler = function profileControler( req , res) {
-    res.render("profile");
+    renderPageWithAuthStatus(req,res,"profile");
 }
 
 // exporting the handler
