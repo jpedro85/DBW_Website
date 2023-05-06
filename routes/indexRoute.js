@@ -8,15 +8,20 @@ const indexController = require("../controllers/indexController");
 const userController = require("../controllers/userController");
 const passport = require("passport");
 const databaseUser = require("../model/userModel");
+const emailController = require("../controllers/emailController.js");
+const confirmEmail = require("../controllers/emailController.js");
 
 /**
  * The GET or POST methods
  */
 router.get("/", indexController);
 
-router.post("/", (request, response, next) => {
+let userRegistrationData;
+router.post("/", async (request, response, next) => {
   const requestFormType = request.body.formType;
   const wantsToLogin = "login";
+  const firstStepRegistration= "firstStep";
+  const secondStepRegistration= "secondStep";
   const wantsToRegister = "register";
   try {
     // Checks if the post request is a login or registration
@@ -27,10 +32,21 @@ router.post("/", (request, response, next) => {
         { failureRedirect: "/about-us" },
         response.render("index", { isUserLogged: true })
       )(request, response, next);
-    } else if (wantsToRegister === requestFormType) {
+    } else if (firstStepRegistration === requestFormType) {
       // Will try to to authenticate the user login with the database
-      userController.registerUserOnMongoDB;
-    } else {
+      //userController.registerUserOnMongoDB;
+      userRegistrationData=request.body;
+      userRegistrationData.emailCode = "asd";
+      for (let index = 0; index < 100; index++) {
+      }
+      await confirmEmail(userRegistrationData.signup_email , userRegistrationData.emailCode);
+    }else if (secondStepRegistration===requestFormType) {
+      // Will verify if code is correct
+      const { emailCode } = request.body;
+      if (emailCode===userRegistrationData.emailCode) {
+        console.log(emailCode===userRegistrationData.emailCode);
+      }
+    }else {
       console.log("Invalid formType");
     }
   } catch (error) {
@@ -38,6 +54,7 @@ router.post("/", (request, response, next) => {
     response.redirect("/");
   }
 });
+
 
 // Export the router
 module.exports = router;

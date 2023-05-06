@@ -98,44 +98,46 @@
               <img class="titleimg" src="/images/Logo.png" alt="">
               Create Account
             </div>
-            <div class="form-element">
-              <label for="username">Username</label>
-              <input name="signup_username" type="text" id="Popup-creatAcount-username" placeholder="Enter Username" />
-            </div>
-            <div id="Popup-creatAcount-error-username" class="form-element textErrorConteiner textError">
-              errororororoorororoororr
-            </div>
-            <div class="form-element">
-              <label for="email">Email</label>
-              <input name="signup_email" type="text" id="Popup-creatAcount-email" placeholder="Enter Email" />
-            </div>
-            <div id="Popup-creatAcount-error-email" class="form-element textErrorConteiner textError">
-              errororororoorororoororr
-            </div>
-            <div class="form-element">
-              <label for="password">Password</label>
-              <input name="signup_password" type="password" id="Popup-creatAcount-password" placeholder="Enter Password" />
-            </div>
-            <div class="form-element">
-              <label for="password">Confirm Password</label>
-              <input name="signup_repeat_password" type="password" id="Popup-creatAcount-password-confirm" placeholder="Confirm Password" />
-            </div>
-            <input type="hidden" value="register" name="formType">
-            <div id="Popup-creatAcount-error-password" class="form-element textErrorConteiner textError">
-              errororororoorororoororr
-            </div>
-            <div class="form-element Popup-creatAcount-steptext">
-              <div>
-                Step 1 of 2
+            <form action="/" method="post">
+              <div class="form-element">
+                <label for="username">Username</label>
+                <input name="signup_username" type="text" id="Popup-creatAcount-username" placeholder="Enter Username" />
               </div>
-            </div>
-            <div class="form-element">
-              <div class="form-element form-bottom-text">
-                <div id="Popup-creatAcount-LogInNow">Dont have account ?
-                <button id="Popup-creatAcoun-Signin-Button" class="BlueTransparent-Button">Log In Now</button></div>
-                <button id="Popup-creatAcount-next" class="Button-Popup ButtonDarkBlue">Next Step</button>
+              <div id="Popup-creatAcount-error-username" class="form-element textErrorConteiner textError">
+                errororororoorororoororr
               </div>
-            </div>
+              <div class="form-element">
+                <label for="email">Email</label>
+                <input name="signup_email" type="text" id="Popup-creatAcount-email" placeholder="Enter Email" />
+              </div>
+              <div id="Popup-creatAcount-error-email" class="form-element textErrorConteiner textError">
+                errororororoorororoororr
+              </div>
+              <div class="form-element">
+                <label for="password">Password</label>
+                <input name="signup_password" type="password" id="Popup-creatAcount-password" placeholder="Enter Password" />
+              </div>
+              <div class="form-element">
+                <label for="password">Confirm Password</label>
+                <input name="signup_repeat_password" type="password" id="Popup-creatAcount-password-confirm" placeholder="Confirm Password" />
+              </div>
+              <input type="hidden" value="firstStep" name="formType">
+              <div id="Popup-creatAcount-error-password" class="form-element textErrorConteiner textError">
+                errororororoorororoororr
+              </div>
+              <div class="form-element Popup-creatAcount-steptext">
+                <div>
+                  Step 1 of 2
+                </div>
+              </div>
+              <div class="form-element">
+                <div class="form-element form-bottom-text">
+                  <div id="Popup-creatAcount-LogInNow">Dont have account ?
+                  <button type="button" id="Popup-creatAcoun-Signin-Button" class="BlueTransparent-Button">Log In Now</button></div>
+                  <button type="submit" id="Popup-creatAcount-next" class="Button-Popup ButtonDarkBlue">Next Step</button>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
 
@@ -146,43 +148,47 @@
               <img class="titleimg" src="/images/Logo.png" alt="">
               Confirm Email
             </div>
-            <div class="form-element">
-              <div id="Popup-confirmEmail-inputTitel" for="confirm">Please enter the <span id="destaque1">code</span> that has been send to:</div>
-              <div id="Popup-confirmEmail-emailshow">" email "</div>
-              <div id="email-confirm-conteiner" class="inputText ButtonDarkBlue">
-                <input
-                  id="Popup-confirmEmail-PasteCode-input"
-                  type="text"
-                  class="inputText-Input"
-                />
-                <button id="Popup-confirmEmail-PasteCode" class="inputText-Button">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
+            <form action="/" method="post">
+              <div class="form-element">
+                <div id="Popup-confirmEmail-inputTitel" for="confirm">Please enter the <span id="destaque1">code</span> that has been send to:</div>
+                <div id="Popup-confirmEmail-emailshow">" email "</div>
+                <div id="email-confirm-conteiner" class="inputText ButtonDarkBlue">
+                  <input
+                    id="Popup-confirmEmail-PasteCode-input"
+                    type="text"
+                    class="inputText-Input"
+                    name="emailCode"
+                  />
+                  <button id="Popup-confirmEmail-PasteCode" class="inputText-Button">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
                       fill="currentColor"
-                      d="M5 21q-.825 0-1.413-.588T3 19V5q0-.825.588-1.413T5 3h4.175q.275-.875 1.075-1.438T12 1q1 0 1.788.563T14.85 3H19q.825 0 1.413.588T21 5v14q0 .825-.588 1.413T19 21H5Zm0-2h14V5h-2v3H7V5H5v14Zm7-14q.425 0 .713-.288T13 4q0-.425-.288-.713T12 3q-.425 0-.713.288T11 4q0 .425.288.713T12 5Z"
-                    />
-                  </svg>
-                </button>
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M5 21q-.825 0-1.413-.588T3 19V5q0-.825.588-1.413T5 3h4.175q.275-.875 1.075-1.438T12 1q1 0 1.788.563T14.85 3H19q.825 0 1.413.588T21 5v14q0 .825-.588 1.413T19 21H5Zm0-2h14V5h-2v3H7V5H5v14Zm7-14q.425 0 .713-.288T13 4q0-.425-.288-.713T12 3q-.425 0-.713.288T11 4q0 .425.288.713T12 5Z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <input type="hidden" name="formType" value="secondStep">
+                <div id="Popup-confirmEmail-error" class="form-element textErrorConteiner textError">
+                  errororororoorororoororr
+                </div>
               </div>
-              <div id="Popup-confirmEmail-error" class="form-element textErrorConteiner textError">
-                errororororoorororoororr
+              <div class="form-element Popup-creatAcount-steptext">
+                <div>
+                  Step 2 of 2
+                </div>
+              </div>
+              <div class="form-element">
+                <button class="Button-Popup ButtonDarkBlue" id="Signup-Confirm-Email">Confirm Email</button>
               </div>
             </div>
-            <div class="form-element Popup-creatAcount-steptext">
-              <div>
-                Step 2 of 2
-              </div>
-            </div>
-            <div class="form-element">
-              <button class="Button-Popup ButtonDarkBlue" id="Signup-Confirm-Email">Confirm Email</button>
-            </div>
-          </div>
+            </form>
         </div>
 
         <div id="Popup-AcountCreated" class="Popup">
