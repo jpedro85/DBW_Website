@@ -22,7 +22,7 @@ const registerUserOnMongoDB = async function (request, response) {
     response.redirect("/");
   } catch (registerError) {
     console.error(registerError);
-    response.redirect("/")
+    response.redirect("/");
   }
 };
 
@@ -41,8 +41,6 @@ const logoutUser = function (request, response, next) {
     });
   });
 };
-
-
 
 // Exports the functions
 module.exports = { registerUserOnMongoDB, logoutUser };
