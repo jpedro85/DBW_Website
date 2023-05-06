@@ -2,7 +2,7 @@
 const express = require("express");
 // Import method override so we can use other HTTP methods
 const methodOverride = require("method-override");
-// Import mongoose so we can use mongoDB
+// Import mongoose so we can use mongoD
 const mongoose = require("mongoose");
 
 /////////////////////////
