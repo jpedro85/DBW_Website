@@ -44,17 +44,25 @@ const confirmEmail = async function (destinationEmail, emailCode) {
   });
 };
 
+/**
+ * This function resends the email to user
+ * @param {String} username The User's username to search through the database
+ * @param {*} response
+ * 
+ * @returns Return a response that contains success:true
+ */
 const resendEmail = async function (username,response) {
   databaseUser
     .find({ username: username })
     .then((fetchedUser) => {
       if (!fetchedUser) {
-        return response.send({ success: false });
+        return response.send({ success: false, error:"User not found"});
       }
       confirmEmail(fetchedUser.email, fetchedUser.confirmationCode);
+      return response.send({success:true})
     })
     .catch((sendError) =>
-      response.send({ success: false, message: `Occurred an error:\n${sendError}`})
+      response.send({ success: false, error: `Occurred an error:\n${sendError}`})
     );
 };
 
