@@ -120,7 +120,7 @@ document.querySelector("#Popup-creatAcount-next").addEventListener("click" , () 
 function sendRequest(reqForm,responseHandler){
 
     // making the request email send
-    fetch("/asdfadsfdsafdsa", //Rota para o POST Request
+    fetch("/", //Rota para o POST Request
     { 
         method: "POST", // defining the requesthe method and body format
         headers: { "Content-Type": "application/json", },

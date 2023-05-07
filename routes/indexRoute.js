@@ -8,7 +8,7 @@ const indexController = require("../controllers/indexController");
 // Import passport so we can use the authenticate function
 const passport = require("passport");
 // Imports the signup function
-const { signup } = require("../controllers/userController.js");
+const { signup , logoutUser } = require("../controllers/userController.js");
 // Imports confirm email function
 const {resendEmail} = require("../controllers/emailController.js")
 
@@ -21,7 +21,8 @@ router.post("/", async (request, response, next) => {
   const requestFormType = request.body.formType;
   const wantsToLogin = "login";
   const firstStepRegistration = "register";
-  const wantToResendEmail = "resend"
+  const wantToResendEmail = "resend";
+  const wantToLogOut = "logout";
   try {
     // Checks if the post request is a login or registration
     if (wantsToLogin === requestFormType) {
@@ -65,10 +66,15 @@ router.post("/", async (request, response, next) => {
       // For now is rendering the page
       //response.render("index", { isUserLogged: false });
     }else if (wantToResendEmail === requestFormType) {
-      /**
-       * Handles the post to resend email
-       **/
+      
+      // Handles the post to resend email
       resendEmail(request.body.username,response);
+
+    } else if (wantToLogOut === requestFormType ) {
+
+      // log out
+      logoutUser(request,response,next);
+
     } else {
       throw new Error("Invalid FormType");
     }
