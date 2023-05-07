@@ -10,8 +10,8 @@ const Popup_ErroPopUp = document.querySelector("#Popup-FetchError");
 
 function openLogin() {
     // making the login popup visible
-    poppupLogin.classList.toggle("active");
-    conteiner.classList.toggle("active");
+    poppupLogin.classList.add("active");
+    conteiner.classList.add("active");
 }
 
 const FetchError_error = document.querySelector("#FetchError-error");
@@ -82,7 +82,7 @@ function resetSingUp() {
 
 // popup createAcount step 2
 const Popup_confirmEmail = document.querySelector("#Popup-confirmEmail");
-const Popup_AcountCreated = document.querySelector("#Popup-creatAcount");
+const Popup_creatAcount = document.querySelector("#Popup-creatAcount");
 
 
 /*
@@ -99,59 +99,72 @@ document.querySelector("#Popup-creatAcount-next").addEventListener("click" , () 
 
     // object represente the form
     let reqForm = {
-        signup_username: "",
-        signup_email: "",
-        signup_password: "",
-        signup_repeat_password: "",
-        formType: "firstStep"
+        username: "",
+        email: "",
+        password: "",
+        repeat_password: "",
+        formType: "regiter"
     } 
 
     //falta hiden input
     if ( verifyUsername(reqForm) && verifyEmail(reqForm) && verifyPasswordCriterios(reqForm) && verifyPasswordConfimr(reqForm) ){
 
-        // making the request email send
-        fetch("https://httpstat.us/404", //Rota para o POST Request
-        { 
-                method: "POST", //Definir que é método POST
-                //Diz ao servidor que o request body está em formato JSON
-                headers: { "Content-Type": "application/json", },
-                //Transforma o objecto em string e asseguramos que os dadtos estão no formato coreto no “request body” do HTTP
-                body: JSON.stringify(reqForm), 
-        })
-        .then( (res) => { 
-
-            console.log()
-
-            return res.body.json()    
-            // if (res.ok) 
-            //     return res.body.json()    
-            // else 
-            //     throw Error(res.status + " " + res.statusText);
-        })
-        .then( (res_data) => { singUpResponseHandler(res_data) } ) 
-        .catch( (error) => showError(error) );
-
+        sendRequest(reqForm,singUpResponseHandler);
     } 
 })
 
+function sendRequest(reqForm,responseHandler){
+
+    // making the request email send
+    fetch("/", //Rota para o POST Request
+    { 
+        method: "POST", // defining the requesthe method and body format
+        headers: { "Content-Type": "application/json", },
+        body: JSON.stringify(reqForm),  
+    })
+    .then( (res) => {   
+        if (res.ok) 
+             return res.json()  
+        else 
+            throw Error( res.status + " " + res.statusText );
+    })
+    .then( (res_data) => { responseHandler(res_data) } ) 
+    .catch( (error) => showError(error) );
+
+}
+
+const Popup_confirmEmail_emailshow = document.querySelector("#Popup-confirmEmail-emailshow");
+const Popup_AcountCreated = document.querySelector("#Popup-AcountCreated");
+
+const SuccessfullyCreated_resend = document.querySelector("#SuccessfullyCreated-resend");
+const SuccessfullyCreated_normal = document.querySelector("#SuccessfullyCreated-normal");
 //singupHandlers
 function singUpResponseHandler(res) {
 
     console.log(res);
 
-    if (res.sucess) {
+    if (res.success) {
+
+        lastSingUpReq = {
+            username: res.username,
+            email: res.email,
+            password : res.password,
+            repeat_password : res.repeat_password,
+            formType: "secondStep"
+        } 
         
-        //next step
-        Object.assign(lastSingUpReq , res.lastreq) // copia  o objeto para lastSingUpReq
-        sendEmaiSendRequest();
+        // opening popup confirmm
+        Popup_confirmEmail_emailshow.innerText = lastSingUpReq.email ; 
+        Popup_creatAcount.classList.remove("active");
+        Popup_confirmEmail.classList.add("active");
 
         OverlayCloseActive = false;
     } else {
 
         if ( res.errortype === "username" ){
 
-            input_username.innerText = res.error ;
-            input_error_username.classList.add("errorBox");
+            input_error_username.innerText = res.error ;
+            input_username.classList.add("errorBox");
 
         } else if ( res.errortype === "email") {
 
@@ -159,99 +172,84 @@ function singUpResponseHandler(res) {
             input_email.classList.add("errorBox");
 
         } else if ( res.errortype === "password" ) {
-
+            
             input_error_password.innerText = res.error;
             input_password.classList.add("errorBox");
 
         } else if ( res.errortype === "passwordmatch" ) {
 
-            input_passwordConfirm.innerText = res.error;
+            input_error_password.innerText = res.error;
+            input_password.classList.add("errorBox");
             input_passwordConfirm.classList.add("errorBox");
 
-        } else {
-            // res.error === "other" 
+        } else if ( res.errortype === "alreadyCreated" ) {
+            
+            SuccessfullyCreated_normal.style.display = "none";
+            SuccessfullyCreated_resend.style.display = "flex";
+            
+            Popup_creatAcount.classList.remove("active");
+            Popup_AcountCreated.classList.add("active");
+
+        } else 
             showError(res.error);
-        }
-    }
+    }  
 
 }
 
-function singUpResponseHandler_Catch(res) {
-
-    if (res.status = 404) {}
-}
-
-
-// adding handler for confirmEmail
+// adding handler for resent email
 document.querySelector("#Popup-confirmEmail-Resend").addEventListener("click" , () => {
 
-    if (lastSingUpReq != null) {
-
-        lastSingUpReq.formType = "secondstep";
-
-        fetch("/", //Rota para o POST Request
-        { 
-                method: "POST", //Definir que é método POST
-                //Diz ao servidor que o request body está em formato JSON
-                headers: { "Content-Type": "application/json", },
-                //Transforma o objecto em string e asseguramos que os dadtos estão no formato coreto no “request body” do HTTP
-                body: JSON.stringify(reqForm), 
-        })
-        .then((res) => res.json()) 
-        .then( SingUpResponseHandler(data) )
-        .catch((error) => {
-            showError(error);
-        });
-
+    if (lastSingUpReq != null) { 
+        lastSingUpReq.formType = "resend" ; 
+        sendRequest(reqForm,emailResponceHandler);
     }
-    
+
 });
 
-
 /*
-    expeting object {
-        sucess : <true ,false>
-        error : error;
+    expeted response object {
+        success : < true or false >,
+        error : <description>
     }
 */
+function emailResponceHandler(res) {
 
-function sendEmaiSendRequest(){
-
-    lastSingUpReq.formType = "secondstep";
-
-    fetch("/", //Rota para o POST Request
-        { 
-                method: "POST", //Definir que é método POST
-                //Diz ao servidor que o request body está em formato JSON
-                headers: { "Content-Type": "application/json", },
-                //Transforma o objecto em string e asseguramos que os dadtos estão no formato coreto no “request body” do HTTP
-                body: JSON.stringify(reqForm), 
-        })
-        .then((res) => res.json()) 
-        .then( emailResponseHandler(data) )
-        .catch((error) => {
-            showError(error);
-    });
-
-}
-
-const Popup_confirmEmail_inputTitel = document.querySelector("#Popup-confirmEmail-inputTitel");
-
-function emailResponseHandler(res) {
-
-    if (res.sucess) {
-
-        Popup_confirmEmail_inputTitel.innerText = lastSingUpReq.email ; 
-        Popup_AcountCreated.classList.remove("active");
-        Popup_confirmEmail.classList.add("active");
-
-    } else 
+    if (!res.success) 
         showError(res.error);
 
 }
 
+// adding handler for Popup-Login-Button
+document.querySelector("#Popup-Login-Button").addEventListener("click" , () => {
 
+    console.log("aaaaafdsaf")
+    // object represente the form
+    let reqForm = {
+       username: "",
+       password: "",
+       formType: "login"
+    }     
 
+   //falta hiden input
+    if ( verifyUsernamelogin(reqForm) && verifyPasswordlogin(reqForm) ){
+
+        fetch("/", //Rota para o POST Request
+        { 
+            method: "POST", // defining the requesthe method and body format
+            headers: { "Content-Type": "application/json", },
+            body: JSON.stringify(reqForm),  
+        })
+        .then( (res) => {   
+            if (res.ok) 
+                return res.json()  
+            else 
+                throw Error( res.status + " " + res.statusText );
+        })
+        .then( (res_data) => { loginResponseHandler(res_data) } ) 
+        .catch( (error) => showError(error) );
+    } 
+
+})
 
 /*
     expeted response object {
@@ -260,64 +258,29 @@ function emailResponseHandler(res) {
         error : <description>
     }
 */
-
-// adding handler for Popup-Login-Button
-document.querySelector("#Popup-Login-Button").addEventListener("click" , () => {
-
-    // object represente the form
-    let reqForm = {
-       username: "",
-       password: "",
-       formType: "login"
-   } 
-
-   //falta hiden input
-   if ( verifyUsernamelogin(reqForm) && verifyPasswordlogin(reqForm) ){
-
-       console.log(reqForm);
-       // making the request email send
-       fetch("/", //Rota para o POST Request
-       { 
-               method: "POST", //Definir que é método POST
-               //Diz ao servidor que o request body está em formato JSON
-               headers: { "Content-Type": "application/json", },
-               //Transforma o objecto em string e asseguramos que os dadtos estão no formato coreto no “request body” do HTTP
-               body: JSON.stringify(reqForm), 
-       })
-       .then((res) => res.json()) // passa a resposta para json
-       .then(loginResponseHandler(data))
-       .catch((error) => {
-            showError(error);
-       });
-   } 
-
-})
-
-//log iin handlres 
-
 // handler for the response to login
 function loginResponseHandler(res) {
 
-    console.log(res);
-
-    if (res.sucess) {
-        // redirect to redirect_after_login 
+    if (res.success) {
         window.location.href = redirect_after_login;
     } else {
 
-        if ( res.errortype === "username" ){
-
-            input_error_username_login.innerText = res.error;
-            input_username_login.classList.add("errorBox");
-
-        } else if ( res.errortype === "password" ){
+        if ( res.errortype === "credentials") {
 
             input_error_password_login.innerText = res.error;
+            input_username_login.classList.add("errorBox");
             input_password_login.classList.add("errorBox");
 
+        } else if (res.errortype === "pending" ) {
+
+            input_error_password_login.innerText = res.error;
+
         } else {
-            // if == "other"
-            showError(res.error);
+
+            if (res.error != null)
+                showError(res.error);
+            else 
+                showError("Error 500 : Server error")
         }
     }
 
@@ -340,7 +303,7 @@ document.querySelector("#Popup-creatAcoun-Signin-Button").addEventListener("clic
 
 // adding handler for continuing button
 document.querySelector("#AcountCreated-continue").addEventListener("click" , () => {
-    Popup_AcountCreated.classList.remove("active");
+    Popup_creatAcount.classList.remove("active");
     conteiner.classList.remove("active");
 });
 
@@ -353,7 +316,7 @@ document.querySelector("#Popup-Login-Signup-Button").addEventListener("click" , 
 
     // making the overlay Creat Acount visible
     poppupLogin.classList.remove("active");
-    Popup_AcountCreated.classList.add("active");
+    Popup_creatAcount.classList.add("active");
     // activeting the closing on outside of the overlay click 
     OverlayCloseActive = true;
 });
@@ -531,8 +494,6 @@ function verifyUsernamelogin(formResult) {
 
 // Check if username field is empty
 function verifyPasswordlogin(formResult) {
-
-    console.log(input_password_login.value)
 
     if (input_password_login.value != "") {
         

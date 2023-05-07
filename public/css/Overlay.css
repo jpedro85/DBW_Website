@@ -262,7 +262,7 @@
 }
 
 
-#SuccessfullyCreated-conteiner {
+.SuccessfullyCreated-conteiner {
     height: 100px;
     font-family: 'Roboto';
     font-style: normal;
@@ -273,4 +273,21 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+#Popup-AcountCreated-resend{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    line-height: 24px;
+}
+
+#SuccessfullyCreated-resend {
+    display: none;
+}
+
+#Popup-AcountCreated-btn-recent {
+    display: inline !important;
 }
