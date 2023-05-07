@@ -49,3 +49,11 @@ function closePopUp(OverLay) {
     }
 
 }
+
+// closes all open popups
+function closeAllPopUps () {
+
+    OverLays.forEach( (OverLay) => {
+        OverLay.classList.remove("active");
+    } );
+}

@@ -1,6 +1,6 @@
 /*--------------------------------- Main Pop up--------------------------------- */
 .Popup-conteiner{
-    display: none ;
+    display: none !important ;
     opacity: 0;
     background: rgba(0, 0, 0, 0.6);
     min-width: 100vw;
@@ -21,7 +21,7 @@
 }
 
 .Popup-conteiner.active{
-    display: block;
+    display: block !important;
     z-index: 1000;
     opacity: 1;
     transition: top 0ms ease-in-out 0ms,
@@ -31,7 +31,7 @@
 
 /*---------------------------------LOG IN--------------------------------- */
 .Popup{
-    display: none;
+    display: none ;
     position: absolute;
     z-index: 1001;
     top: 50%;
@@ -50,7 +50,7 @@
 }
 
 .Popup.active{
-    display: block;
+    display: block !important;
     opacity: 1;
     transform:translate(-50%,-50%);
     transition: top 0ms ease-in-out 0ms,
@@ -70,6 +70,10 @@
     border-radius: 15px;
     cursor: pointer;
     font-size: 25px;
+}
+
+.Close-Popup:hover {
+    color: #FFFFFF;
 }
 
 .Popup .form .title{
@@ -205,6 +209,7 @@
     font-size: 20px;
     line-height: 18px;
     color: #FFFFFF;
+    text-align: center;
 }
 
 #Popup-confirmEmail-emailshow {
@@ -214,7 +219,8 @@
     font-weight: 400;
     font-size: 18px;
     line-height: 18px;
-    color: #358AD8 
+    color: #358AD8 ;
+    text-align: center;
 
 }
 
@@ -229,6 +235,25 @@
     font-size: 18px;
     line-height: 18px;
     color: #ad2424 
+}
+
+.textError2{
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 24px;
+    color: #ad2424 
+}
+
+.texterrorbox {
+    min-height: 200px;
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: justify;
 }
 
 .errorBox {
