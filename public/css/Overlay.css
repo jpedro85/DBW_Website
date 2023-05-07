@@ -120,6 +120,7 @@
 .Popup .form .form-element input[type="password"]::placeholder {
     color: #FFFFFF;
     opacity: 80%;
+    padding-left: 10px;
 }
 
 .Popup .form .form-element input[type="text"]:focus,
