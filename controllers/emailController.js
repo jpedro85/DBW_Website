@@ -44,6 +44,20 @@ const confirmEmail = async function (destinationEmail, emailCode) {
   });
 };
 
+const resendEmail = async function (username,response) {
+  databaseUser
+    .find({ username: username })
+    .then((fetchedUser) => {
+      if (!fetchedUser) {
+        return response.send({ success: false });
+      }
+      confirmEmail(fetchedUser.email, fetchedUser.confirmationCode);
+    })
+    .catch((sendError) =>
+      response.send({ success: false, message: `Occurred an error:\n${sendError}`})
+    );
+};
+
 /**
  * Register the user on mongoDB database with its information
  * and sends a email with url token to confirm the email to able
@@ -78,9 +92,9 @@ const verifyUser = async (request, response, next) => {
 /**
  * This function serves to see if and account is currently
  * active or in pending status
- * 
+ *
  * @param {String} userStatus The status of the user in the database
- * 
+ *
  * @returns {Boolean} A boolean saying if the account is active or pending
  */
 function isAccountActive(userStatus) {
@@ -89,4 +103,4 @@ function isAccountActive(userStatus) {
   return userStatus.status === confirmedEmail;
 }
 
-module.exports = { confirmEmail, verifyUser };
+module.exports = { confirmEmail, verifyUser , resendEmail};

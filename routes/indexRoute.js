@@ -9,6 +9,8 @@ const indexController = require("../controllers/indexController");
 const passport = require("passport");
 // Imports the signup function
 const { signup } = require("../controllers/userController.js");
+// Imports confirm email function
+const {resendEmail} = require("../controllers/emailController.js")
 
 /**
  * The GET or POST methods
@@ -18,7 +20,8 @@ router.get("/", indexController);
 router.post("/", async (request, response, next) => {
   const requestFormType = request.body.formType;
   const wantsToLogin = "login";
-  const firstStepRegistration = "firstStep";
+  const firstStepRegistration = "register";
+  const wantToResendEmail = "resend"
   try {
     // Checks if the post request is a login or registration
     if (wantsToLogin === requestFormType) {
@@ -27,7 +30,7 @@ router.post("/", async (request, response, next) => {
        **/
 
       /** Authenticates the user session and responds to the request
-       *  Authenticates the user if not valid do ... if valid renders page while logged
+       * if not valid do ... if valid redirect to "/"
        **/
       //passport.authenticate("local",{successRedirect:"/"})(request,response,next);
       passport.authenticate("local",function (error, user, info) {
@@ -43,7 +46,8 @@ router.post("/", async (request, response, next) => {
           if (loginErr) {
             return next(loginErr);
           }
-          return response.send({ success : true, message : info });
+          // If correct credentials sends a response thats handled client-side
+          response.send({ success : true, message : info });
         });      
       })(request,response,next)
     } else if (firstStepRegistration === requestFormType) {
@@ -60,6 +64,11 @@ router.post("/", async (request, response, next) => {
       // Sends a response to the request
       // For now is rendering the page
       //response.render("index", { isUserLogged: false });
+    }else if (wantToResendEmail === requestFormType) {
+      /**
+       * Handles the post to resend email
+       **/
+      resendEmail(request.body.username,response);
     } else {
       throw new Error("Invalid FormType");
     }
