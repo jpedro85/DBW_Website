@@ -1,6 +1,7 @@
 const config = require("../config/smtp");
 const databaseUser = require("../model/user.model.js");
 const emailController = require("./emailController.js");
+const { isAccountActive } = require("../controllers/emailController");
 const SALTROUNDS = 10;
 
 // Importing the package necessary for JSON web token
@@ -19,6 +20,7 @@ const signup = async (userData, response) => {
     // Generate the token through json web token
     const token = jwt({ email: userData.email }, config.secret);
 
+    // Converts the plaintext password to hashed password
     const hashedPassword = bcrypt.hashSync(userData.password, SALTROUNDS);
 
     // Creates user model thats going to be sent to database
@@ -34,21 +36,68 @@ const signup = async (userData, response) => {
       newDatabaseUser.email,
       newDatabaseUser.confirmationCode
     );
+
+    response.send({
+      success: true,
+      username: userData.username,
+      email: userData.email,
+    });
   } catch (savingError) {
     // If its username duplicate
     const duplicatedUsername =
       savingError.keyPattern.hasOwnProperty("username");
+
     // If its email duplicate
     const duplicateEmail = savingError.keyPattern.hasOwnProperty("email");
     if (duplicatedUsername) {
-      response.send({ success: false, message: "Username already in use!!" });
-    } else if (duplicateEmail) {
       response.send({
         success: false,
-        message: "Email already has an account associated!!",
+        errortype: "username",
+        error: "Username already in use !",
       });
+    } else if (duplicateEmail) {
+      databaseUser
+        .findOne({ email: userData.email })
+        .then((fetchedUser) => {
+          if (!fetchedUser) {
+            throw new Error("Not found");
+          } else {
+            if (isAccountActive(fetchedUser.status)) {
+              response.send({
+                success: false,
+                username : fetchedUser.username,
+                email: userData.email,
+                errortype: "emailInUse",
+                error: "Email already in use.",
+              });
+            } else {
+              response.send({
+                success: false,
+                username : fetchedUser.username,
+                email: userData.email,
+                errortype: "acountPending",
+                error: "Account is not active.",
+              });
+            }
+          }
+        })
+        .catch((error) => {
+          response.send({
+            success: false,
+            email: userData.email,
+            errortype: "other",
+            error: savingError,
+          });
+        });
     } else {
       console.error(savingError);
+
+      response.send({
+        success: false,
+        email: userData.email,
+        errortype: "other",
+        error: savingError,
+      });
     }
   }
 };
@@ -83,7 +132,7 @@ const renderPageWithAuthStatus = function (request, response, page) {
   // Check wether the user is logged or not
   const isUserLogged = request.isAuthenticated();
   //shows the ejs page on the site and use the model to fill dynamically
-  return response.render(page, { isUserLogged: isUserLogged });
+  return response.render(page, { isUserLogged: isUserLogged , showAcountCreated : false , confirmstate : false});
 };
 
 module.exports = { signup, renderPageWithAuthStatus, logoutUser };

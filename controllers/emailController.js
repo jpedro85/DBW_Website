@@ -17,6 +17,7 @@ const transporter = nodemailer.createTransport({
   host: SMTP_CONFIG.host,
   port: SMTP_CONFIG.port,
   secure: false,
+  pool : SMTP_CONFIG.pool,
   auth: {
     user: SMTP_CONFIG.user,
     pass: SMTP_CONFIG.pass,
@@ -32,6 +33,7 @@ const transporter = nodemailer.createTransport({
  * @param {String} emailCode JSON web token
  */
 const confirmEmail = async function (destinationEmail, emailCode) {
+
   await transporter.sendMail({
     from: SMTP_CONFIG.user,
     to: destinationEmail,
@@ -53,8 +55,8 @@ const confirmEmail = async function (destinationEmail, emailCode) {
  */
 const resendEmail = async function (username,response) {
   databaseUser
-    .find({ username: username })
-    .then((fetchedUser) => {
+    .findOne({ username: username })
+    .then( (fetchedUser) => {
       if (!fetchedUser) {
         return response.send({ success: false, error:"User not found"});
       }
@@ -86,15 +88,22 @@ const verifyUser = async (request, response, next) => {
       if (!fetchedUser) {
         return response.status(404).send({ message: "User Not found." });
       }
+
+      console.log(isAccountActive(fetchedUser.status))
+
       if (!isAccountActive(fetchedUser.status)) {
         // Changes the status to Active
         fetchedUser.status = "Active";
         // Saves the the changes made to the Database
         fetchedUser.save();
+        
+        response.render("index", { isUserLogged: false , showAcountCreated : true , confirmstate : true });
+      } else {
+        response.render("index", { isUserLogged: false , showAcountCreated : true , confirmstate : false  });
       }
+
     })
     .catch((searchingError) => console.error(searchingError));
-  response.render("index", { isUserLogged: false });
 };
 
 /**
@@ -106,9 +115,9 @@ const verifyUser = async (request, response, next) => {
  * @returns {Boolean} A boolean saying if the account is active or pending
  */
 function isAccountActive(userStatus) {
+
   const confirmedEmail = "Active";
-  console.log(userStatus.status);
-  return userStatus.status === confirmedEmail;
+  return userStatus === confirmedEmail;
 }
 
-module.exports = { confirmEmail, verifyUser , resendEmail};
+module.exports = { confirmEmail, verifyUser , resendEmail , isAccountActive};

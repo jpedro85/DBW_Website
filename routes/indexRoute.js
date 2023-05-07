@@ -52,9 +52,9 @@ router.post("/", async (request, response, next) => {
       })(request,response,next)
     } else if (firstStepRegistration === requestFormType) {
       const userRegistrationData = {
-        username: request.body.signup_username,
-        email: request.body.signup_email,
-        password: request.body.signup_password,
+        username: request.body.username,
+        email: request.body.email,
+        password: request.body.password,
       };
       /**
        * Server side verification

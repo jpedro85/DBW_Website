@@ -5,3 +5,4 @@ document.querySelector("#button-login").addEventListener("click" , () => {
     openLogin();
 })
 
+redirect_after_login = "/about-us";

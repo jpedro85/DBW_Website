@@ -1,5 +1,5 @@
 // about us ou index
-let redirect_after_login = "/";
+let redirect_after_login ;
 let lastSingUpReq ;
 
 // main popupsPopup_ErroPopUp
@@ -33,7 +33,11 @@ const input_error_username_login = document.querySelector("#Popup-Login-error-us
 const input_error_password_login = document.querySelector("#Popup-Login-error-password");
 
 
-// rests the values of the log in form
+/**
+ * rests the values of the log in form
+ *
+ * @return  {void}  
+ */ 
 function resetLogin() {
     // reseting the values of the form
     input_username_login.value = "";
@@ -103,7 +107,7 @@ document.querySelector("#Popup-creatAcount-next").addEventListener("click" , () 
         email: "",
         password: "",
         repeat_password: "",
-        formType: "regiter"
+        formType: "register"
     } 
 
     //falta hiden input
@@ -116,7 +120,7 @@ document.querySelector("#Popup-creatAcount-next").addEventListener("click" , () 
 function sendRequest(reqForm,responseHandler){
 
     // making the request email send
-    fetch("/", //Rota para o POST Request
+    fetch("/asdfadsfdsafdsa", //Rota para o POST Request
     { 
         method: "POST", // defining the requesthe method and body format
         headers: { "Content-Type": "application/json", },
@@ -141,16 +145,11 @@ const SuccessfullyCreated_normal = document.querySelector("#SuccessfullyCreated-
 //singupHandlers
 function singUpResponseHandler(res) {
 
-    console.log(res);
-
     if (res.success) {
 
         lastSingUpReq = {
             username: res.username,
             email: res.email,
-            password : res.password,
-            repeat_password : res.repeat_password,
-            formType: "secondStep"
         } 
         
         // opening popup confirmm
@@ -170,6 +169,26 @@ function singUpResponseHandler(res) {
 
             input_error_email.innerText = res.error ;
             input_email.classList.add("errorBox");
+        
+        } else if ( res.errortype === "emailInUse") {
+
+            input_error_email.innerText = res.error ;
+            input_email.classList.add("errorBox");
+
+        } else if ( res.errortype === "acountPending") {
+
+            SuccessfullyCreated_normal.style.display = "none";
+            SuccessfullyCreated_resend.style.display = "flex";
+            
+            Popup_creatAcount.classList.remove("active");
+            Popup_AcountCreated.classList.add("active");
+
+            lastSingUpReq = {
+                username: res.username,
+                email: res.email,
+            } 
+
+            console.log(lastSingUpReq)
 
         } else if ( res.errortype === "password" ) {
             
@@ -182,14 +201,6 @@ function singUpResponseHandler(res) {
             input_password.classList.add("errorBox");
             input_passwordConfirm.classList.add("errorBox");
 
-        } else if ( res.errortype === "alreadyCreated" ) {
-            
-            SuccessfullyCreated_normal.style.display = "none";
-            SuccessfullyCreated_resend.style.display = "flex";
-            
-            Popup_creatAcount.classList.remove("active");
-            Popup_AcountCreated.classList.add("active");
-
         } else 
             showError(res.error);
     }  
@@ -200,10 +211,19 @@ function singUpResponseHandler(res) {
 document.querySelector("#Popup-confirmEmail-Resend").addEventListener("click" , () => {
 
     if (lastSingUpReq != null) { 
+        console.log(lastSingUpReq)
         lastSingUpReq.formType = "resend" ; 
-        sendRequest(reqForm,emailResponceHandler);
+        sendRequest(lastSingUpReq,emailResponceHandler);
     }
 
+});
+
+// adding handler for resent email in aconte already created
+document.querySelector("#Popup-AcountCreated-btn-recent").addEventListener("click" , () => {
+    
+        Popup_confirmEmail_emailshow.innerText = lastSingUpReq.email ; 
+        Popup_AcountCreated.classList.remove("active");
+        Popup_confirmEmail.classList.add("active");
 });
 
 /*
@@ -261,24 +281,24 @@ document.querySelector("#Popup-Login-Button").addEventListener("click" , () => {
 // handler for the response to login
 function loginResponseHandler(res) {
 
-    if (res.success) {
+    if (res.message.success) {
         window.location.href = redirect_after_login;
     } else {
 
-        if ( res.errortype === "credentials") {
+        if ( res.message.errortype === "credentials") {
 
-            input_error_password_login.innerText = res.error;
+            input_error_password_login.innerText = res.message.error;
             input_username_login.classList.add("errorBox");
             input_password_login.classList.add("errorBox");
 
-        } else if (res.errortype === "pending" ) {
+        } else if (res.message.errortype === "pending" ) {
 
-            input_error_password_login.innerText = res.error;
+            input_error_password_login.innerText = res.message.error;
 
         } else {
 
-            if (res.error != null)
-                showError(res.error);
+            if (res.message.error != null)
+                showError(res.message.error);
             else 
                 showError("Error 500 : Server error")
         }
@@ -303,9 +323,10 @@ document.querySelector("#Popup-creatAcoun-Signin-Button").addEventListener("clic
 
 // adding handler for continuing button
 document.querySelector("#AcountCreated-continue").addEventListener("click" , () => {
-    Popup_creatAcount.classList.remove("active");
+    Popup_AcountCreated.classList.remove("active");
     conteiner.classList.remove("active");
-});
+}); 
+ 
 
 
 // adding handler for Popup-Login-Signup-Button
@@ -336,7 +357,7 @@ function verifyUsername(object) {
 
             input_error_username.innerText = "";
             input_username.classList.remove("errorBox");
-            object["signup_username"] = input_username.value ;
+            object["username"] = input_username.value ;
 
             return true;
 
@@ -369,7 +390,7 @@ function verifyEmail(formResult) {
                 input_error_email.innerText = "" ;
                 input_email.classList.remove("errorBox");
 
-                formResult["signup_email"] = input_email.value ;
+                formResult["email"] = input_email.value ;
 
                 return true;
 
@@ -410,7 +431,7 @@ function verifyPasswordCriterios(formResult) {
                             input_error_password.innerText = "";
                             input_password.classList.remove("errorBox");
 
-                            formResult["signup_password"] = input_password.value;
+                            formResult["password"] = input_password.value;
 
                             return true;
 
@@ -457,7 +478,7 @@ function verifyPasswordConfimr(formResult) {
         input_password.classList.remove("errorBox");
         input_passwordConfirm.classList.remove("errorBox");
 
-        formResult.signup_repeat_password = input_passwordConfirm.value;
+        formResult["repeat_password"] = input_passwordConfirm.value;
 
         return true;
 

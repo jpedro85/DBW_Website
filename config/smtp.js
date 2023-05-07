@@ -4,4 +4,5 @@ module.exports = {
     secret: "your-secret-key",
     user: "khajiit.business@gmail.com",
     pass: "ldsxccmjdmfyzvbb",
+    pool: true,
 }
