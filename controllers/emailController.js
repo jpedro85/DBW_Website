@@ -62,7 +62,7 @@ const verifyUser = async (request, response, next) => {
         // Changes the status to Active
         fetchedUser.status = "Active";
         // Saves the the changes made to the Database
-        //fetchedUser.save();
+        fetchedUser.save();
       }
     })
     .catch((searchingError) => console.error(searchingError));
