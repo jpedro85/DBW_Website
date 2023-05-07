@@ -34,7 +34,7 @@
               <button id="btn-link-login" class="textButton fontSpaColor"> Loging in</button> or
               <button id="btn-link-login" class="textButton fontSpaColor">Creating an Account</button>
             </h2>
-            <button class="play-bttn ButtonLightBlue" onclick="plyaRedirect()">
+            <button id="Btn-play" class="play-bttn ButtonLightBlue"">
               Play Now
             </button>
           </div>
@@ -61,160 +61,10 @@
           </div>
         </div>
       </div>
-
-      <div class="Popup-conteiner">
-        <div id="Popup-Login" class="Popup">
-          <div class="Close-Popup">&times;</div>
-          <div class="form">
-            <div class="title">
-              <img class="titleimg" src="/images/Logo.png" alt="">
-              Log in
-            </div>
-            <form action="/" method="post">
-              <div class="form-element">
-                <label for="Popup-Login-username">Username</label>
-                <input name="username" type="text" id="Popup-Login-username" placeholder="Enter Username" />
-              </div>
-              <div class="form-element">
-                <label for="Popup-Login-password">Password</label>
-                <input name="password" type="password" id="Popup-Login-password" placeholder="Enter Password" />
-              </div>
-              <input type="hidden" value="login" name="formType">
-              <div id="Popup-Popup-Login-error" class="form-element textErrorConteiner textError">
-                errororororoorororoororr
-              </div>
-              <div class="form-element">
-                <button class="Button-Popup ButtonDarkBlue" id="Popup-Login-Button">Log In</button>
-              </div>
-            </form>
-            <div class="form-element form-bottom-text">
-              Dont have account ?<button id="Popup-Login-Signup-Button" class="BlueTransparent-Button">Sign Up Now</button>
-            </div>
-          </div>
-        </div>
-  
-        <div id="Popup-creatAcount" class="Popup">
-          <div class="Close-Popup">&times;</div>
-          <div class="form">
-            <div class="title">
-              <img class="titleimg" src="/images/Logo.png" alt="">
-              Create Account
-            </div>
-            <form action="/" method="post">
-              <div class="form-element">
-                <label for="username">Username</label>
-                <input name="signup_username" type="text" id="Popup-creatAcount-username" placeholder="Enter Username" />
-              </div>
-              <div id="Popup-creatAcount-error-username" class="form-element textErrorConteiner textError">
-                errororororoorororoororr
-              </div>
-              <div class="form-element">
-                <label for="email">Email</label>
-                <input name="signup_email" type="text" id="Popup-creatAcount-email" placeholder="Enter Email" />
-              </div>
-              <div id="Popup-creatAcount-error-email" class="form-element textErrorConteiner textError">
-                errororororoorororoororr
-              </div>
-              <div class="form-element">
-                <label for="password">Password</label>
-                <input name="signup_password" type="password" id="Popup-creatAcount-password" placeholder="Enter Password" />
-              </div>
-              <div class="form-element">
-                <label for="password">Confirm Password</label>
-                <input name="signup_repeat_password" type="password" id="Popup-creatAcount-password-confirm" placeholder="Confirm Password" />
-              </div>
-              <input type="hidden" value="register" name="formType">
-              <div id="Popup-creatAcount-error-password" class="form-element textErrorConteiner textError">
-                errororororoorororoororr
-              </div>
-              <div class="form-element Popup-creatAcount-steptext">
-                <div>
-                  Step 1 of 2
-                </div>
-              </div>
-              <div class="form-element">
-                <div class="form-element form-bottom-text">
-                  <div id="Popup-creatAcount-LogInNow">Dont have account ?
-                  <button type="button" id="Popup-creatAcoun-Signin-Button" class="BlueTransparent-Button">Log In Now</button></div>
-                  <button type="submit" id="Popup-creatAcount-next" class="Button-Popup ButtonDarkBlue">Next Step</button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-
-        <div id="Popup-confirmEmail" class="Popup">
-          <div class="Close-Popup" >&times;</div>
-          <div class="form">
-            <div class="title">
-              <img class="titleimg" src="/images/Logo.png" alt="">
-              Confirm Email
-            </div>
-            <form action="/" method="post">
-              <div class="form-element">
-                <div id="Popup-confirmEmail-inputTitel" for="confirm">Please enter the <span id="destaque1">code</span> that has been send to:</div>
-                <div id="Popup-confirmEmail-emailshow">" email "</div>
-                <div id="email-confirm-conteiner" class="inputText ButtonDarkBlue">
-                  <input
-                    id="Popup-confirmEmail-PasteCode-input"
-                    type="text"
-                    class="inputText-Input"
-                    name="emailCode"
-                  />
-                  <button id="Popup-confirmEmail-PasteCode" class="inputText-Button">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="currentColor"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        fill="currentColor"
-                        d="M5 21q-.825 0-1.413-.588T3 19V5q0-.825.588-1.413T5 3h4.175q.275-.875 1.075-1.438T12 1q1 0 1.788.563T14.85 3H19q.825 0 1.413.588T21 5v14q0 .825-.588 1.413T19 21H5Zm0-2h14V5h-2v3H7V5H5v14Zm7-14q.425 0 .713-.288T13 4q0-.425-.288-.713T12 3q-.425 0-.713.288T11 4q0 .425.288.713T12 5Z"
-                      />
-                    </svg>
-                  </button>
-                </div>
-                <input type="hidden" name="formType" value="secondStep">
-                <div id="Popup-confirmEmail-error" class="form-element textErrorConteiner textError">
-                  errororororoorororoororr
-                </div>
-              </div>
-              <div class="form-element Popup-creatAcount-steptext">
-                <div>
-                  Step 2 of 2
-                </div>
-              </div>
-              <div class="form-element">
-                <button class="Button-Popup ButtonDarkBlue" id="Signup-Confirm-Email">Confirm Email</button>
-              </div>
-            </div>
-            </form>
-        </div>
-
-        <div id="Popup-AcountCreated" class="Popup">
-          <div class="Close-Popup" id="Close-Account-Created">&times;</div>
-          <div class="form">
-            <div class="title">
-              <img class="titleimg" src="/images/Logo.png" alt="">
-              Account Created
-            </div>
-            <div id="SuccessfullyCreated-conteiner" class="form-element">
-              <div> The account as bean <span id="destaque2">Successfully Created</span> !</div>
-            </div>
-            <div class="form-element">
-              <button class="Button-Popup ButtonDarkBlue" id="AcountCreated-continue">Continue</button>
-            </div>
-          </div>
-        </div>
-
-      </div> 
-
-    </div>
+      <%- include("../views/partials/Log_in_out_popups.ejs") %>
+    </div> 
     <%- include("../views/partials/footer.ejs") %>
     <script src="/js/index.js"></script>
-    <script src="/js/Overlay.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
   </body>
