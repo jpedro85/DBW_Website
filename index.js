@@ -101,7 +101,7 @@ app.use(
 
 // Making the strategy to authenticate or user
 passport.use(
-  new localStrategy(async (username, password, done) => {
+  new localStrategy(async (username, password, next) => {
     try {
       const confirmedEmail = "Active";
       const [userFound] = await fetchedUser.find({ username: username });
@@ -113,20 +113,20 @@ passport.use(
         // and if passwords compare and pass
         if (activeAccount && valid) {
           // If passes all verification the user logsIn
-          done(null, userFound);
+          next(null, userFound, "Welcome");
         }else{
           // If its bad input
-          done(null,false);
+          next(null,false,'invalid e-mail address or password' );
         }
       } else {
         // Here is where we gonna handle the bad inputs Server-side
         // for now sends response.json()
-        done(null,false)
+        next(null,false, 'invalid e-mail address or password')
       }
     } catch (authError) {
       // Error Handling
       // for now sends response.json()
-      done(authError);
+      next(authError);
     }
   })
 );

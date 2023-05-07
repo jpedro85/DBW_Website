@@ -30,7 +30,22 @@ router.post("/", async (request, response, next) => {
        *  Authenticates the user if not valid do ... if valid renders page while logged
        **/
       //passport.authenticate("local",{successRedirect:"/"})(request,response,next);
-      passport.authenticate("local",{successRedirect:"/"})(request,response,next)
+      passport.authenticate("local",function (error, user, info) {
+        if (error) {
+          return next(error); // will generate a 500 error
+        }
+        // Generate a JSON response reflecting authentication status
+        if (! user) {
+          return response.send({ success : false, message : info });
+        }
+        // Creates the session and logs the user
+        request.login(user, loginErr => {
+          if (loginErr) {
+            return next(loginErr);
+          }
+          return response.send({ success : true, message : info });
+        });      
+      })(request,response,next)
     } else if (firstStepRegistration === requestFormType) {
       const userRegistrationData = {
         username: request.body.signup_username,
