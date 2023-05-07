@@ -56,14 +56,15 @@ router.post("/", async (request, response, next) => {
        * Server side verification
        */
       // After all verifications saves the user on the dataBase waiting for confirmation
-      signup(userRegistrationData);
+      signup(userRegistrationData, response);
       // Sends a response to the request
       // For now is rendering the page
-      response.render("index", { isUserLogged: false });
+      //response.render("index", { isUserLogged: false });
     } else {
       throw new Error("Invalid FormType");
     }
   } catch (formError) {
+    // Error Handling
     console.error(formError);
     response.redirect("/");
   }
