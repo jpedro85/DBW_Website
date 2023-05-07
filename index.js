@@ -109,24 +109,36 @@ passport.use(
       if (userFound) {
         const activeAccount = userFound.status === confirmedEmail;
         const valid = await bcrypt.compare(password, userFound.password);
-        // Checks wether the account 
+        // Checks wether the account
         if (!activeAccount) {
-          // Sends that there are no errors, doesn't send the user and the error message 
-          next(null,false,"Please confirm your account. Check your email");
+          // Sends that there are no errors, doesn't send the user and the error message
+          next(null, false, {
+            success: false,
+            errortype: "pending",
+            error: "Please confirm your account. Check your email",
+          });
         }
         // Check if active account
         // if passwords compare and pass
         if (activeAccount && valid) {
           // If passes all verification the user logsIn sends no error, the user and message
-          next(null, userFound, "Welcome");
-        }else{
+          next(null, userFound, { success: true });
+        } else {
           // If its bad input
-          next(null,false,'Invalid username or password' );
+          next(null, false, {
+            success: false,
+            errortype: "credentials",
+            error: "Invalid username or password",
+          });
         }
       } else {
         // Here is where we gonna handle the bad inputs Server-side
         // for now sends response.json()
-        next(null,false, 'Invalid username or password')
+        next(null, false, {
+          success: false,
+          errortype: "credentials",
+          error: "Invalid username or password",
+        });
       }
     } catch (authError) {
       // Error Handling
