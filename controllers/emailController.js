@@ -9,8 +9,10 @@ const databaseUser = require("../model/user.model.js");
  **/
 /////////////////////////
 
+// Imports the Config of our email
 const SMTP_CONFIG = require("../config/smtp.js");
 
+// Creates the transport thats going to have the config necessary for nodemailer send the email
 const transporter = nodemailer.createTransport({
   host: SMTP_CONFIG.host,
   port: SMTP_CONFIG.port,
@@ -24,7 +26,11 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// send mail with defined transport object
+/**
+ * Sends and email to the Destination email to confirm to account
+ * @param {String} destinationEmail The email of the destined user
+ * @param {String} emailCode JSON web token
+ */
 const confirmEmail = async function (destinationEmail, emailCode) {
   await transporter.sendMail({
     from: SMTP_CONFIG.user,
@@ -69,6 +75,14 @@ const verifyUser = async (request, response, next) => {
   response.render("index", { isUserLogged: false });
 };
 
+/**
+ * This function serves to see if and account is currently
+ * active or in pending status
+ * 
+ * @param {String} userStatus The status of the user in the database
+ * 
+ * @returns {Boolean} A boolean saying if the account is active or pending
+ */
 function isAccountActive(userStatus) {
   const confirmedEmail = "Active";
   console.log(userStatus.status);

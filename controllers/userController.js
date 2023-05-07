@@ -8,6 +8,12 @@ var jwt = require("jwt-encode");
 // Import bcrypt package to hash the password
 var bcrypt = require("bcrypt");
 
+/**
+ * Signup is function that going to create the user and save it on database with
+ * a confirmation token thats JSON web token thats unique
+ * 
+ * @param {Object} userData The info of the user that wants to register
+ **/
 const signup = async (userData) => {
     try {
         // Generate the token through json web token
@@ -15,7 +21,6 @@ const signup = async (userData) => {
       
         const hashedPassword = bcrypt.hashSync(userData.password, SALTROUNDS);
       
-        //console.log(hashedPassword);
         // Creates user model thats going to be sent to database
         const newDatabaseUser = new databaseUser({
           username: userData.username,
@@ -62,7 +67,7 @@ const renderPageWithAuthStatus = function(request, response, page) {
     // Check wether the user is logged or not
     const isUserLogged = request.isAuthenticated();
     //shows the ejs page on the site and use the model to fill dynamically
-    response.render(page, { isUserLogged: isUserLogged });
+    return response.render(page, { isUserLogged: isUserLogged });
   }
 
 module.exports = { signup , renderPageWithAuthStatus ,logoutUser};
