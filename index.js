@@ -18,7 +18,9 @@ const localStrategy = require("passport-local");
 // Imports Session
 const session = require("express-session");
 // Imports user model
-const fetchedUser = require("./model/userModel");
+const fetchedUser = require("./model/user.model");
+// Import bcrypt a tool used for the password encryption
+var bcrypt = require("bcrypt");
 const app = express();
 
 /////////////////////////
@@ -50,7 +52,8 @@ const indexRoute = require("./routes/indexRoute");
 const aboutUsRoute = require("./routes/aboutUsRoute");
 const playOptionsRoute = require("./routes/playOptionsRoute");
 const playGameRoute = require("./routes/playGameRoute");
-const profileRoute = require("./routes/profileRoute")
+const profileRoute = require("./routes/profileRoute");
+const authEmailRoute = require("./routes/authEmailRoute");
 // to be decided
 // const userRoute = require("./routes/userRoute");
 
@@ -80,8 +83,6 @@ app.use(methodOverride("_method"));
 // Transform JSON to object
 app.use(express.json());
 
-
-
 /////////////////////////
 /**
  * Passport Config
@@ -98,16 +99,39 @@ app.use(
   })
 );
 
+// Making the strategy to authenticate or user
+passport.use(
+  new localStrategy( async (username, password, done) => {
+    try {
+      const confirmedEmail = "Active";
+      const [userFound] = await fetchedUser.find({"username": username});
+      const activeAccount = userFound.status === confirmedEmail;
+      const valid = await bcrypt.compare(password, userFound.password);
+      // Check if the username is found
+      // and if passwords compare and pass
+      if (userFound && activeAccount && valid) {
+        done(null, userFound);
+      } else {
+        // Here is where we gonna handle the bad inputs Server-side
+        // for now sends response.json()
+        done(null, false);
+      }
+    } catch (authError) {
+      // Error Handling 
+      // for now sends response.json()
+      done(authError);
+    }
+  })
+);
+
 // Initializes passport
 app.use(passport.initialize());
 // Its used to restore a users session
 app.use(passport.session());
-// Authenticate is added automatically by the plugin
-passport.use(new localStrategy(fetchedUser.authenticate()));
 // Saves a user session
-passport.serializeUser(fetchedUser.serializeUser());
+passport.serializeUser( (user,done) =>{done(null,user)});
 // Removes a user from the session
-passport.deserializeUser(fetchedUser.deserializeUser());
+passport.deserializeUser( (user,done) =>{done(null,user)});
 
 /////////////////////////
 /**
@@ -138,6 +162,8 @@ app.use(playOptionsRoute);
 app.use(playGameRoute);
 // Create the route to the profile page
 app.use(profileRoute);
+//
+app.use(authEmailRoute);
 // Create route to user
 // app.use(userRoute);
 

@@ -1,46 +1,52 @@
-// Imports the user model from mongoDB
-const databaseUser = require("../model/userModel");
+const config = require("../config/smtp");
+const databaseUser = require("../model/user.model.js");
+const emailController = require("./emailController.js");
+const SALTROUNDS=10;
 
-/**
- * Register the user on mongoDB database with its information
- *
- * @param   {*}  request
- * @param   {*}  response
- *
- **/
-const registerUserOnMongoDB = async function (request,response,userData) {
-  const { signup_username, signup_email, signup_password } = userData;
-  try {
-    // Creates a new User
-    const user = new databaseUser({
-      email: signup_email,
-      username: signup_username,
-    });
-    // Saves the data in the database
-    await databaseUser.register(user, signup_password);
-    // Redirects after all processes to the main page
-    response.redirect("/");
-  } catch (registerError) {
-    console.error(registerError);
-    response.redirect("/");
-  }
+// Importing the package necessary for JSON web token
+var jwt = require("jwt-encode");
+// Import bcrypt package to hash the password
+var bcrypt = require("bcrypt");
+
+const signup = async (userData) => {
+    try {
+        // Generate the token through json web token
+        const token = jwt({ email: userData.email }, config.secret);
+      
+        const hashedPassword = bcrypt.hashSync(userData.password, SALTROUNDS);
+      
+        //console.log(hashedPassword);
+        // Creates user model thats going to be sent to database
+        const newDatabaseUser = new databaseUser({
+          username: userData.username,
+          email: userData.email,
+          password: hashedPassword,
+          confirmationCode: token,
+        });
+      
+        await newDatabaseUser.save();
+        emailController.confirmEmail(newDatabaseUser.email, newDatabaseUser.confirmationCode);
+        
+    } catch (savingError) {
+        console.error(savingError);
+    }
 };
 
 const logoutUser = function (request, response, next) {
-  request.logout(function (logoutError) {
-    if (logoutError) {
-      return next(logoutError);
-    }
-    // Destroys the session of the user
-    request.session.destroy(function (sessionError) {
-      if (sessionError) {
-        return next(sessionError);
+    request.logout(function (logoutError) {
+      if (logoutError) {
+        return next(logoutError);
       }
-      // Redirects to the login page
-      response.redirect("/");
+      // Destroys the session of the user
+      request.session.destroy(function (sessionError) {
+        if (sessionError) {
+          return next(sessionError);
+        }
+        // Redirects to the login page
+        response.redirect("/");
+      });
     });
-  });
-};
+  };
 
 /**
  * This is an auxiliary function to remove the duplication of the verification 
@@ -53,11 +59,10 @@ const logoutUser = function (request, response, next) {
  * @return  {[type]}            Renders the page you choose with its corresponding navBar
  */
 const renderPageWithAuthStatus = function(request, response, page) {
-  // Check wether the user is logged or not
-  const isUserLogged = request.isAuthenticated();
-  //shows the ejs page on the site and use the model to fill dynamically
-  response.render(page, { isUserLogged: isUserLogged });
-}
+    // Check wether the user is logged or not
+    const isUserLogged = request.isAuthenticated();
+    //shows the ejs page on the site and use the model to fill dynamically
+    response.render(page, { isUserLogged: isUserLogged });
+  }
 
-// Exports the functions
-module.exports = { registerUserOnMongoDB, logoutUser, renderPageWithAuthStatus };
+module.exports = { signup , renderPageWithAuthStatus ,logoutUser};

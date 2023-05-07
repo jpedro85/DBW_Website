@@ -70,21 +70,23 @@
               <img class="titleimg" src="/images/Logo.png" alt="">
               Log in
             </div>
-            <div class="form-element">
-              <label for="Popup-Login-username">Username</label>
-              <input name="username" type="text" id="Popup-Login-username" placeholder="Enter Username" />
-            </div>
-            <div class="form-element">
-              <label for="Popup-Login-password">Password</label>
-              <input name="password" type="password" id="Popup-Login-password" placeholder="Enter Password" />
-            </div>
-            <input type="hidden" value="login" name="formType">
-            <div id="Popup-Popup-Login-error" class="form-element textErrorConteiner textError">
-              errororororoorororoororr
-            </div>
-            <div class="form-element">
-              <button class="Button-Popup ButtonDarkBlue" id="Popup-Login-Button">Log In</button>
-            </div>
+            <form action="/" method="post">
+              <div class="form-element">
+                <label for="Popup-Login-username">Username</label>
+                <input name="username" type="text" id="Popup-Login-username" placeholder="Enter Username" />
+              </div>
+              <div class="form-element">
+                <label for="Popup-Login-password">Password</label>
+                <input name="password" type="password" id="Popup-Login-password" placeholder="Enter Password" />
+              </div>
+              <input type="hidden" value="login" name="formType">
+              <div id="Popup-Popup-Login-error" class="form-element textErrorConteiner textError">
+                errororororoorororoororr
+              </div>
+              <div class="form-element">
+                <button class="Button-Popup ButtonDarkBlue" id="Popup-Login-Button">Log In</button>
+              </div>
+            </form>
             <div class="form-element form-bottom-text">
               Dont have account ?<button id="Popup-Login-Signup-Button" class="BlueTransparent-Button">Sign Up Now</button>
             </div>

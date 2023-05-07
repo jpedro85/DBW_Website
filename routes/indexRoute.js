@@ -5,59 +5,57 @@
 const router = require("express").Router();
 // Import the functions from controller file
 const indexController = require("../controllers/indexController");
-const userController = require("../controllers/userController");
+// Import passport so we can use the authenticate function
 const passport = require("passport");
-const databaseUser = require("../model/userModel");
-const emailController = require("../controllers/emailController.js");
+// Imports the signup function
+const {signup} = require("../controllers/userController.js");
 
 /**
  * The GET or POST methods
  */
 router.get("/", indexController);
 
-let userRegistrationData;
-router.post("/", async (request, response, next) => {
+router.post("/", passport.authenticate("local") , async (request, response, next) => {
   const requestFormType = request.body.formType;
   const wantsToLogin = "login";
-  const firstStepRegistration= "firstStep";
-  const secondStepRegistration= "secondStep";
-  const wantsToRegister = "register";
+  const firstStepRegistration = "firstStep";
+  const secondStepRegistration = "secondStep";
   try {
     // Checks if the post request is a login or registration
     if (wantsToLogin === requestFormType) {
+       /**
+       * Server side verification
+       **/
+
+      // Authenticates the user session and responds to the request
+      passport.authenticate("local", response.send("Hello"))(request,response,next);
+
       // Authenticates the user if not valid do ... if valid renders page while logged
-      passport.authenticate("local",response.render("index", { isUserLogged: true })
-      )(request, response, next);
+      // passport.authenticate("local",response.render("index", { isUserLogged: true })
+      // )(request, response, next);
     } else if (firstStepRegistration === requestFormType) {
-      
+      const userRegistrationData = {
+        username: request.body.signup_username,
+        email: request.body.signup_email,
+        password: request.body.signup_password,
+      };
       /**
        * Server side verification
        */
-      
-      // If all is working saves the input data on variable
-      userRegistrationData=request.body;
-      // Generates a random emailCode that later will be sent
-      userRegistrationData.emailCode = emailController.randomEmailCode();
-      // It will send an email to with a code so we can verify its email
-      emailController.confirmEmail(userRegistrationData.signup_email , userRegistrationData.emailCode);
-    }else if (secondStepRegistration===requestFormType) {
-      // Will verify if code is correct
-      const { emailCode } = request.body;
-      if (userRegistrationData.emailCode === emailCode) {
-        // Will try to to register the user login with the database
-        userController.registerUserOnMongoDB(request,response,userRegistrationData);
-      }else{
-        // Handle the error here
-      }
-    }else {
-      console.log("Invalid formType");
+      // After all verifications saves the user on the dataBase waiting for confirmation
+      signup(userRegistrationData);
+      // Sends a response to the request
+      // For now is rendering the page
+      response.render("index", {isUserLogged:true});
     }
-  } catch (error) {
-    console.error(error);
+    else{
+      throw new Error("Invalid FormType")
+    }
+  } catch (formError) {
+    console.error(formError);
     response.redirect("/");
   }
 });
-
 
 // Export the router
 module.exports = router;
