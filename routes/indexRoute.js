@@ -8,31 +8,29 @@ const indexController = require("../controllers/indexController");
 // Import passport so we can use the authenticate function
 const passport = require("passport");
 // Imports the signup function
-const {signup} = require("../controllers/userController.js");
+const { signup } = require("../controllers/userController.js");
 
 /**
  * The GET or POST methods
  */
 router.get("/", indexController);
 
-router.post("/", passport.authenticate("local") , async (request, response, next) => {
+router.post("/", async (request, response, next) => {
   const requestFormType = request.body.formType;
   const wantsToLogin = "login";
   const firstStepRegistration = "firstStep";
-  const secondStepRegistration = "secondStep";
   try {
     // Checks if the post request is a login or registration
     if (wantsToLogin === requestFormType) {
-       /**
+      /**
        * Server side verification
        **/
 
-      // Authenticates the user session and responds to the request
-      passport.authenticate("local", response.send("Hello"))(request,response,next);
-
-      // Authenticates the user if not valid do ... if valid renders page while logged
-      // passport.authenticate("local",response.render("index", { isUserLogged: true })
-      // )(request, response, next);
+      /** Authenticates the user session and responds to the request
+       *  Authenticates the user if not valid do ... if valid renders page while logged
+       **/
+      //passport.authenticate("local",{successRedirect:"/"})(request,response,next);
+      passport.authenticate("local",{successRedirect:"/"})(request,response,next)
     } else if (firstStepRegistration === requestFormType) {
       const userRegistrationData = {
         username: request.body.signup_username,
@@ -46,10 +44,9 @@ router.post("/", passport.authenticate("local") , async (request, response, next
       signup(userRegistrationData);
       // Sends a response to the request
       // For now is rendering the page
-      response.render("index", {isUserLogged:true});
-    }
-    else{
-      throw new Error("Invalid FormType")
+      response.render("index", { isUserLogged: false });
+    } else {
+      throw new Error("Invalid FormType");
     }
   } catch (formError) {
     console.error(formError);

@@ -101,23 +101,30 @@ app.use(
 
 // Making the strategy to authenticate or user
 passport.use(
-  new localStrategy( async (username, password, done) => {
+  new localStrategy(async (username, password, done) => {
     try {
       const confirmedEmail = "Active";
-      const [userFound] = await fetchedUser.find({"username": username});
-      const activeAccount = userFound.status === confirmedEmail;
-      const valid = await bcrypt.compare(password, userFound.password);
-      // Check if the username is found
-      // and if passwords compare and pass
-      if (userFound && activeAccount && valid) {
-        done(null, userFound);
+      const [userFound] = await fetchedUser.find({ username: username });
+      // If its found an user in the  database
+      if (userFound) {
+        const activeAccount = userFound.status === confirmedEmail;
+        const valid = await bcrypt.compare(password, userFound.password);
+        // Check if the username is found
+        // and if passwords compare and pass
+        if (activeAccount && valid) {
+          // If passes all verification the user logsIn
+          done(null, userFound);
+        }else{
+          // If its bad input
+          done(null,false);
+        }
       } else {
         // Here is where we gonna handle the bad inputs Server-side
         // for now sends response.json()
-        done(null, false);
+        done(null,false)
       }
     } catch (authError) {
-      // Error Handling 
+      // Error Handling
       // for now sends response.json()
       done(authError);
     }
@@ -129,9 +136,13 @@ app.use(passport.initialize());
 // Its used to restore a users session
 app.use(passport.session());
 // Saves a user session
-passport.serializeUser( (user,done) =>{done(null,user)});
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
 // Removes a user from the session
-passport.deserializeUser( (user,done) =>{done(null,user)});
+passport.deserializeUser((user, done) => {
+  done(null, user);
+});
 
 /////////////////////////
 /**
