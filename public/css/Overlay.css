@@ -31,7 +31,7 @@
 
 /*---------------------------------LOG IN--------------------------------- */
 .Popup{
-    display: none;
+    display: none ;
     position: absolute;
     z-index: 1001;
     top: 50%;
@@ -50,7 +50,7 @@
 }
 
 .Popup.active{
-    display: block;
+    display: block !important;
     opacity: 1;
     transform:translate(-50%,-50%);
     transition: top 0ms ease-in-out 0ms,
@@ -70,6 +70,10 @@
     border-radius: 15px;
     cursor: pointer;
     font-size: 25px;
+}
+
+.Close-Popup:hover {
+    color: #FFFFFF;
 }
 
 .Popup .form .title{
@@ -206,6 +210,7 @@
     font-size: 20px;
     line-height: 18px;
     color: #FFFFFF;
+    text-align: center;
 }
 
 #Popup-confirmEmail-emailshow {
@@ -215,7 +220,8 @@
     font-weight: 400;
     font-size: 18px;
     line-height: 18px;
-    color: #358AD8 
+    color: #358AD8 ;
+    text-align: center;
 
 }
 
@@ -232,13 +238,32 @@
     color: #ad2424 
 }
 
+.textError2{
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 24px;
+    color: #ad2424 
+}
+
+.texterrorbox {
+    min-height: 200px;
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: justify;
+}
+
 .errorBox {
     border: 2px solid #ad2424 !important;
     box-shadow: 0 0 20px 0 rgba(173, 36, 36, 0.4) !important;
 }
 
 
-#SuccessfullyCreated-conteiner {
+.SuccessfullyCreated-conteiner {
     height: 100px;
     font-family: 'Roboto';
     font-style: normal;
@@ -249,4 +274,21 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+#Popup-AcountCreated-resend{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    line-height: 24px;
+}
+
+#SuccessfullyCreated-resend {
+    display: none;
+}
+
+#Popup-AcountCreated-btn-recent {
+    display: inline !important;
 }
