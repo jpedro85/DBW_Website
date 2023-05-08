@@ -188,8 +188,6 @@ function singUpResponseHandler(res) {
                 email: res.email,
             } 
 
-            console.log(lastSingUpReq)
-
         } else if ( res.errortype === "password" ) {
             
             input_error_password.innerText = res.error;
@@ -211,7 +209,6 @@ function singUpResponseHandler(res) {
 document.querySelector("#Popup-confirmEmail-Resend").addEventListener("click" , () => {
 
     if (lastSingUpReq != null) { 
-        console.log(lastSingUpReq)
         lastSingUpReq.formType = "resend" ; 
         sendRequest(lastSingUpReq,emailResponceHandler);
     }
@@ -242,7 +239,6 @@ function emailResponceHandler(res) {
 // adding handler for Popup-Login-Button
 document.querySelector("#Popup-Login-Button").addEventListener("click" , () => {
 
-    console.log("aaaaafdsaf")
     // object represente the form
     let reqForm = {
        username: "",
@@ -436,7 +432,6 @@ function verifyPasswordCriterios(formResult) {
                             return true;
 
                         } else {
-                            console.log("erro2")
                             input_error_password.innerText = "Must be less then 26 characters."
                             input_password.classList.add("errorBox");
                         }

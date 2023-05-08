@@ -31,19 +31,31 @@ const transporter = nodemailer.createTransport({
  * Sends and email to the Destination email to confirm to account
  * @param {String} destinationEmail The email of the destined user
  * @param {String} emailCode JSON web token
+ * 
+ * trow error if email not send
  */
 const confirmEmail = async function (destinationEmail, emailCode) {
 
-  await transporter.sendMail({
-    from: SMTP_CONFIG.user,
-    to: destinationEmail,
-    subject: "Please confirm your account",
-    html: `<h1>Email Confirmation</h1>
-          <h2>Hello</h2>
-          <p>Thank you for registering. Please confirm your email by clicking on the following link</p>
-          <a href=http://localhost:3000/confirm/${emailCode}> Click here</a>
-          </div>`,
-  });
+  try {
+    await transporter.sendMail({
+      from: SMTP_CONFIG.user,
+      to: destinationEmail,
+      subject: "Please confirm your account",
+      html: `<h1>Email Confirmation</h1>
+            <h2>Hello</h2>
+            <p>Thank you for registering. Please confirm your email by clicking on the following link</p>
+            <a href=http://localhost:3000/confirm/${emailCode}> Click here</a>
+            </div>`,
+    });
+
+    return true
+  
+  } catch (error) {
+
+    console.log("returned")
+    return error
+  }
+  
 };
 
 /**
@@ -89,7 +101,7 @@ const verifyUser = async (request, response, next) => {
         return response.status(404).send({ message: "User Not found." });
       }
 
-      console.log(isAccountActive(fetchedUser.status))
+      // console.log(isAccountActive(fetchedUser.status))
 
       if (!isAccountActive(fetchedUser.status)) {
         // Changes the status to Active

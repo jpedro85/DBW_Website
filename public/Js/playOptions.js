@@ -59,9 +59,7 @@ button_join_room.addEventListener("click", () => {
 // adding function to the copy code button
 button_copy_code.addEventListener("click", async ()=>{
 
-    
     navigator.clipboard.writeText(input_copy_code.value);
-    console.log(navigator.clipboard.readText());
 });
 
 // adding function to the paste code button

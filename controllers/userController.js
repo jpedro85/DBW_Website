@@ -2,6 +2,8 @@ const config = require("../config/smtp");
 const databaseUser = require("../model/user.model.js");
 const emailController = require("./emailController.js");
 const { isAccountActive } = require("../controllers/emailController");
+
+
 const SALTROUNDS = 10;
 
 // Importing the package necessary for JSON web token
@@ -30,18 +32,32 @@ const signup = async (userData, response) => {
       password: hashedPassword,
       confirmationCode: token,
     });
+     
+    const sendError = await emailController.confirmEmail( newDatabaseUser.email , newDatabaseUser.confirmationCode );
 
-    await newDatabaseUser.save();
-    emailController.confirmEmail(
-      newDatabaseUser.email,
-      newDatabaseUser.confirmationCode
-    );
+    emailController.confirmEmail( newDatabaseUser.email , newDatabaseUser.confirmationCode )
+    .then( async (semError) => {
+ 
+      if (semError != true){
+        response.send({
+          success: false,
+          username : userData.username,
+          email: userData.email,
+          errortype: "email",
+          error: semError.message,
+        });
+      }
+      
+      response.send({
+        success: true,
+        username: userData.username,
+        email: userData.email,
+      }); 
 
-    response.send({
-      success: true,
-      username: userData.username,
-      email: userData.email,
-    });
+      await newDatabaseUser.save();
+
+    })
+   
   } catch (savingError) {
     // If its username duplicate
     const duplicatedUsername =
