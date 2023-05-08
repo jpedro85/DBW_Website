@@ -33,29 +33,25 @@ const signup = async (userData, response) => {
       confirmationCode: token,
     });
      
-    const sendError = await emailController.confirmEmail( newDatabaseUser.email , newDatabaseUser.confirmationCode );
-
     emailController.confirmEmail( newDatabaseUser.email , newDatabaseUser.confirmationCode )
-    .then( async (semError) => {
- 
+    .then( (semError) => {
       if (semError != true){
         response.send({
           success: false,
           username : userData.username,
           email: userData.email,
           errortype: "email",
-          error: semError.message,
+          error: "Invalid email",
         });
+     
+      } else {
+        response.send({
+          success: true,
+          username: userData.username,
+          email: userData.email,
+        }); 
+        newDatabaseUser.save();
       }
-      
-      response.send({
-        success: true,
-        username: userData.username,
-        email: userData.email,
-      }); 
-
-      await newDatabaseUser.save();
-
     })
    
   } catch (savingError) {
