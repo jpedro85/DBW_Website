@@ -34,7 +34,7 @@ const transporter = nodemailer.createTransport({
  * 
  * trow error if email not send
  */
-const confirmEmail = async function (destinationEmail, emailCode) {
+const sendConfirmEmail = async function (destinationEmail, emailCode) {
 
   try {
     await transporter.sendMail({
@@ -48,12 +48,10 @@ const confirmEmail = async function (destinationEmail, emailCode) {
             </div>`,
     });
 
-    return true
+    return true;
   
   } catch (error) {
-
-    console.log("returned")
-    return error
+    return error;
   }
   
 };
@@ -72,7 +70,7 @@ const resendEmail = async function (username,response) {
       if (!fetchedUser) {
         return response.send({ success: false, error:"User not found"});
       }
-      confirmEmail(fetchedUser.email, fetchedUser.confirmationCode);
+      sendConfirmEmail(fetchedUser.email, fetchedUser.confirmationCode);
       return response.send({success:true})
     })
     .catch((sendError) =>
@@ -132,4 +130,4 @@ function isAccountActive(userStatus) {
   return userStatus === confirmedEmail;
 }
 
-module.exports = { confirmEmail, verifyUser , resendEmail , isAccountActive};
+module.exports = { sendConfirmEmail, verifyUser , resendEmail , isAccountActive};

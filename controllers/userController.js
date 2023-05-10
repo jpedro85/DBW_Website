@@ -1,8 +1,7 @@
 const config = require("../config/smtp");
 const databaseUser = require("../model/user.model.js");
-const emailController = require("./emailController.js");
-const { isAccountActive } = require("../controllers/emailController");
-
+const {sendConfirmEmail, isAccountActive } = require("../controllers/emailController");
+const verifications = require("./Validations.Controler.js");
 
 const SALTROUNDS = 10;
 
@@ -10,6 +9,7 @@ const SALTROUNDS = 10;
 var jwt = require("jwt-encode");
 // Import bcrypt package to hash the password
 var bcrypt = require("bcrypt");
+const { request } = require("express");
 
 /**
  * Signup is function that going to create the user and save it on database with
@@ -32,9 +32,11 @@ const signup = async (userData, response) => {
       password: hashedPassword,
       confirmationCode: token,
     });
-     
-    emailController.confirmEmail( newDatabaseUser.email , newDatabaseUser.confirmationCode )
-    .then( (semError) => {
+  
+    await newDatabaseUser.save()
+    
+    sendConfirmEmail( newDatabaseUser.email , newDatabaseUser.confirmationCode )
+    .then( async (semError) => {
       if (semError != true){
         response.send({
           success: false,
@@ -43,21 +45,22 @@ const signup = async (userData, response) => {
           errortype: "email",
           error: "Invalid email",
         });
-     
+
+        databaseUser.deleteOne({ email : newDatabaseUser.email }).catch( (error) => console.log(error) );
+
       } else {
         response.send({
           success: true,
           username: userData.username,
           email: userData.email,
         }); 
-        newDatabaseUser.save();
       }
     })
    
   } catch (savingError) {
+
     // If its username duplicate
-    const duplicatedUsername =
-      savingError.keyPattern.hasOwnProperty("username");
+    const duplicatedUsername = savingError.keyPattern.hasOwnProperty("username");
 
     // If its email duplicate
     const duplicateEmail = savingError.keyPattern.hasOwnProperty("email");

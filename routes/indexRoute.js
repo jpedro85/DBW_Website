@@ -11,6 +11,9 @@ const passport = require("passport");
 const { signup , logoutUser } = require("../controllers/userController.js");
 // Imports confirm email function
 const {resendEmail} = require("../controllers/emailController.js")
+// Import password and user validation
+const {validateObject,is_Username_Invalid, is_Password_Invalid} = require("../controllers/Validations.Controler.js")
+
 
 /**
  * The GET or POST methods
@@ -25,7 +28,7 @@ router.post("/", async (request, response, next) => {
   const wantToLogOut = "logout";
   try {
     // Checks if the post request is a login or registration
-    if (wantsToLogin === requestFormType) {
+    if (wantsToLogin === requestFormType && validateObject(request.body,"username","password")) {
       /**
        * Server side verification
        **/
@@ -51,32 +54,74 @@ router.post("/", async (request, response, next) => {
           response.send({ success : true, message : info });
         });      
       })(request,response,next)
-    } else if (firstStepRegistration === requestFormType) {
+    } else if (firstStepRegistration === requestFormType && validateObject(request.body,"username","email","password","repeat_password")) {
+
       const userRegistrationData = {
         username: request.body.username,
         email: request.body.email,
         password: request.body.password,
-      };
-      /**
-       * Server side verification
-       */
-      // After all verifications saves the user on the dataBase waiting for confirmation
-      signup(userRegistrationData, response);
-      // Sends a response to the request
-      // For now is rendering the page
-      //response.render("index", { isUserLogged: false });
-    }else if (wantToResendEmail === requestFormType) {
+      };  
+
+      /*
+        the duplication of the username will be resolve after save that
+        will cause error and return a response to the request
+      */
+      validation_result = is_Username_Invalid(request.body.username);
+      if (validation_result){
+        response.send({
+          success : false,
+          errortype : "username",
+          error : validation_result,
+        })
+
+      } else if (request.body.email === "") { // if the email is invalid NODEMAILER will trow an error an another msg will be send
+        response.send({
+          success : false,
+          errortype : "email",
+          error : "Email can't be empty.",
+        })
+
+      } else {
+
+        validation_result = is_Password_Invalid(request.body.password);
+        if (validation_result){
+          response.send({
+            success : false,
+            errortype : "password",
+            error : validation_result,
+          })
+
+        } else if (request.body.password != request.body.repeat_password){
+          response.send({
+            success : false,
+            errortype : "passwordmatch",
+            error : "Passwords don´t match."
+         })
+
+        } else {
+          // After all verifications saves the user on the dataBase waiting for confirmation
+          signup(userRegistrationData, response);
+          // Sends a response to the request
+        }
+
+      }
+
+  
+    }else if (wantToResendEmail === requestFormType && validateObject(request.body,"username")) {
       
       // Handles the post to resend email
       resendEmail(request.body.username,response);
 
     } else if (wantToLogOut === requestFormType ) {
 
-      // log out
       logoutUser(request,response,next);
 
     } else {
-      throw new Error("Invalid FormType");
+      response.send({
+        success : false,
+        errortype : "other",
+        error : "Invalid FormType"
+      })
     }
   } catch (formError) {
     // Error Handling

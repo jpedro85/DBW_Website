@@ -58,6 +58,28 @@ const input_email = document.querySelector("#Popup-creatAcount-email");
 const input_password = document.querySelector("#Popup-creatAcount-password");
 const input_passwordConfirm = document.querySelector("#Popup-creatAcount-password-confirm");
 
+input_username.addEventListener("keydown",() => {
+    input_username.classList.remove("errorBox")
+    input_error_username.innerText = "";
+})
+
+input_email.addEventListener("keydown",() => {
+    input_email.classList.remove("errorBox")
+    input_error_email.innerText = ""
+})
+
+input_password.addEventListener("keydown",() => {
+    input_password.classList.remove("errorBox")
+    input_passwordConfirm.classList.remove("errorBox")
+    input_error_password.innerText = ""
+})
+
+input_passwordConfirm.addEventListener("keydown",() => {
+    input_password.classList.remove("errorBox")
+    input_passwordConfirm.classList.remove("errorBox")
+    input_error_password.innerText = ""
+})
+
 // inpus "errorBox" do pop up creatAcount
 const input_error_username = document.querySelector("#Popup-creatAcount-error-username");
 const input_error_email = document.querySelector("#Popup-creatAcount-error-email");
@@ -110,11 +132,10 @@ document.querySelector("#Popup-creatAcount-next").addEventListener("click" , () 
         formType: "register"
     } 
 
-    //falta hiden input
     if ( verifyUsername(reqForm) && verifyEmail(reqForm) && verifyPasswordCriterios(reqForm) && verifyPasswordConfimr(reqForm) ){
-
         sendRequest(reqForm,singUpResponseHandler);
-    } 
+    }
+
 })
 
 function sendRequest(reqForm,responseHandler){
@@ -342,31 +363,20 @@ document.querySelector("#Popup-Login-Signup-Button").addEventListener("click" , 
 // object represent the final result
 function verifyUsername(object) {
 
-    if (input_username.value != "") {
-
-        if (input_username.value.length < 8 ){
-
-            input_error_username.innerText = "Must be at least 8 characters."
-            input_username.classList.add("errorBox");
-
-        } else if ( input_username.value.length <= 25 ) {
-
-            input_error_username.innerText = "";
-            input_username.classList.remove("errorBox");
-            object["username"] = input_username.value ;
-
-            return true;
-
-        } else {
-
-            input_error_username.innerText = "Must be less then 26 characters."
-            input_username.classList.add("errorBox");
-
-        }
-    
-    } else {
+    if (input_username.value == "") {
         input_error_username.innerText = "Username cannot be empty."
         input_username.classList.add("errorBox");
+
+    } else if (input_username.value.length < 8 || input_username.value.length > 25) {
+        input_error_username.innerText = "Must have at least 8 and at most 25 characters."
+        input_username.classList.add("errorBox");
+
+    } else {
+        input_error_username.innerText = "";
+        input_username.classList.remove("errorBox");
+        object["username"] = input_username.value ;
+
+        return true;
     }
 
     return false;
@@ -375,90 +385,53 @@ function verifyUsername(object) {
 // object represent the final result of the form
 function verifyEmail(formResult) {
 
-    if (input_email.value != "") {
-
-        let indexArroba = input_email.value.indexOf('@') ;
-        if (  indexArroba > 0 ){
-
-            let indexDot = input_email.value.indexOf('.') ;
-           if( indexDot >  indexArroba && indexDot != input_email.value.length - 1 ){
-
-                input_error_email.innerText = "" ;
-                input_email.classList.remove("errorBox");
-
-                formResult["email"] = input_email.value ;
-
-                return true;
-
-            } else {
-                input_error_email.innerText = "Invalid domain."
-                input_email.classList.add("errorBox");
-            }
-
-        } else {
-            input_error_email.innerText = "Dosen't contein '@'."
-            input_email.classList.add("errorBox");
-        }
-
-    } else {
+    if (input_email.value == "") {
         input_error_email.innerText = "Email cannot be empty."
         input_email.classList.add("errorBox");
+        return false;
+    } 
+
+    let indexArroba = input_email.value.indexOf('@') ;
+    let indexDot = input_email.value.indexOf('.') ;
+    if (indexArroba < 0) {
+        input_error_email.innerText = "Dosen't contein '@'."
+        input_email.classList.add("errorBox");
+    
+    }else if( indexDot <  indexArroba || indexDot == input_email.value.length - 1 ){
+        input_error_email.innerText = "Invalid domain."
+        input_email.classList.add("errorBox");
+        
+    } else {
+        formResult["email"] = input_email.value ;
+        return true;
     }
-
+      
     return false;
-
 }
 
 // object represent the final result of the form
 function verifyPasswordCriterios(formResult) {
 
-    if ( strContain_UperCase(input_password.value) ) {
+    console.log(input_password.value.length)
+    if (input_password.value.length < 8 || input_password.value.length  > 64) {
+        input_error_password.innerText = "Must have at least 8 and at most 64 characters."
+        input_password.classList.add("errorBox");
 
-        if ( strContain_LowerCase(input_password.value) ) {
+    } else if (!strContain_UperAndLower(input_password.value)) {
+        input_error_password.innerText = "Must have lower and uppercase characters."
+        input_password.classList.add("errorBox");
 
-            if ( strContain_Numbers(input_password.value) ) {
+    } else if (!strContain_Numbers(input_password.value)){
+        input_error_password.innerText = "Must have at least one number."
+        input_password.classList.add("errorBox");
 
-                if ( strContain_Symbols(input_password.value) ){
-                    
-                    if (input_password.value.length > 7 ){
-                        
-                        if (input_password.value.length <= 64) {
-
-                            input_error_password.innerText = "";
-                            input_password.classList.remove("errorBox");
-
-                            formResult["password"] = input_password.value;
-
-                            return true;
-
-                        } else {
-                            input_error_password.innerText = "Must be less then 26 characters."
-                            input_password.classList.add("errorBox");
-                        }
-
-                    } else {
-                        input_error_password.innerText = "Must be at least 8 characters."
-                        input_password.classList.add("errorBox");
-                    }
-
-                } else {
-                    input_error_password.innerText = "Must have at least one symbol."
-                    input_password.classList.add("errorBox");
-                }
-
-            } else {
-                input_error_password.innerText = "Must have at least one number."
-                input_password.classList.add("errorBox");
-            }
-
-        } else {
-            input_error_password.innerText = "Must have at least one lowercase lether."
-            input_password.classList.add("errorBox");
-        }
+    } else if (!strContain_Symbols(input_password.value)){
+        input_error_password.innerText = "Must have at least one symbol."
+        input_password.classList.add("errorBox");
 
     } else {
-        input_error_password.innerText = "Must have at least one upercase lether."
-        input_password.classList.add("errorBox");
+        formResult["password"] = input_password.value;
+        return true;
     }
 
     return false;
@@ -468,13 +441,7 @@ function verifyPasswordCriterios(formResult) {
 function verifyPasswordConfimr(formResult) {
 
     if (input_password.value === input_passwordConfirm.value) {
-        
-        input_error_password.innerText = "";
-        input_password.classList.remove("errorBox");
-        input_passwordConfirm.classList.remove("errorBox");
-
         formResult["repeat_password"] = input_passwordConfirm.value;
-
         return true;
 
     } else {
@@ -492,12 +459,7 @@ function verifyPasswordConfimr(formResult) {
 function verifyUsernamelogin(formResult) {
 
     if (input_username_login.value != "") {
-        
-        input_error_username_login.innerText = "";
-        input_username_login.classList.remove("errorBox");
-
         formResult["username"] = input_username_login.value ;
-
         return true;
 
     } else {
@@ -512,12 +474,7 @@ function verifyUsernamelogin(formResult) {
 function verifyPasswordlogin(formResult) {
 
     if (input_password_login.value != "") {
-        
-        input_error_password_login.innerText = "";
-        input_password_login.classList.remove("errorBox");
-
         formResult["password"] = input_password_login.value ;
-
         return true;
 
     } else {
@@ -527,6 +484,4 @@ function verifyPasswordlogin(formResult) {
 
     return false;
 }
-
-
 
