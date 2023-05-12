@@ -29,12 +29,21 @@
       <div class="front">
         <div class="row">
           <div class="col head-content ">
-            <h2>
-              Start now by
-              <button id="btn-link-login" class="textButton fontSpaColor"> Loging in</button> or
-              <button id="btn-link-login" class="textButton fontSpaColor">Creating an Account</button>
-            </h2>
-            <button id="Btn-play" class="play-bttn ButtonLightBlue"">
+            <% if(isUserLogged) {%>
+              <h2>
+                Start now by
+                <button id="btn-link-login" class="textButton fontSpaColor"> Clicking</button> on
+                <button id="btn-link-login" class="textButton fontSpaColor">Play Now</button>
+              </h2>
+              <button id="Btn-play1" class="play-bttn ButtonLightBlue">
+            <% } else {%> 
+              <h2>
+                Start now by
+                <button id="btn-link-login" class="textButton fontSpaColor"> Login in</button> or
+                <button id="btn-link-login" class="textButton fontSpaColor">Creating an Account</button>
+              </h2>
+              <button id="Btn-play2" class="play-bttn ButtonLightBlue">
+            <% }%>
               Play Now
             </button>
           </div>

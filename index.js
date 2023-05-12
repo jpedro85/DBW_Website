@@ -102,6 +102,7 @@ app.use(
 // Making the strategy to authenticate or user
 passport.use(
   new localStrategy(async (username, password, next) => {
+
     try {
       const confirmedEmail = "Active";
       const [userFound] = await fetchedUser.find({ username: username });
@@ -115,7 +116,7 @@ passport.use(
           next(null, false, {
             success: false,
             errortype: "pending",
-            error: "Please confirm your account. Check your email",
+            error: "Please confirm your account. If you didn't receive the email go to signup.",
           });
         }
         // Check if active account
@@ -140,7 +141,7 @@ passport.use(
           error: "Invalid username or password",
         });
       }
-    } catch (authError) {
+    } catch(authError) {
       // Error Handling
       // for now sends response.json()
       next(authError);

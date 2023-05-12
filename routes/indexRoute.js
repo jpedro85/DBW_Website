@@ -29,31 +29,39 @@ router.post("/", async (request, response, next) => {
   try {
     // Checks if the post request is a login or registration
     if (wantsToLogin === requestFormType && validateObject(request.body,"username","password")) {
-      /**
-       * Server side verification
-       **/
+
+      let responded = false
 
       /** Authenticates the user session and responds to the request
-       * if not valid do ... if valid redirect to "/"
-       **/
-      //passport.authenticate("local",{successRedirect:"/"})(request,response,next);
+       * the passport authenticate is called to times so the callback for success is called twice
+      */
       passport.authenticate("local",function (error, user, info) {
-        if (error) {
-          return next(error); // will generate a 500 error
-        }
-        // Generate a JSON response reflecting authentication status
-        if (! user) {
-          return response.send({ success : false, message : info });
-        }
-        // Creates the session and logs the user
-        request.login(user, loginErr => {
-          if (loginErr) {
-            return next(loginErr);
+        
+        if (!responded) {
+
+          if (error) {
+            response.send({ success : false }); // will generate a 500 error
+  
+          } else if (!user ) {
+             response.send({ success : false, message : info });
+  
+          } else {
+            // Creates the session and logs the user
+            request.login(user, loginErr => {
+            if (loginErr) {
+              return next(loginErr);
+            }
+            // If correct credentials sends a response thats handled client-side
+            response.send({ success : true, message : info });
+            });  
+  
           }
-          // If correct credentials sends a response thats handled client-side
-          response.send({ success : true, message : info });
-        });      
+
+          responded = true;
+        }
+
       })(request,response,next)
+      
     } else if (firstStepRegistration === requestFormType && validateObject(request.body,"username","email","password","repeat_password")) {
 
       const userRegistrationData = {

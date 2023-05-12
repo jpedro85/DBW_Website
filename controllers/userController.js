@@ -101,7 +101,7 @@ const signup = async (userData, response) => {
             success: false,
             email: userData.email,
             errortype: "other",
-            error: savingError,
+            error: "Server error:" + error,
           });
         });
     } else {

@@ -50,18 +50,18 @@ function is_Username_Invalid(str) {
 /**
  * Returns true if all object properties are defined
  *
- * @param   {Object}  object  Object to validate
+ * @param   {Object}  object  [Object to validate]
  *
- * @param  {[properties]} properties of the object in String
+ * @param  {[properties]} properties [String]
  */
 function validateObject(object,...properties) {
 
     for(let propertie of properties ){
         
-        if (!object[propertie] && object[propertie]!=""){
-            return false;
+        // if (!object[propertie] && object[propertie]!=""){
+        if (!object.hasOwnProperty(propertie)){
+                return false;
         }
-            
     }
 
     return true

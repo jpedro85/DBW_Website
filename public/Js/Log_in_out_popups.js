@@ -32,6 +32,15 @@ const input_password_login = document.querySelector("#Popup-Login-password");
 const input_error_username_login = document.querySelector("#Popup-Login-error-username");
 const input_error_password_login = document.querySelector("#Popup-Login-error-password");
 
+input_username_login.addEventListener("keydown",() => {
+    input_username_login.classList.remove("errorBox")
+    input_error_username_login.innerText = "";
+})
+
+input_password_login.addEventListener("keydown",() => {
+    input_password_login.classList.remove("errorBox")
+    input_error_password_login.innerText = "";
+})
 
 /**
  * rests the values of the log in form
@@ -49,7 +58,7 @@ function resetLogin() {
 
     // reseting the boxerror efect
     input_username_login.classList.remove("errorBox");
-    input_username_login.classList.remove("errorBox");
+    input_password_login.classList.remove("errorBox");
 }
 
 // inpus do pop up creatAcount
@@ -123,7 +132,7 @@ const Popup_creatAcount = document.querySelector("#Popup-creatAcount");
 // adding handler for Popup-creatAcount-next
 document.querySelector("#Popup-creatAcount-next").addEventListener("click" , () => {
 
-    // object represente the form
+    // object represents the form
     let reqForm = {
         username: "",
         email: "",
@@ -143,7 +152,7 @@ function sendRequest(reqForm,responseHandler){
     // making the request email send
     fetch("/", //Rota para o POST Request
     { 
-        method: "POST", // defining the requesthe method and body format
+        method: "POST", // defining the request's method and body format
         headers: { "Content-Type": "application/json", },
         body: JSON.stringify(reqForm),  
     })
@@ -269,21 +278,7 @@ document.querySelector("#Popup-Login-Button").addEventListener("click" , () => {
 
    //falta hiden input
     if ( verifyUsernamelogin(reqForm) && verifyPasswordlogin(reqForm) ){
-
-        fetch("/", //Rota para o POST Request
-        { 
-            method: "POST", // defining the requesthe method and body format
-            headers: { "Content-Type": "application/json", },
-            body: JSON.stringify(reqForm),  
-        })
-        .then( (res) => {   
-            if (res.ok) 
-                return res.json()  
-            else 
-                throw Error( res.status + " " + res.statusText );
-        })
-        .then( (res_data) => { loginResponseHandler(res_data) } ) 
-        .catch( (error) => showError(error) );
+        sendRequest(reqForm,loginResponseHandler);
     } 
 
 })
