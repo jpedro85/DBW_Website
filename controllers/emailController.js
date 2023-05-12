@@ -91,10 +91,11 @@ const verifyUser = async (request, response, next) => {
         fetchedUser.status = "Active";
         // Saves the the changes made to the Database
         fetchedUser.save();
+        // Response in case user is not active
+        response.render("index");
       }
     })
     .catch((searchingError) => console.error(searchingError));
-  response.render("index", { isUserLogged: false });
 };
 
 /**
