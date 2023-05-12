@@ -16,6 +16,9 @@ const { request } = require("express");
  * a confirmation token thats JSON web token thats unique
  *
  * @param {Object} userData The info of the user that wants to register
+ * @param {String} userData.username Users username
+ * @param {String} userData.email Users email 
+ * @param {String} userData.password  Users plaintext password
  **/
 const signup = async (userData, response) => {
   try {
