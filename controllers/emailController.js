@@ -107,9 +107,9 @@ const verifyUser = async (request, response, next) => {
         // Saves the the changes made to the Database
         fetchedUser.save();
         
-        response.render("index", { isUserLogged: false , showAcountCreated : true , confirmstate : true });
+        response.render("index", { isUserLogged: false , showAcountCreated : true , confirmstate : true , showIndexOnUnauthenticated : false , page : "debugOnlyText"});
       } else {
-        response.render("index", { isUserLogged: false , showAcountCreated : true , confirmstate : false  });
+        response.render("index", { isUserLogged: false , showAcountCreated : true , confirmstate : false , showIndexOnUnauthenticated : false , page : "debugOnlyText"});
       }
 
     })

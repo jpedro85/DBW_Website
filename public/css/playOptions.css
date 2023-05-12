@@ -306,3 +306,24 @@
     line-height: 28px;
     color: #FFFFFF;
 }
+
+#showtextlikeinput_code {
+    background-color: #095C61;
+    border: none;
+    color: #FFFFFF ;
+    padding: 0 ;
+    text-align: left;
+    font-size: 26px;
+    font-family: "Roboto";
+    font-weight: bold;
+    margin: 0 ;
+    transition: 0.3s;
+    border: 1px #84f8ff solid;
+}
+
+#JoinCode-Copy-input {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    text-align: left;
+}

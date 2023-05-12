@@ -135,19 +135,26 @@ const logoutUser = function (request, response, next) {
 
 /**
  * This is an auxiliary function to remove the duplication of the verification
- * of the user whether is logged or not to show the corresponding navbar
+ * of the user whether is logged or not to show the correct page or show index if showIndexOnUnauthenticated and the user is not logged
  *
- * @param   {[type]}  request
- * @param   {[type]}  response
- * @param   {String}  page      this parameter is going to be the page you want to render. Generally a String
+ * @param   {request} request                     request
+ * @param   {response} response                    response
+ * @param   {String}  page                       page to render
+ * @param   {Object}  pageInfo                    default is empty isUserLogged property is added internally
+ * @param   {Boolean}  showIndexOnUnauthenticated  showIndex if user not authenticated 
  *
- * @return  {[type]}            Renders the page you choose with its corresponding navBar
+ * @return  {response}                              Renders the page you choose
  */
-const renderPageWithAuthStatus = function (request, response, page) {
+const renderPageWithAuthStatus = function (request, response, page, pageInfo={} , showIndexOnUnauthenticated=false  ) {
   // Check wether the user is logged or not
   const isUserLogged = request.isAuthenticated();
+  pageInfo["isUserLogged"] = isUserLogged;
+
   //shows the ejs page on the site and use the model to fill dynamically
-  return response.render(page, { isUserLogged: isUserLogged , showAcountCreated : false , confirmstate : false});
+  if (!isUserLogged && showIndexOnUnauthenticated)
+    return response.render("index", { isUserLogged: isUserLogged , showAcountCreated : false , confirmstate : false , showIndexOnUnauthenticated , page} );
+  else 
+    return response.render( page , pageInfo );
 };
 
 module.exports = { signup, renderPageWithAuthStatus, logoutUser };

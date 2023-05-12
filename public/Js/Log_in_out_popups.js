@@ -339,19 +339,22 @@ document.querySelector("#AcountCreated-continue").addEventListener("click" , () 
     conteiner.classList.remove("active");
 }); 
  
+function openSingUp() {
 
+    conteiner.classList.add("active");
+     // making the overlay Creat Acount visible
+    poppupLogin.classList.remove("active");
+    Popup_creatAcount.classList.add("active");
+    // activeting the closing on outside of the overlay click 
+    OverlayCloseActive = true;
+}
 
 // adding handler for Popup-Login-Signup-Button
 document.querySelector("#Popup-Login-Signup-Button").addEventListener("click" , () => {
 
     // reseting the values of the form
     resetSingUp();
-
-    // making the overlay Creat Acount visible
-    poppupLogin.classList.remove("active");
-    Popup_creatAcount.classList.add("active");
-    // activeting the closing on outside of the overlay click 
-    OverlayCloseActive = true;
+    openSingUp();
 });
 
 //auxiliares singup

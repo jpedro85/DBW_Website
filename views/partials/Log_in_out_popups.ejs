@@ -1,4 +1,4 @@
-<% if (showAcountCreated) { %>
+<% if (showAcountCreated || ( showIndexOnUnauthenticated && !isUserLogged ) ) { %>
 <div class="Popup-conteiner active">
 <% } else { %>
 <div class="Popup-conteiner">
@@ -131,22 +131,26 @@
       </div>
     </div>
 
-    <div id="Popup-FetchError" class="Popup">
-      <div class="Close-Popup" id="Close-Account-Created">&times;</div>
-      <div class="form">
-        <div class="title">
-          <img class="titleimg" src="/images/Logo.png" alt="">
-          Error
+    <% if (showIndexOnUnauthenticated && !isUserLogged) { %>
+      <div id="Popup-FetchError" class="Popup active">
+        <div class="Close-Popup" id="Close-Account-Created">&times;</div>
+        <div class="form">
+          <div class="title">
+            <img class="titleimg" src="/images/Logo.png" alt="">
+            Error
+          </div>
+          <div class=" SuccessfullyCreated-conteiner form-element">
+            <div> Access <span class="textError2">denied</span> !</div>
+          </div>
+          <div id="FetchError-error" class="texterrorbox textError2">You must be logged in to access the page: <%=page%> </div>
+          <div class="form-element">
+            <button class="Button-Popup ButtonDarkBlue" id="FetchError-continue">Continue</button>
+          </div>
         </div>
-        <div class=" SuccessfullyCreated-conteiner form-element">
-          <div> Sorry, an <span class="textError2">error</span> occurred !</div>
-        </div>
-        <div id="FetchError-error" class="texterrorbox textError2"></div>
-        <div class="form-element">
-          <button class="Button-Popup ButtonDarkBlue" id="FetchError-continue">Continue</button>
-        </div>
-      </div>
     </div>
+    <% } else {%>
+      <%- include("./ErrorPopUp.ejs") %>
+    <% } %>
 </div>
 <script src="/js/Log_in_out_popups.js"></script>
 <script src="/js/Overlay.js"></script>
