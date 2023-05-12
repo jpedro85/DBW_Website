@@ -290,6 +290,10 @@
     color: #85b8d6;
   }
 
+  .textButton:active {
+    color: #a2cbe2;
+  }
+
   .BlueTransparent-Button {
     display: block;
     font-size: 25px;

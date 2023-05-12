@@ -58,11 +58,23 @@ button_join_room.addEventListener("click", () => {
 
 // adding function to the copy code button
 button_copy_code.addEventListener("click", async ()=>{
-
-    
-    navigator.clipboard.writeText(input_copy_code.value);
-    console.log(navigator.clipboard.readText());
+    navigator.clipboard.writeText(input_copy_code.innerText);
+    showtextlikeinput_code.style = "background-color: #1CA1AA; color: black ;"
 });
+
+button_copy_code.addEventListener("mousedown", ()=> {
+    showtextlikeinput_code.style = "background-color: #70f5ff; color: black ;"
+} )
+
+const showtextlikeinput_code = document.querySelector("#showtextlikeinput_code");
+button_copy_code.addEventListener("mouseenter" , () => {
+    showtextlikeinput_code.style = "background-color: #1CA1AA; color: black ;"
+} )
+
+button_copy_code.addEventListener("mouseleave" , () => {
+    showtextlikeinput_code.style = "background-color: #095C61;    color: #FFFFFF ;"
+} )
+
 
 // adding function to the paste code button
 button_paste_code.addEventListener("click", async ()=>{

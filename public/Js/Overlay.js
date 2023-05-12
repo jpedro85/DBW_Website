@@ -4,8 +4,7 @@ const OverLays = document.querySelectorAll(".Popup");
 const OverLayConteiner = document.querySelector(".Popup-conteiner")
 
 // bool to activete the closing on outside of the overlay click 
- let OverlayCloseActive = true;
-
+let OverlayCloseActive = true;
 
 // for all overlay add function to the close button
 OverLays.forEach( (OverLay_popup) => {
@@ -19,14 +18,14 @@ OverLays.forEach( (OverLay_popup) => {
     } );
        
 
-    OverLay_popup.addEventListener("click" ,(event) => {
+    OverLay_popup.addEventListener("mousedown" ,(event) => {
         event.stopPropagation();
-    } , false);
+    });
 
 });
 
 // for a click in the overlay conteiner close the overlay
-OverLayConteiner.addEventListener("click", (event) => {
+OverLayConteiner.addEventListener("mousedown", (event) => {
     
     // close all popus
     if (OverlayCloseActive) {
@@ -35,9 +34,7 @@ OverLayConteiner.addEventListener("click", (event) => {
         });
     }
 
-} );
-
-// })
+});
 
 // function that close any popup 
 // doens't check if argument is a popup

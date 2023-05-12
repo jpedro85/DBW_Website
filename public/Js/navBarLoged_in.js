@@ -25,8 +25,9 @@ switch(window.location.pathname){
         break;
 }
 
-let navLogedIn = document.getElementById("navBarLoged_in");
-let menuButton = document.getElementById("navLink_Menu");
+const navLink_LogOut = document.getElementById("navLink_LogOut");
+const navLogedIn = document.getElementById("navBarLoged_in");
+const menuButton = document.getElementById("navLink_Menu");
 let click = false;
 
 // Adicionando um EventListener para quando clicarmos no menu.
@@ -49,4 +50,29 @@ menuButton.addEventListener("click", (event) => {
             menu.remove();
     }
     
+});
+
+
+// adding even to button log out 
+
+navLink_LogOut.addEventListener("click" , () => {
+
+    reqForm = {
+        formType: "logout",
+    }
+
+    fetch("/" , {
+        method: "POST", // defining the requesthe method and body format
+        headers: { "Content-Type": "application/json", },
+        body: JSON.stringify(reqForm),
+    
+    }).finally( () => {
+        
+        if (window.location.href.includes("about"))
+            window.location.href = "/about-us"
+        else
+            window.location.href = "/"
+
+    });
+
 });

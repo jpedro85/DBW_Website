@@ -1,5 +1,5 @@
 // about us ou index
-let redirect_after_login = "/";
+let redirect_after_login ;
 let lastSingUpReq ;
 
 // main popupsPopup_ErroPopUp
@@ -32,8 +32,21 @@ const input_password_login = document.querySelector("#Popup-Login-password");
 const input_error_username_login = document.querySelector("#Popup-Login-error-username");
 const input_error_password_login = document.querySelector("#Popup-Login-error-password");
 
+input_username_login.addEventListener("keydown",() => {
+    input_username_login.classList.remove("errorBox")
+    input_error_username_login.innerText = "";
+})
 
-// rests the values of the log in form
+input_password_login.addEventListener("keydown",() => {
+    input_password_login.classList.remove("errorBox")
+    input_error_password_login.innerText = "";
+})
+
+/**
+ * rests the values of the log in form
+ *
+ * @return  {void}  
+ */ 
 function resetLogin() {
     // reseting the values of the form
     input_username_login.value = "";
@@ -45,7 +58,7 @@ function resetLogin() {
 
     // reseting the boxerror efect
     input_username_login.classList.remove("errorBox");
-    input_username_login.classList.remove("errorBox");
+    input_password_login.classList.remove("errorBox");
 }
 
 // inpus do pop up creatAcount
@@ -53,6 +66,28 @@ const input_username = document.querySelector("#Popup-creatAcount-username");
 const input_email = document.querySelector("#Popup-creatAcount-email");
 const input_password = document.querySelector("#Popup-creatAcount-password");
 const input_passwordConfirm = document.querySelector("#Popup-creatAcount-password-confirm");
+
+input_username.addEventListener("keydown",() => {
+    input_username.classList.remove("errorBox")
+    input_error_username.innerText = "";
+})
+
+input_email.addEventListener("keydown",() => {
+    input_email.classList.remove("errorBox")
+    input_error_email.innerText = ""
+})
+
+input_password.addEventListener("keydown",() => {
+    input_password.classList.remove("errorBox")
+    input_passwordConfirm.classList.remove("errorBox")
+    input_error_password.innerText = ""
+})
+
+input_passwordConfirm.addEventListener("keydown",() => {
+    input_password.classList.remove("errorBox")
+    input_passwordConfirm.classList.remove("errorBox")
+    input_error_password.innerText = ""
+})
 
 // inpus "errorBox" do pop up creatAcount
 const input_error_username = document.querySelector("#Popup-creatAcount-error-username");
@@ -97,20 +132,19 @@ const Popup_creatAcount = document.querySelector("#Popup-creatAcount");
 // adding handler for Popup-creatAcount-next
 document.querySelector("#Popup-creatAcount-next").addEventListener("click" , () => {
 
-    // object represente the form
+    // object represents the form
     let reqForm = {
         username: "",
         email: "",
         password: "",
         repeat_password: "",
-        formType: "regiter"
+        formType: "register"
     } 
 
-    //falta hiden input
     if ( verifyUsername(reqForm) && verifyEmail(reqForm) && verifyPasswordCriterios(reqForm) && verifyPasswordConfimr(reqForm) ){
-
         sendRequest(reqForm,singUpResponseHandler);
-    } 
+    }
+
 })
 
 function sendRequest(reqForm,responseHandler){
@@ -118,7 +152,7 @@ function sendRequest(reqForm,responseHandler){
     // making the request email send
     fetch("/", //Rota para o POST Request
     { 
-        method: "POST", // defining the requesthe method and body format
+        method: "POST", // defining the request's method and body format
         headers: { "Content-Type": "application/json", },
         body: JSON.stringify(reqForm),  
     })
@@ -141,16 +175,11 @@ const SuccessfullyCreated_normal = document.querySelector("#SuccessfullyCreated-
 //singupHandlers
 function singUpResponseHandler(res) {
 
-    console.log(res);
-
     if (res.success) {
 
         lastSingUpReq = {
             username: res.username,
             email: res.email,
-            password : res.password,
-            repeat_password : res.repeat_password,
-            formType: "secondStep"
         } 
         
         // opening popup confirmm
@@ -170,6 +199,24 @@ function singUpResponseHandler(res) {
 
             input_error_email.innerText = res.error ;
             input_email.classList.add("errorBox");
+        
+        } else if ( res.errortype === "emailInUse") {
+
+            input_error_email.innerText = res.error ;
+            input_email.classList.add("errorBox");
+
+        } else if ( res.errortype === "acountPending") {
+
+            SuccessfullyCreated_normal.style.display = "none";
+            SuccessfullyCreated_resend.style.display = "flex";
+            
+            Popup_creatAcount.classList.remove("active");
+            Popup_AcountCreated.classList.add("active");
+
+            lastSingUpReq = {
+                username: res.username,
+                email: res.email,
+            } 
 
         } else if ( res.errortype === "password" ) {
             
@@ -182,14 +229,6 @@ function singUpResponseHandler(res) {
             input_password.classList.add("errorBox");
             input_passwordConfirm.classList.add("errorBox");
 
-        } else if ( res.errortype === "alreadyCreated" ) {
-            
-            SuccessfullyCreated_normal.style.display = "none";
-            SuccessfullyCreated_resend.style.display = "flex";
-            
-            Popup_creatAcount.classList.remove("active");
-            Popup_AcountCreated.classList.add("active");
-
         } else 
             showError(res.error);
     }  
@@ -201,9 +240,17 @@ document.querySelector("#Popup-confirmEmail-Resend").addEventListener("click" , 
 
     if (lastSingUpReq != null) { 
         lastSingUpReq.formType = "resend" ; 
-        sendRequest(reqForm,emailResponceHandler);
+        sendRequest(lastSingUpReq,emailResponceHandler);
     }
 
+});
+
+// adding handler for resent email in aconte already created
+document.querySelector("#Popup-AcountCreated-btn-recent").addEventListener("click" , () => {
+    
+        Popup_confirmEmail_emailshow.innerText = lastSingUpReq.email ; 
+        Popup_AcountCreated.classList.remove("active");
+        Popup_confirmEmail.classList.add("active");
 });
 
 /*
@@ -222,7 +269,6 @@ function emailResponceHandler(res) {
 // adding handler for Popup-Login-Button
 document.querySelector("#Popup-Login-Button").addEventListener("click" , () => {
 
-    console.log("aaaaafdsaf")
     // object represente the form
     let reqForm = {
        username: "",
@@ -232,21 +278,7 @@ document.querySelector("#Popup-Login-Button").addEventListener("click" , () => {
 
    //falta hiden input
     if ( verifyUsernamelogin(reqForm) && verifyPasswordlogin(reqForm) ){
-
-        fetch("/", //Rota para o POST Request
-        { 
-            method: "POST", // defining the requesthe method and body format
-            headers: { "Content-Type": "application/json", },
-            body: JSON.stringify(reqForm),  
-        })
-        .then( (res) => {   
-            if (res.ok) 
-                return res.json()  
-            else 
-                throw Error( res.status + " " + res.statusText );
-        })
-        .then( (res_data) => { loginResponseHandler(res_data) } ) 
-        .catch( (error) => showError(error) );
+        sendRequest(reqForm,loginResponseHandler);
     } 
 
 })
@@ -261,24 +293,24 @@ document.querySelector("#Popup-Login-Button").addEventListener("click" , () => {
 // handler for the response to login
 function loginResponseHandler(res) {
 
-    if (res.success) {
+    if (res.message.success) {
         window.location.href = redirect_after_login;
     } else {
 
-        if ( res.errortype === "credentials") {
+        if ( res.message.errortype === "credentials") {
 
-            input_error_password_login.innerText = res.error;
+            input_error_password_login.innerText = res.message.error;
             input_username_login.classList.add("errorBox");
             input_password_login.classList.add("errorBox");
 
-        } else if (res.errortype === "pending" ) {
+        } else if (res.message.errortype === "pending" ) {
 
-            input_error_password_login.innerText = res.error;
+            input_error_password_login.innerText = res.message.error;
 
         } else {
 
-            if (res.error != null)
-                showError(res.error);
+            if (res.message.error != null)
+                showError(res.message.error);
             else 
                 showError("Error 500 : Server error")
         }
@@ -303,53 +335,46 @@ document.querySelector("#Popup-creatAcoun-Signin-Button").addEventListener("clic
 
 // adding handler for continuing button
 document.querySelector("#AcountCreated-continue").addEventListener("click" , () => {
-    Popup_creatAcount.classList.remove("active");
+    Popup_AcountCreated.classList.remove("active");
     conteiner.classList.remove("active");
-});
+}); 
+ 
+function openSingUp() {
 
+    conteiner.classList.add("active");
+     // making the overlay Creat Acount visible
+    poppupLogin.classList.remove("active");
+    Popup_creatAcount.classList.add("active");
+    // activeting the closing on outside of the overlay click 
+    OverlayCloseActive = true;
+}
 
 // adding handler for Popup-Login-Signup-Button
 document.querySelector("#Popup-Login-Signup-Button").addEventListener("click" , () => {
 
     // reseting the values of the form
     resetSingUp();
-
-    // making the overlay Creat Acount visible
-    poppupLogin.classList.remove("active");
-    Popup_creatAcount.classList.add("active");
-    // activeting the closing on outside of the overlay click 
-    OverlayCloseActive = true;
+    openSingUp();
 });
 
 //auxiliares singup
 // object represent the final result
 function verifyUsername(object) {
 
-    if (input_username.value != "") {
-
-        if (input_username.value.length < 8 ){
-
-            input_error_username.innerText = "Must be at least 8 characters."
-            input_username.classList.add("errorBox");
-
-        } else if ( input_username.value.length <= 25 ) {
-
-            input_error_username.innerText = "";
-            input_username.classList.remove("errorBox");
-            object["signup_username"] = input_username.value ;
-
-            return true;
-
-        } else {
-
-            input_error_username.innerText = "Must be less then 26 characters."
-            input_username.classList.add("errorBox");
-
-        }
-    
-    } else {
+    if (input_username.value == "") {
         input_error_username.innerText = "Username cannot be empty."
         input_username.classList.add("errorBox");
+
+    } else if (input_username.value.length < 8 || input_username.value.length > 25) {
+        input_error_username.innerText = "Must have at least 8 and at most 25 characters."
+        input_username.classList.add("errorBox");
+
+    } else {
+        input_error_username.innerText = "";
+        input_username.classList.remove("errorBox");
+        object["username"] = input_username.value ;
+
+        return true;
     }
 
     return false;
@@ -358,91 +383,53 @@ function verifyUsername(object) {
 // object represent the final result of the form
 function verifyEmail(formResult) {
 
-    if (input_email.value != "") {
-
-        let indexArroba = input_email.value.indexOf('@') ;
-        if (  indexArroba > 0 ){
-
-            let indexDot = input_email.value.indexOf('.') ;
-           if( indexDot >  indexArroba && indexDot != input_email.value.length - 1 ){
-
-                input_error_email.innerText = "" ;
-                input_email.classList.remove("errorBox");
-
-                formResult["signup_email"] = input_email.value ;
-
-                return true;
-
-            } else {
-                input_error_email.innerText = "Invalid domain."
-                input_email.classList.add("errorBox");
-            }
-
-        } else {
-            input_error_email.innerText = "Dosen't contein '@'."
-            input_email.classList.add("errorBox");
-        }
-
-    } else {
+    if (input_email.value == "") {
         input_error_email.innerText = "Email cannot be empty."
         input_email.classList.add("errorBox");
+        return false;
+    } 
+
+    let indexArroba = input_email.value.indexOf('@') ;
+    let indexDot = input_email.value.indexOf('.') ;
+    if (indexArroba < 0) {
+        input_error_email.innerText = "Dosen't contein '@'."
+        input_email.classList.add("errorBox");
+    
+    }else if( indexDot <  indexArroba || indexDot == input_email.value.length - 1 ){
+        input_error_email.innerText = "Invalid domain."
+        input_email.classList.add("errorBox");
+        
+    } else {
+        formResult["email"] = input_email.value ;
+        return true;
     }
-
+      
     return false;
-
 }
 
 // object represent the final result of the form
 function verifyPasswordCriterios(formResult) {
 
-    if ( strContain_UperCase(input_password.value) ) {
+    console.log(input_password.value.length)
+    if (input_password.value.length < 8 || input_password.value.length  > 64) {
+        input_error_password.innerText = "Must have at least 8 and at most 64 characters."
+        input_password.classList.add("errorBox");
 
-        if ( strContain_LowerCase(input_password.value) ) {
+    } else if (!strContain_UperAndLower(input_password.value)) {
+        input_error_password.innerText = "Must have lower and uppercase characters."
+        input_password.classList.add("errorBox");
 
-            if ( strContain_Numbers(input_password.value) ) {
+    } else if (!strContain_Numbers(input_password.value)){
+        input_error_password.innerText = "Must have at least one number."
+        input_password.classList.add("errorBox");
 
-                if ( strContain_Symbols(input_password.value) ){
-                    
-                    if (input_password.value.length > 7 ){
-                        
-                        if (input_password.value.length <= 64) {
-
-                            input_error_password.innerText = "";
-                            input_password.classList.remove("errorBox");
-
-                            formResult["signup_password"] = input_password.value;
-
-                            return true;
-
-                        } else {
-                            console.log("erro2")
-                            input_error_password.innerText = "Must be less then 26 characters."
-                            input_password.classList.add("errorBox");
-                        }
-
-                    } else {
-                        input_error_password.innerText = "Must be at least 8 characters."
-                        input_password.classList.add("errorBox");
-                    }
-
-                } else {
-                    input_error_password.innerText = "Must have at least one symbol."
-                    input_password.classList.add("errorBox");
-                }
-
-            } else {
-                input_error_password.innerText = "Must have at least one number."
-                input_password.classList.add("errorBox");
-            }
-
-        } else {
-            input_error_password.innerText = "Must have at least one lowercase lether."
-            input_password.classList.add("errorBox");
-        }
+    } else if (!strContain_Symbols(input_password.value)){
+        input_error_password.innerText = "Must have at least one symbol."
+        input_password.classList.add("errorBox");
 
     } else {
-        input_error_password.innerText = "Must have at least one upercase lether."
-        input_password.classList.add("errorBox");
+        formResult["password"] = input_password.value;
+        return true;
     }
 
     return false;
@@ -452,13 +439,7 @@ function verifyPasswordCriterios(formResult) {
 function verifyPasswordConfimr(formResult) {
 
     if (input_password.value === input_passwordConfirm.value) {
-        
-        input_error_password.innerText = "";
-        input_password.classList.remove("errorBox");
-        input_passwordConfirm.classList.remove("errorBox");
-
-        formResult.signup_repeat_password = input_passwordConfirm.value;
-
+        formResult["repeat_password"] = input_passwordConfirm.value;
         return true;
 
     } else {
@@ -476,12 +457,7 @@ function verifyPasswordConfimr(formResult) {
 function verifyUsernamelogin(formResult) {
 
     if (input_username_login.value != "") {
-        
-        input_error_username_login.innerText = "";
-        input_username_login.classList.remove("errorBox");
-
         formResult["username"] = input_username_login.value ;
-
         return true;
 
     } else {
@@ -496,12 +472,7 @@ function verifyUsernamelogin(formResult) {
 function verifyPasswordlogin(formResult) {
 
     if (input_password_login.value != "") {
-        
-        input_error_password_login.innerText = "";
-        input_password_login.classList.remove("errorBox");
-
         formResult["password"] = input_password_login.value ;
-
         return true;
 
     } else {
@@ -511,6 +482,4 @@ function verifyPasswordlogin(formResult) {
 
     return false;
 }
-
-
 
