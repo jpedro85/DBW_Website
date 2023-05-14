@@ -2,9 +2,9 @@
 const {renderPageWithAuthStatus} = require('../controllers/userController.js');
 
 // Function to handler the request
-function playGameGet(request, response) {
-  renderPageWithAuthStatus(request, response, "playGame", {} ,true);
+function playGameGet(req, res) {
+  renderPageWithAuthStatus(req, res, "playGame", {} ,true);
 }
 
 // exporting the handler
-module.exports = playGameGet;
+module.exports = {playGameGet};

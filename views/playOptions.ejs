@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/css/playOptions.css" />
     <link rel="stylesheet" href="/css/buttons.css" />
     <link rel="stylesheet" href="/css/scrollBar.css" />
+    <link rel="stylesheet" href="/css/Overlay.css" />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Roboto"
@@ -249,6 +250,7 @@
                     </svg>
                   </button>
                 </div>
+                <p id="past_error" class="tab-element-error"></p>
               </div>
             </div>
           </div>
@@ -261,7 +263,12 @@
         </div>
       </div>
     </div>
+    <div class="Popup-conteiner">
+      <%- include("../views/partials/ErrorPopUp.ejs") %>
+    </div>
     <%- include("../views/partials/footer.ejs") %>
+    <script src="/js/Overlay.js"></script>
+    <script src="/js/ErrorPopUp.js"></script>
     <script src="/js/buttons.js"></script>
     <script src="/js/playOptions.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.slim.min.js"></script>

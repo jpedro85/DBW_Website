@@ -62,23 +62,114 @@ button_copy_code.addEventListener("click", async ()=>{
     showtextlikeinput_code.style = "background-color: #1CA1AA; color: black ;"
 });
 
+// adding animation to the copy code button
 button_copy_code.addEventListener("mousedown", ()=> {
     showtextlikeinput_code.style = "background-color: #70f5ff; color: black ;"
 } )
 
+// adding animation to the copy code button
 const showtextlikeinput_code = document.querySelector("#showtextlikeinput_code");
 button_copy_code.addEventListener("mouseenter" , () => {
     showtextlikeinput_code.style = "background-color: #1CA1AA; color: black ;"
 } )
 
+// adding animation to the copy code button
 button_copy_code.addEventListener("mouseleave" , () => {
     showtextlikeinput_code.style = "background-color: #095C61;    color: #FFFFFF ;"
 } )
 
-
+const past_error = document.querySelector("#past_error");
 // adding function to the paste code button
 button_paste_code.addEventListener("click", async ()=>{
     input_paste_code.value = await navigator.clipboard.readText();
+    input_paste_code.classList.remove("errorBox");
+    past_error.innerText = "";
 });
 
+// adding handler for the event click on create match button
+const option_match_type =  document.querySelector("#dropdown-MatchType .selected")
+const option_number_questions =  document.querySelector("#dropdown-Questions .selected")
+const option_difficulty =  document.querySelector("#dropdown-Dificulty .selected")
+const option_max_players =  document.querySelector("#dropdown-MaxPlayers .selected")
+document.querySelector("#btn-create").addEventListener("click" , () => {
 
+    reqForm = {
+        formtype : "create",
+        match_type : option_match_type.innerText,
+        number_questions : option_number_questions.innerText,
+        difficulty : option_difficulty.innerText,
+        max_players : option_max_players.innerText,
+        code : input_copy_code.innerText,
+    }
+
+    console.error(reqForm)
+    //sending the request to creat a match
+    sendRequest(createMatchHandler,reqForm);
+
+});
+
+// handler for createMatch response
+function createMatchHandler(res_data) {
+    
+    // the expected response is a HTTP.redirect
+    if(!res_data.success)
+        showError(res_data.error);
+
+}
+
+// adding handler for the event click on join match button
+
+
+document.querySelector("#btn-join").addEventListener("click" , () => {
+
+    reqForm = {
+        formtype : "join",
+        code : input_paste_code.value,
+    }
+
+    sendRequest(joinMatchHandler,reqForm);
+});
+
+// handler for joinMatch response
+function joinMatchHandler(res_data){
+
+     // the expected response is a HTTP.redirect
+     if(!res_data.success){
+
+        if(res_data.errortype === "fullMatch")
+            showError(res_data.error);
+        else if (res_data.errortype === "code"){
+            input_paste_code.classList.add("errorBox");
+            past_error.innerText = res_data.error;
+        }
+        else
+            showError(res_data.error);
+     }
+
+}
+
+input_paste_code.addEventListener("keydown" , ()=>{
+    input_paste_code.classList.remove("errorBox");
+    past_error.innerText = "";
+} )
+
+
+
+function sendRequest(responseHandler) {
+
+    fetch("/play/Options", 
+    { 
+        method: "POST", // defining the request's method and body format
+        headers: { "Content-Type": "application/json", },
+        body: JSON.stringify(reqForm),  
+    })
+    .then( (res) => {   
+        if (res.ok) 
+                return res.json()  
+        else 
+            throw Error( res.status + " " + res.statusText );
+    })
+    .then( (res_data) => { responseHandler(res_data) } ) 
+    .catch( (error) => showError(error) );
+
+}

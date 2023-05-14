@@ -171,6 +171,21 @@
     margin-bottom: 20px;
 }
 
+.tab-element-error {
+    margin-top: 20px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 18px;
+    color: #ad2424;
+}
+
+.errorBox {
+    border: 2px solid #ad2424 !important;
+    box-shadow: 0 0 20px 0 rgba(173, 36, 36, 0.4) !important;
+}
+
 #conteiner-tab-settings3 {   
     flex-grow: 1;
     display: flex;
@@ -327,3 +342,4 @@
     align-items: center;
     text-align: left;
 }
+
