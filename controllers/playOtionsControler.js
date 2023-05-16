@@ -106,7 +106,7 @@ class Match {
 
       this.#players.forEach( (matchPlayer) => {
 
-        if (matchPlayer.is(user))
+        if (matchPlayer.is(user.username))
           matchPlayer.guessed(true);
         else
           matchPlayer.guessed(false);
@@ -126,6 +126,24 @@ class Match {
 
   newQuestion(question) {
     this.#currentQuestion = question;
+  }
+
+  /**
+   * returns true if the ,match has the player
+   *
+   * @param   {[type]}  username  user.username
+   *
+   * @return  {[type]}            true if player is in the match
+   */
+  hasPlayer(username) {
+
+    for (let i = 0; i < this.#players.length; i++) {
+
+      if (this.#players[i].is(username))
+        return true;
+    }
+
+    return false;
   }
 }
 
@@ -247,8 +265,8 @@ class MatchPlayer {
     return this.#lastGuess;
   }
 
-  is(matchPlayer){
-    return matchPlayer.user === matchPlayer.user;
+  is(username){
+    return matchPlayer.user === username;
   }
 
   get user() {
@@ -410,4 +428,4 @@ function getMatchByCode (code){
 
 
 //exporting the router the handler
-module.exports = { AllPrivateMatches , MatchNormal, MatchVotedTheme , MatchPlayer , Question ,playOption_JoinMatch ,playOption_CreateMatch ,playOptionsControler };
+module.exports = { AllPrivateMatches , MatchNormal, MatchVotedTheme , MatchPlayer , Question , getMatchByCode ,playOption_JoinMatch ,playOption_CreateMatch ,playOptionsControler };

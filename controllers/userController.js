@@ -152,12 +152,12 @@ const renderPageWithAuthStatus = function (request, response, page, pageInfo={} 
   // Check wether the user is logged or not
   const isUserLogged = request.isAuthenticated();
   pageInfo["isUserLogged"] = isUserLogged;
-
   //shows the ejs page on the site and use the model to fill dynamically
-  if (!isUserLogged && showIndexOnUnauthenticated)
+  if (!isUserLogged && showIndexOnUnauthenticated){
     return response.render("index", { isUserLogged: isUserLogged , showAcountCreated : false , confirmstate : false , showIndexOnUnauthenticated , page} );
-  else 
+  }else {
     return response.render( page , pageInfo );
+  }
 };
 
 module.exports = { signup, renderPageWithAuthStatus, logoutUser };

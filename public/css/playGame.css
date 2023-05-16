@@ -255,6 +255,9 @@
     border-radius: 10px;
     
 }
+#tab-wainting-lether.active {
+    display: flex;
+}
 
 .tab-princ-divisor-main {
     background-color: #143951;
@@ -296,6 +299,9 @@
     overflow-x: hidden;
     
 }
+#tab-wainting-join.active {
+    display: flex;
+}
 
 #tab-Vote {
     min-width: 400px;
@@ -307,6 +313,9 @@
     border: 2px solid #143951;
     border-radius: 10px;
     overflow-x: hidden;
+}
+#tab-Vote.active {
+    display: flex;
 }
 
 #tab-Vote-OpnMenu{
@@ -375,7 +384,10 @@
 
 
 #playerinfo{
-    /* display: none; */
+    display: none; 
+}
+#playerinfo.active{
+    display: block
 }
 
 #tab-Game {
