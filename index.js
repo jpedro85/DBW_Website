@@ -54,11 +54,9 @@ const playOptionsRoute = require("./routes/playOptionsRoute");
 const playGameRoute = require("./routes/playGameRoute");
 const profileRoute = require("./routes/profileRoute");
 const authEmailRoute = require("./routes/authEmailRoute");
-// to be decided
-// const userRoute = require("./routes/userRoute");
 
 // Our anonymous function that contains our sockets
-//let serverSocket = require("./public/js/socket/socketServerSide");
+let serverSocket = require("./public/js/socket/socketServerSide.js");
 
 //////////////////
 /**
@@ -191,10 +189,9 @@ app.use(playOptionsRoute);
 app.use(playGameRoute);
 // Create the route to the profile page
 app.use(profileRoute);
-//
+// Creates the route where confirms the email
 app.use(authEmailRoute);
-// Create route to user
-// app.use(userRoute);
+
 
 /////////////////////////
 /**
@@ -202,7 +199,7 @@ app.use(authEmailRoute);
  **/
 /////////////////////////
 
-//serverSocket(io);
+serverSocket(io);
 
 server.listen(PORT, function (connectionError) {
   if (connectionError)
