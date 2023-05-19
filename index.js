@@ -87,15 +87,15 @@ app.use(express.json());
  **/
 /////////////////////////
 
+const sessionMiddleware = session({
+  // Used to encrypt you session data
+  secret: "your-secret-key",
+  resave: false,
+  saveUninitialized: false,
+});
+
 // Express-session middleware. Saves the user session on the server side
-app.use(
-  session({
-    // Used to encrypt you session data
-    secret: "your-secret-key",
-    resave: false,
-    saveUninitialized: false,
-  })
-);
+app.use(sessionMiddleware);
 
 // Making the strategy to authenticate or user
 passport.use(
@@ -160,6 +160,13 @@ passport.deserializeUser((user, done) => {
   done(null, user);
 });
 
+const wrap = middleware => (socket, next) =>
+ middleware(socket.request, {}, next);
+
+io.use(wrap(sessionMiddleware));
+io.use(wrap(passport.initialize()));
+io.use(wrap(passport.session()));
+
 /////////////////////////
 /**
  * MongoDB Connection
@@ -198,6 +205,14 @@ app.use(authEmailRoute);
  * Server Launch
  **/
 /////////////////////////
+
+io.use((socket, next) => {
+  if (socket.request.user) {
+    next();
+  } else {
+    next(new Error('unauthorized'))
+  }
+});
 
 serverSocket(io);
 
