@@ -19,7 +19,7 @@ Khajiit also features room creation and joining functionality, allowing players 
 - Captivating interface: Immerse yourself in a vibrant and dynamic gaming environment.
 - Diverse question categories: Test your knowledge across various subjects, including general knowledge, science, history, pop culture, and more.
 - Scoring system: Accumulate points based on accuracy and speed, adding a strategic element to the game.
-- Room customization: Create private rooms to invite specific friends or join public rooms for broader competition.
+- Room customization: Create private rooms to invite specific friends for broader competition.
 
 ## Installation
 
