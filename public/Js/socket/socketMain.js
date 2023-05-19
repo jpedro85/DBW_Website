@@ -1,6 +1,6 @@
 import { sendUserAnswerToServer, receiveFromServer } from "./socketHandler.js";
 
-sendUserAnswerToServer(roomQuestions);
+// sendUserAnswerToServer(roomQuestions);
 
 sendButton.addEventListener("click", (event) => {
    event.preventDefault();

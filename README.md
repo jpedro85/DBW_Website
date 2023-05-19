@@ -2,6 +2,14 @@
 
 Khajiit is an exhilarating multiplayer quiz game that brings together players from all around the world to test their knowledge and compete for the title of the smartest and quickest participant. In Khajiit, players engage in fast-paced trivia battles, answering a variety of challenging questions across multiple categories.
 
+## Project Description
+
+Khajiit is an exhilarating multiplayer quiz game that brings together players from all around the world to test their knowledge and compete for the title of the smartest and quickest participant. In Khajiit, players engage in fast-paced trivia battles, answering a variety of challenging questions across multiple categories.
+With Khajiit, players can challenge their friends to compete against other trivia enthusiasts. The game features a captivating and user-friendly interface that immerses players in a vibrant and dynamic environment. Whether you're a seasoned quiz master or a casual player looking for some friendly competition, Khajiit offers an entertaining and intellectually stimulating experience. 
+As players answer questions, they accumulate points based on both accuracy and speed. The quicker a player responds with the correct answer, the higher the points they receive. This scoring system adds an exciting element of strategy, as players must balance speed with accuracy to secure their position on the leaderboard.
+Khajiit also features room creation and joining functionality, allowing players to customize their gaming experience. They can create private rooms to invite specific friends to compete against a broader player base. The multiplayer aspect of Khajiit enhances the thrill of the game, creating a lively atmosphere where players can showcase their trivia skills and engage in friendly rivalries.
+
+
 ## Features
 
 - Multiplayer gameplay: Challenge your friends or compete against other trivia enthusiasts from around the world.
