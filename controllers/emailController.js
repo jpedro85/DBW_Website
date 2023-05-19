@@ -10,7 +10,7 @@ const databaseUser = require("../model/user.model.js");
 /////////////////////////
 
 // Imports the Config of our email
-const SMTP_CONFIG = require("../config/smtp.js");
+const SMTP_CONFIG = require("../config/smtp.config.js");
 
 // Creates the transport thats going to have the config necessary for nodemailer send the email
 const transporter = nodemailer.createTransport({
