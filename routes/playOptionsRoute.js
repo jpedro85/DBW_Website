@@ -17,6 +17,7 @@ router.post("/play/Options",  (req ,res ) => {
 
     }else
         res.send({success: false , errortype : "other" , error: "Invalid form submitted on request. Form type was not set." });
+
 });
 
 //exporting the router

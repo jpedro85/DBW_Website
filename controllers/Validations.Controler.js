@@ -41,7 +41,6 @@ function is_Password_Invalid(str) {
 function is_Username_Invalid(str) {
 
     if(str.length < 8 || str.length > 25  ){
-        console.log("user:false");
         return "Must have at least 8 and at most 25 characters."
     }else
         return false;

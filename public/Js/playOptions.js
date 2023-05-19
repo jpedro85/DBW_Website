@@ -101,8 +101,6 @@ document.querySelector("#btn-create").addEventListener("click" , () => {
         max_players : option_max_players.innerText,
         code : input_copy_code.innerText,
     }
-
-    console.error(reqForm)
     //sending the request to creat a match
     sendRequest(createMatchHandler,reqForm);
 
@@ -136,14 +134,19 @@ function joinMatchHandler(res_data){
      // the expected response is a HTTP.redirect
      if(!res_data.success){
 
-        if(res_data.errortype === "fullMatch")
+        if(res_data.errortype === "fullMatch"){
             showError(res_data.error);
-        else if (res_data.errortype === "code"){
+
+        } else if (res_data.errortype === "code"){
             input_paste_code.classList.add("errorBox");
             past_error.innerText = res_data.error;
-        }
-        else
+        
+        } else if( res_data.errortype === "abandon" || res_data.errortype === "limitRetched"){
+            past_error.innerText = res_data.error;
+
+        } else
             showError(res_data.error);
+           
      }
 
 }
@@ -164,9 +167,12 @@ function sendRequest(responseHandler) {
         body: JSON.stringify(reqForm),  
     })
     .then( (res) => {   
-        if (res.ok) 
-                return res.json()  
-        else 
+        if(res.redirected) {
+            window.location.href = res.url;
+            return {success:true}
+        } else if (res.ok){
+            return res.json()  
+        } else 
             throw Error( res.status + " " + res.statusText );
     })
     .then( (res_data) => { responseHandler(res_data) } ) 
