@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \\\"Error: no test specified\\\" && exit 1\"",
-    "start": "nodemon start"
+    "start": "nodemon start",
+    "dev": "node start"
   },
   "author": "",
   "license": "ISC",
@@ -21,7 +22,6 @@
     "nodemon": "^2.0.22",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
-    "passport-local-mongoose": "^8.0.0",
     "socket.io": "^4.6.1",
     "socket.io-client": "^4.6.1"
   }

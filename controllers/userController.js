@@ -1,4 +1,4 @@
-const config = require("../config/smtp");
+const config = require("../config/smtp.config");
 const databaseUser = require("../model/user.model.js");
 const {sendConfirmEmail, isAccountActive } = require("../controllers/emailController");
 const verifications = require("./Validations.Controler.js");
