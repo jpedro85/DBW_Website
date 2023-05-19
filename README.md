@@ -48,6 +48,6 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Contact
 
-If you have any questions or want to reach out, you can contact us at [email@example.com](mailto:email@example.com).
+If you have any questions or want to reach out, you can contact us at [khajiit.business@gmail.com](mailto:khajiit.business@gmail.com).
 
 Enjoy playing Khajiit and have fun challenging your friends with your trivia knowledge!
