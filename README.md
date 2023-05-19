@@ -1,4 +1,7 @@
-# Khajiit
+
+
+
+# <img src="/public/images/Logo.png" alt="Khajiit Logo" width="80" height="100" align="center"> Khajiit 
 
 Khajiit is an exhilarating multiplayer quiz game that brings together players from all around the world to test their knowledge and compete for the title of the smartest and quickest participant. In Khajiit, players engage in fast-paced trivia battles, answering a variety of challenging questions across multiple categories.
 
