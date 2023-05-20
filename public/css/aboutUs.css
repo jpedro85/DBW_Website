@@ -123,16 +123,16 @@ hr {
 }
 
 #imageBackEnd {
-    background-image: url("/images/Logo-Active.png"); 
+    background-image: url("/images/backEnd.jpg"); 
     background-size: 200px 200px;
 }
 
 #imageFrontEnd {
-    background-image: url("/images/Logo-Active.png"); 
+    background-image: url("/images/frontEnd.jpg"); 
     background-size: 200px 200px;
 }
 
 #imageDesigner {
-    background-image: url("/images/Logo-Active.png"); 
+    background-image: url("/images/designer.jpg"); 
     background-size: 200px 200px;
 }

@@ -10,25 +10,46 @@
     <link rel="stylesheet" href="/css/buttons.css" />
     <link rel="stylesheet" href="/css/Overlay.css" />
     <link rel="stylesheet" href="/css/scrollBar.css" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+    />
   </head>
   <body>
-    <% if(isUserLogged) {%>
-      <%-include("../views/partials/navBarLoged_in.ejs")%> 
-   <% } else {%> 
-     <%-include("../views/partials/navBar.ejs") %>
-   <% }%>
+    <% if(isUserLogged) {%> 
+      <%-include("../views/partials/navBarLoged_in.ejs")%>
+    <% } else {%>
+       <%-include("../views/partials/navBar.ejs") %>
+    <% }%>
     <div class="scrollbar AboutUsContent">
       <div id="Part1" class="row title">
         <div class="col-lg-12">About Us</div>
       </div>
       <div class="row">
         <div id="AboutUsTextBack" class="col-lg-12">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Assumenda
-          unde et dolor natus facilis. Sit molestiae voluptatum accusantium
-          quisquam, vel maxime? Harum consequuntur temporibus nulla porro ullam
-          blanditiis perferendis ad.
+          <p>
+            We are a dedicated team of student developers working on Khajiit as
+            part of a college class project. Our goal is to create an engaging
+            multiplayer quiz game that challenges players' knowledge and
+            provides a fun and educational experience.
+          </p>
+          <p>
+            With limited resources and time, we have put our skills together to
+            develop Khajiit from scratch. Our team comprises talented
+            individuals from various backgrounds. Through this project, we aim
+            to apply our classroom knowledge and gain hands-on experience in
+            developing a real-world application.
+          </p>
+          <p>
+            We are excited to share our creation with you and hope that Khajiit
+            brings joy and learning to your gaming experience. Your support and
+            feedback are incredibly valuable to us as we continue to improve and
+            enhance the game.
+          </p>
         </div>
       </div>
       <div id="Part2" class="row title">
@@ -44,17 +65,15 @@
               </div>
               <div>
                 <div class="infoImageConteiner">
-                    <mask id="imageBackEnd" class="infoImage"></mask>
+                  <mask id="imageBackEnd" class="infoImage"></mask>
                 </div>
                 <p class="infoName">João Pedro</p>
                 <hr />
               </div>
               <p class="infoText">
-                Vestibulum quis ante quis velit pharetra pellentesque
-                pellentesque quis purus. Vestibulum porta facilisis risus. Donec
-                tincidunt orci risus. Cras luctus mi lectus, vitae sollicitudin
-                nisl posuere in. Phasellus eros risus, pretium vitae euismod
-                lobortis, vulputate sit amet augue. Sed eleifend libero
+                Kickboxing helped him develop concentration. In addition, it
+                made him familiar with fighting the "bugs" in the code. They
+                won't beat him.
               </p>
             </div>
             <div class="info col-lg-4 col-md-6 col-sm-12">
@@ -64,17 +83,15 @@
               </div>
               <div>
                 <div class="infoImageConteiner">
-                  <mask  id="imageFrontEnd" class="infoImage"></mask >
+                  <mask id="imageFrontEnd" class="infoImage"></mask>
                 </div>
                 <p class="infoName">Pedro Ferreira</p>
                 <hr />
               </div>
               <p class="infoText">
-                Vestibulum quis ante quis velit pharetra pellentesque
-                pellentesque quis purus. Vestibulum porta facilisis risus. Donec
-                tincidunt orci risus. Cras luctus mi lectus, vitae sollicitudin
-                nisl posuere in. Phasellus eros risus, pretium vitae euismod
-                lobortis, vulputate sit amet augue. Sed eleifend libero
+                He is fanatical about logic games. And for solving them. He is
+                very analytical. Just like in development, he wants to "attack"
+                and find the best solution to that weird bug.
               </p>
             </div>
             <div class="info col-lg-4 col-md-6 col-sm-12">
@@ -84,25 +101,22 @@
               </div>
               <div>
                 <div class="infoImageConteiner">
-                  <mask  id="imageDesigner" class="infoImage"></mask >
+                  <mask id="imageDesigner" class="infoImage"></mask>
                 </div>
                 <p class="infoName">Ricardo Vieira</p>
                 <hr />
               </div>
               <p class="infoText">
-                Vestibulum quis ante quis velit pharetra pellentesque
-                pellentesque quis purus. Vestibulum porta facilisis risus. Donec
-                tincidunt orci risus. Cras luctus mi lectus, vitae sollicitudin
-                nisl posuere in. Phasellus eros risus, pretium vitae euismod
-                lobortis, vulputate sit amet augue. Sed eleifend libero
+                He is the man who leads a new colleague into our madness. He's
+                the boss in the "banter" and in the "jokes".
               </p>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <%- include("../views/partials/Log_in_out_popups.ejs") %>
-    <%- include("../views/partials/footer.ejs") %>
+    <%- include("../views/partials/Log_in_out_popups.ejs") %> <%-
+    include("../views/partials/footer.ejs") %>
     <script src="/js/aboutus.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>

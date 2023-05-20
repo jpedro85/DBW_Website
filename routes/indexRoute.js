@@ -33,7 +33,7 @@ router.post("/", async (request, response, next) => {
       let responded = false
 
       /** Authenticates the user session and responds to the request
-       * the passport authenticate is called to times so the callback for success is called twice
+       * the passport authenticate is called two times so the callback for success is called twice
       */
       passport.authenticate("local",function (error, user, info) {
         
