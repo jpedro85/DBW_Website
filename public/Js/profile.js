@@ -3,10 +3,10 @@ const editName=document.querySelector("#Edit-Name");
 const editEmail=document.querySelector("#Edit-Email");
 
 
-const conteiner = document.querySelector(".Popup-conteiner")
-const ImgPopup = document.querySelector("#Popup-Image")
-const NamePopup = document.querySelector("#Popup-Name")
-const EmailPopup = document.querySelector("#Popup-Email")
+const conteiner = document.querySelector(".Popup-conteiner");
+const ImgPopup = document.querySelector("#Popup-Image");
+const NamePopup = document.querySelector("#Popup-Name");
+const EmailPopup = document.querySelector("#Popup-Email");
 
 editPic.addEventListener("click",()=>{
     conteiner.classList.toggle("active");
@@ -37,25 +37,24 @@ const input_error_new_email = document.querySelector("#Popup-Change-email-error"
 input_Username.addEventListener("keydown",() => {
     input_Username.classList.remove("errorBox") 
     input_error_new_username.innerText = "";
-})
+});
 
 input_Email.addEventListener("keydown",() => {
     input_Email.classList.remove("errorBox") 
     input_error_new_email.innerText = "";
-})
+});
 
 // adding handler for Popup-Confirm-New-Username
 document.querySelector("#Popup-Confirm-New-Username").addEventListener("click" , () => {
-    // object represente the form
+    // object represents the form
     let reqForm = {
        username: ""
     }     
-   //falta hiden input
+    // Misses the hidden input
     if ( verifyNewUsername(reqForm)){
-        // sendRequest(reqForm,loginResponseHandler);
-        console.log("test");
+        sendRequest(reqForm,changeUsernameResponseHandler);
     } 
-})
+});
 
 // adding handler for Popup-Confirm-New-Email
 document.querySelector("#Popup-Confirm-New-Email").addEventListener("click" , () => {
@@ -65,10 +64,21 @@ document.querySelector("#Popup-Confirm-New-Email").addEventListener("click" , ()
     }     
    //falta hiden input
     if ( verifyNewEmail(reqForm)){
+        console.log("🚀 ~ reqForm:", reqForm);
         // sendRequest(reqForm,loginResponseHandler);
-        console.log("test");
+        
     } 
-})
+});
+
+const FetchError_error = document.querySelector("#FetchError-error");
+function showError (Msg){
+
+    closeAllPopUps();
+
+    FetchError_error.innerText = Msg;
+    Popup_ErroPopUp.classList.add("active");
+    conteiner.classList.add("active");
+}
 
 // object represent the final result of the form
 function verifyNewUsername(formResult) {
@@ -83,7 +93,7 @@ function verifyNewUsername(formResult) {
     else {
         input_error_new_username.innerText = "";
         input_Username.classList.remove("errorBox");
-        object["username"] = input_Username.value ;
+        formResult["username"] = input_Username.value ;
         return true;
     }
 
@@ -117,20 +127,39 @@ function verifyNewEmail(formResult) {
     return false;
 }
 
+const usernameShowcase = document.querySelector("#JoinCode-Copy-input");
+function changeUsernameResponseHandler(res) {
+    
+    if (res.success) {
+        usernameShowcase.innerText=res.changedUsername;
+    } else {
+
+        if ( res.errortype === "username") {
+
+            input_error_password_login.innerText = res.message.error;
+            input_username_login.classList.add("errorBox");
+            input_password_login.classList.add("errorBox");
+
+        } else {
+            showError(res.error);
+        }
+    }
+
+}
 
 function sendRequest(reqForm,responseHandler){
 
     // making the request email send
     fetch("/profile", //Rota para o POST Request
     { 
-        method: "PATCH", // defining the request's method and body format
+        method: "POST", // defining the request's method and body format
         headers: { "Content-Type": "application/json", },
         body: JSON.stringify(reqForm),
         
     })
     .then( (res) => {   
         if (res.ok) 
-             return res.json()  
+            return res.json()  
         else 
             throw Error( res.status + " " + res.statusText );
     })
@@ -156,10 +185,12 @@ logOut.addEventListener("click" , () => {
     
     }).finally( () => {
         
-        if (window.location.href.includes("about"))
-            window.location.href = "/about-us"
-        else
-            window.location.href = "/"
+        if (window.location.href.includes("about")) {
+            window.location.href = "/about-us";
+        }
+        else{
+            window.location.href = "/";
+        }
 
     });
 
