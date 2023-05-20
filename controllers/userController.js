@@ -1,5 +1,6 @@
 const config = require("../config/smtp");
 const databaseUser = require("../model/user.model.js");
+const databaseUserMetrics = require("../model/metrics.model.js");
 const {sendConfirmEmail, isAccountActive } = require("../controllers/emailController");
 const verifications = require("./Validations.Controler.js");
 
@@ -35,9 +36,13 @@ const signup = async (userData, response) => {
       password: hashedPassword,
       confirmationCode: token,
     });
+
+    const newUserMetrics = new databaseUserMetrics({
+      username: userData.username,
+    });
   
     await newDatabaseUser.save()
-    
+    await newUserMetrics.save()
     sendConfirmEmail( newDatabaseUser.email , newDatabaseUser.confirmationCode )
     .then( async (semError) => {
       if (semError != true){
@@ -156,8 +161,10 @@ const renderPageWithAuthStatus = function (request, response, page, pageInfo={} 
   //shows the ejs page on the site and use the model to fill dynamically
   if (!isUserLogged && showIndexOnUnauthenticated)
     return response.render("index", { isUserLogged: isUserLogged , showAcountCreated : false , confirmstate : false , showIndexOnUnauthenticated , page} );
-  else 
+  else{
+    //console.log(pageInfo); 
     return response.render( page , pageInfo );
+  }
 };
 
 module.exports = { signup, renderPageWithAuthStatus, logoutUser };

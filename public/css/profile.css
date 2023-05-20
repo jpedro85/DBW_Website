@@ -427,3 +427,8 @@ hr {
     background-color: #1CA1AA;
     color: black ;
 }
+
+.errorBox {
+    border: 2px solid #ad2424 !important;
+    box-shadow: 0 0 20px 0 rgba(173, 36, 36, 0.4) !important;
+}
