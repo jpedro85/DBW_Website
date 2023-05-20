@@ -31,7 +31,7 @@ function Post_playGameGetMatch_handler(req, res) {
             res.redirect("/play/Options");
 
           } else
-            res.send({success: false , errortype : "other" , error: "Canot find any match with the code: " + req.params.matchCode });
+            res.send({success: false , errortype : "other" , error: "Cannot find any match with the code: " + req.params.matchCode });
         
         } 
           

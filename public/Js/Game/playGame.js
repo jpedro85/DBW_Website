@@ -3,11 +3,17 @@ const sendButton = document.querySelector("#btn-tab-game-guess");
 const gameChat = document.querySelector("#tab-game-chat");
 const gameQuestion = document.querySelector(".tab-game-question");
 
+let playGameOnMatch = true;
+
 const GoTo_playOptinos = document.querySelector("#GoTo_playOptions");
 if (GoTo_playOptinos != null){
+    ~
     GoTo_playOptinos.addEventListener("click",(click) => {
         window.location = "/play/Options"
     })
+
+    //the match was not found or user is not auth
+    playGameOnMatch=false;
 }
 
 document.querySelector("#button-abandonMatch").addEventListener( "click", () => {
@@ -44,3 +50,5 @@ function startMatchHandler(res_data){
     }
 
 }
+
+

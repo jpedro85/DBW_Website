@@ -1,9 +1,15 @@
 //importing necessary classes
 const {MatchPlayer} = require("./MatchPlayer.js");
+//ompor io server form index
 
 class Match {
 
-    #match_socket
+    static class_io  = null;
+
+    static setIO(io) {
+      Match.class_io = io;
+    }
+
     #joinCode;
     #settings_difficulty;
     #settings_questions ;
@@ -23,24 +29,6 @@ class Match {
       this.#currentQuestion = null;
       this.#ClassName = (type==null) ? "Match" : type ;
       this.#status = "starting"; 
-    }
-
-    /**
-     * return true if the user is the leather and is the one setting the socket
-     *
-     * @param    user    
-     * @param   socket  [socket.io socket connection]
-     *
-     * @return boolean
-     */
-    set_Match_socket(user,socket){
-
-        if (user.username === this.getLeader().user ){
-            this.#match_socket = socket;
-            return true;
-        }
-
-        return false;
     }
   
     ClassName () {
@@ -88,14 +76,20 @@ class Match {
         if(matchPlayer.is(user.username)){
             if(matchPlayer.gaveUp())
                 return {success : false , errortype:"abandon" , error: "Can't rejoin after abandon." }
-            else
-                return {success : matchPlayer.rejoined() , errortype: "limitRetched" , error: "You can only rejoin 2 times." }
+            else{
+              Match.class_io.to(this.#joinCode).emit("teste", "adicionado");
+              return {success : matchPlayer.rejoined() , errortype: "limitRetched" , error: "You can only rejoin 2 times." }
+            }
+                
         }
       }
   
       if (this.#players.length + 1 < this.#settings_maxPlayers ){
-  
+        
         this.#players.push( new MatchPlayer(user,this.#players.length + 1) );
+        console.log("🚀 ~ players:", this.#players);
+        Match.class_io.to(this.#joinCode).emit("teste", "adicionado");
+        
         return {success : true };
       }
   

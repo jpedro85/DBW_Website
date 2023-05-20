@@ -43,10 +43,31 @@ export function sendUserAnswerToServer() {
  * and formats it and sends it to the player's Game Tab
  */
 export function receiveFromServer() {
-    socket.on("clientGameQuestion",(newGameQuestion)=>{
-        sendQuestion(newGameQuestion);
-    })
-    socket.on("clientGameChat",(messageForClient) => {
-        sendAnswer(messageForClient);
+
+    socket.on("connect" ,()=> {
+
+        askToJoin();
+
+        socket.on("clientGameQuestion",(newGameQuestion)=>{
+            sendQuestion(newGameQuestion);
+        });
+        socket.on("clientGameChat",(messageForClient) => {
+            sendAnswer(messageForClient);
+        });
+        socket.on("teste",(msg) => {
+            console.log("🚀 ~ msg:", msg);
+        });
     });
+
 }
+
+function askToJoin(){
+    const roomCode = window.location.pathname.substring(11);
+    socket.emit("askToJoin" , roomCode);
+}
+
+
+export function listenSocketEvents() {
+
+}
+

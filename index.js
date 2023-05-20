@@ -5,6 +5,8 @@ const methodOverride = require("method-override");
 // Import mongoose so we can use mongoDB
 const mongoose = require("mongoose");
 
+const { instrument } = require("@socket.io/admin-ui");
+
 /////////////////////////
 /**
  * Passport Variables
@@ -22,6 +24,9 @@ const fetchedUser = require("./model/user.model");
 // Import bcrypt a tool used for the password encryption
 var bcrypt = require("bcrypt");
 const app = express();
+// importing math to set i"o on class var to avoid circular dependencies
+const  {Match} = require("./controllers/Classes/Matches")
+
 
 /////////////////////////
 /**
@@ -32,9 +37,17 @@ const app = express();
 // Creates the server
 const server = require("http").createServer(app);
 // Create the socket.io server
-const io = require("socket.io")(server);
+const io = require("socket.io")(server,{
+  cors: {
+    origin: ["http://localhost:3000","https://admin.socket.io"],
+    credentials: true
+  }
+});
 // The PORT that the server is going to be
 const PORT = 3000;
+
+// setting Match io before starting server
+Match.setIO(io)
 
 /////////////////////////
 /**
@@ -212,6 +225,11 @@ io.use((socket, next) => {
   } else {
     next(new Error('unauthorized'))
   }
+});
+
+instrument(io, {
+  auth: false,
+  mode: "development",
 });
 
 serverSocket(io);

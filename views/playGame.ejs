@@ -97,7 +97,7 @@
                                     
                                     if (match.players[i].user === match.getLeader().user) { %>
                                         
-                                        <div id="nome do jogador" class="tab-item-sethings-playersInMatch-item">
+                                        <div id="<%=match.players[i].user%>" class="tab-item-sethings-playersInMatch-item">
                                             <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
                                             <!-- svg sinals the match creator -->
                                             <svg width="23" height="20" viewBox="0 0 23 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -108,7 +108,7 @@
                                 
                                     <% } else { %>
 
-                                        <div id="nome do jogador" class="tab-item-sethings-playersInMatch-item">
+                                        <div id="<%=match.players[i].user%>" class="tab-item-sethings-playersInMatch-item">
                                             <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
                                             <div class="text-Setigns-playerName tab-item-sethings-playersInMatch-item-name"><%=match.players[i].user%></div> 
                                         </div>
@@ -491,8 +491,6 @@
         <!-- <script src="/js/buttons.js"></script> -->
         <script src="/socket.io/socket.io.js"></script>
         <script src="/js/Game/playGame.js"></script>
-        <script src="/js/Game/answerHandler.js"></script>
-        <script src="/js/Game/questionHandler.js"></script>
         <script type="module" src="/js/socket/socketMain.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.4.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
