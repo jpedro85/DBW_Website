@@ -1,5 +1,6 @@
 const { renderPageWithAuthStatus } = require("../controllers/userController.js");
 const fetchedUserMetrics = require("../model/metrics.model.js");
+const fetchedDatabaseUser = require("../model/user.model.js");
 // creating the profile handler
 const profileControler = function profileControler(req, response) {
     const isUserLogged = req.isAuthenticated();
@@ -56,3 +57,26 @@ const profileControler = function profileControler(req, response) {
 
 // exporting the handler
 module.exports = profileControler;
+
+
+const updateUsername = async function (request, response) {
+    console.log("error");
+    // Fetches the description from the form
+    const username = request.user;
+    try {
+      // Find book in database by object id
+      const fetched = await fetchedDatabaseUser.findOne({username: username});
+      if (fetched) {
+        // Update the the fetchedBook description locally
+        fetched.username = request.username;
+        // Saves the changes made on the DB
+        await fetched.save();
+        // Redirects to the index page after the process is done
+        response.redirect("/Profile");
+      } else {
+        console.log("test");
+      }
+    } catch (updateError) {
+      console.error(updateError);
+    }
+  };

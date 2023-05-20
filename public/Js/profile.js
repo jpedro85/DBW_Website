@@ -123,9 +123,10 @@ function sendRequest(reqForm,responseHandler){
     // making the request email send
     fetch("/profile", //Rota para o POST Request
     { 
-        method: "POST", // defining the request's method and body format
+        method: "PATCH", // defining the request's method and body format
         headers: { "Content-Type": "application/json", },
-        body: JSON.stringify(reqForm),  
+        body: JSON.stringify(reqForm),
+        
     })
     .then( (res) => {   
         if (res.ok) 
@@ -139,7 +140,7 @@ function sendRequest(reqForm,responseHandler){
 }
 
 
-
+//logout ...
 const logOut = document.getElementById("Log-Out-Button");
 
 logOut.addEventListener("click" , () => {
@@ -163,3 +164,4 @@ logOut.addEventListener("click" , () => {
     });
 
 });
+
