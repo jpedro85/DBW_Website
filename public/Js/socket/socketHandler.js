@@ -54,8 +54,13 @@ export function receiveFromServer() {
         socket.on("clientGameChat",(messageForClient) => {
             sendAnswer(messageForClient);
         });
-        socket.on("teste",(msg) => {
-            console.log("🚀 ~ msg:", msg);
+        socket.on("Player-Joined",(res_Object) => {
+            userJoinHandler(res_Object)
+            console.log("🚀 ~ userJoined:", res_Object.user.username);
+        });
+        socket.on("Player-Left",(res_Object) => {
+            userLeftHandler(res_Object)
+            console.log("🚀 ~ userLeft:", res_Object.user.username);
         });
     });
 

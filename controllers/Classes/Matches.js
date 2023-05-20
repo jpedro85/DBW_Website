@@ -15,8 +15,10 @@ class Match {
     #settings_questions ;
     #settings_maxPlayers;
     #players;
+    #playersDraw;
     #currentQuestion;
     #ClassName;
+    #leader;
     #status; // {starting ,voting, running , finished}
   
     constructor(leader,joinCode,settings_difficulty,settings_questions,settings_maxPlayers,type=null){
@@ -25,19 +27,24 @@ class Match {
       this.#settings_questions = settings_questions;
       this.#settings_maxPlayers = settings_maxPlayers;
       this.#players = [];
-      this.#players.push(  new MatchPlayer(leader,1) );
+      //adding leader
+      let temp = new MatchPlayer(leader,1);
+      this.#players.push( temp );
+      this.#leader = temp ;
+
       this.#currentQuestion = null;
       this.#ClassName = (type==null) ? "Match" : type ;
       this.#status = "starting"; 
+      this.#playersDraw = 0;
     }
   
-    ClassName () {
+    ClassName() {
       // class type - Match
       return this.#ClassName.substring(6);
     }
   
-    getLeader () {
-      return this.#players[0];
+    getLeader() {
+      return this.#leader;
     }
   
     get joinCode () {
@@ -66,46 +73,115 @@ class Match {
   
     /**
      * Return true is player joined match and can join the match false case its full
-     *
-     * @param   {req.user}  user  
      */
     playerJoin(user) {
   
       for(let matchPlayer of this.#players){
-  
+
         if(matchPlayer.is(user.username)){
-            if(matchPlayer.gaveUp())
-                return {success : false , errortype:"abandon" , error: "Can't rejoin after abandon." }
+            if(matchPlayer.gaveUp() && !matchPlayer.automaticGaveUp())
+              return {success : false , errortype:"abandon" , error: "Can't rejoin after abandon." }
+            
             else{
-              Match.class_io.to(this.#joinCode).emit("teste", "adicionado");
-              return {success : matchPlayer.rejoined() , errortype: "limitRetched" , error: "You can only rejoin 2 times." }
+              
+              if(!this.hasLeader())
+                this.#players = newPlayer;
+              
+              Match.class_io.to(this.#joinCode).emit("Player-Joined", { matchInfo : {isleader: this.isLeader(matchPlayer), maxPlayers: this.#settings_maxPlayers , playerCount : this.getPlayerCount() }, user : {username:user.username , img:"em desenvolvimento"} } );
+
+              return {success : matchPlayer.rejoined() , errortype: "limitRetched" , error: "Reached max rejoins, 3 !" }
             }
                 
         }
       }
   
-      if (this.#players.length + 1 < this.#settings_maxPlayers ){
+      if (this.#players.length + 1 - this.#playersDraw < this.#settings_maxPlayers ){
         
-        this.#players.push( new MatchPlayer(user,this.#players.length + 1) );
-        console.log("🚀 ~ players:", this.#players);
-        Match.class_io.to(this.#joinCode).emit("teste", "adicionado");
-        
+        let newPlayer = new MatchPlayer(user,this.#players.length + 1);
+
+        if(!this.hasLeader())
+          this.#players = newPlayer;
+          
+        this.#players.push(newPlayer);
+        Match.class_io.to(this.#joinCode).emit("Player-Joined",  { matchInfo : {isleader: this.isLeader(newPlayer), maxPlayers: this.#settings_maxPlayers , playerCount : this.getPlayerCount() }, user : {username:user.username , img:"em desenvolvimento"} });
         return {success : true };
       }
   
     }
-  
-    playerLeft(user) {
 
-        for (let i = 0; i < this.#players.length; i++) {
+    playerCheated(user){
+      for (let matchPlayer of this.#players) {
             
-            if(this.#players[i].is(user.username)){
-                this.#players[i].draw() 
-                break;
-            }
+        if(matchPlayer.is(user.username)){
+
+          // return true and draw is called if max falls reached else return false
+          if(matchPlayer.cheated()){
+
+            if(matchPlayer == this.#leader)
+              this.leaderLeft();
+
+            this.#playersDraw++;~
+            Match.class_io.to(this.#joinCode).emit("Player-Left",  { matchInfo : {isleader: this.isLeader(matchPlayer), maxPlayers: this.#settings_maxPlayers , playerCount : this.getPlayerCount() }, user : {username:user.username} });
+            break;
+          }
         }
+      }
 
+    }
 
+    playerFell(user){
+      for (let matchPlayer of this.#players) {
+            
+        if(matchPlayer.is(user.username)){
+          
+          if(matchPlayer == this.#leader)
+              this.leaderLeft();
+
+          // return true and draw is called if max falls reached else return false
+          if(matchPlayer.fell()){
+            this.#playersDraw++;
+            Match.class_io.to(this.#joinCode).emit("Player-Left",  { matchInfo : {isleader: this.isLeader(matchPlayer), maxPlayers: this.#settings_maxPlayers , playerCount : this.getPlayerCount() }, user : {username:user.username} });
+            break;     
+          }     
+        }
+      }
+    }
+  
+    playerAbandon(user) {
+
+      for (let matchPlayer of this.#players) {
+            
+        if(matchPlayer.is(user.username)){
+
+            if(matchPlayer == this.#leader)
+              this.leaderLeft();
+            
+            matchPlayer.draw() 
+            this.#playersDraw++;
+            Match.class_io.to(this.#joinCode).emit("Player-Left",  { matchInfo : {isleader: this.isLeader(matchPlayer), maxPlayers: this.#settings_maxPlayers , playerCount : this.getPlayerCount() }, user : {username:user.username} });
+            break;
+        }
+      }
+    }
+
+    hasLeader(){
+      return this.#leader;
+    }
+
+    leaderLeft(){
+
+      Match.class_io.to(this.#joinCode).emit("MatchHover", "Leader Left")
+      
+
+      // for (let i_playerNewLeader = 0; i_playerNewLeader < this.#players.length; i_playerNewLeader++) {
+
+      //   if( this.#players[i_playerNewLeader] != this.#leader && !this.#players[i_playerNewLeader].gaveUp() && !this.#players[i_playerNewLeader].isFell() ){
+      //     console.log("exec:"+i_playerNewLeader+"||"+this.#players[i_playerNewLeader])
+      //     this.#leader = this.#players[i_playerNewLeader];
+      //   }
+      // }
+
+      // this.#leader = null;;
     }
    
     playerGuess(user,guess) {
@@ -128,27 +204,17 @@ class Match {
       }
     }
   
-    questionEnd() {
-      this.#players.forEach( (matchPlayer) => {matchPlayer.update_Answer()} );
-    }
-  
-    newQuestion(question) {
-      this.#currentQuestion = question;
-    }
-  
     /**
      * returns true if the ,match has the player
      *
      * @param   {[type]}  username  user.username
-     *
-     * @return  {[type]}            true if player is in the match
      */
     hasPlayer(username) {
   
       for (let i = 0; i < this.#players.length; i++) {
   
         if (this.#players[i].is(username))
-          return true;
+          return this.#players[i];
       }
   
       return false;
@@ -157,7 +223,54 @@ class Match {
     getPlayers() {
       return this.#players.length ;
     }
-  }
+
+    getPlayerCount(){
+      return this.#players.length - this.#playersDraw
+    }
+      
+    isLeader(match_player){
+      if(this.#leader != null)
+        return this.#leader.user === match_player.user;
+      else
+        return false;
+    }
+
+    start(){
+      Match.class_io.to(this.#joinCode).emit("",{ matchInfo : { status: "running" , type: this.ClassName() } })
+    }
+   
+    questionEnd(matchInfo) {
+
+      playerPoints = [];
+
+      this.#players.forEach( (matchPlayer) => {
+        
+        matchPlayer.update_Answer()
+        
+        playerPoints.push(
+          {
+            username:matchPlayer.user,
+            point_total:matchPlayer.points,
+            point_bonus:matchPlayer.bonus_points,
+            point_streak:matchPlayer.streak_points,
+            rights:matchPlayer.rights,
+            streak:matchPlayer.streak,
+            place:matchPlayer.place
+          })
+      });
+
+      Match.class_io.to(this.#joinCode).emit("Question-End",{matchInfo , playerPoints });
+    }
+  
+    newQuestion(question) {
+      this.#currentQuestion = question;
+    }
+
+    questionEnd() {
+      this.#players.forEach( (matchPlayer) => {matchPlayer.update_Answer()} );
+    }
+
+}
 
 
 
@@ -171,10 +284,32 @@ class MatchNormal extends Match {
       super(leader,joinCode,settings_difficulty,settings_questions,settings_maxPlayers,"Match_Normal");
   
     }
+
+    start(){
+      super.start();
+
+      setInterval
+      
+
+    }
   
     newQuestion() {
+
+
+
+
       question = "porFazer";
       super.newQuestion(question);
+
+      setTimeout(this.questionEnd,120000);
+    }
+
+
+    questionEnd(){
+      super.questionEnd();
+
+      if(this.q)
+
     }
   
 }

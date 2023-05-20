@@ -85,8 +85,8 @@
                                 </div>
                             </div>
                             <!-- conteiner tab shows player in match -->
-                            <div class="tab-divisor-main tab-midle text-title"> 
-                                <span>Players <%=match.getPlayers()%>/<%=match.settings_maxPlayers%></span>
+                            <div id="playersConter" class="tab-divisor-main tab-midle text-title"> 
+                                <span>Players <%=match.getPlayerCount()%>/<%=match.settings_maxPlayers%></span>
                             </div>
                             <div id="tab-item-sethings-playersInMatch" >
 
@@ -95,25 +95,29 @@
                                     if(match.players[i].user === req.user.username)
                                         player = match.players[i];
                                     
-                                    if (match.players[i].user === match.getLeader().user) { %>
+                                    if(!match.players[i].gaveUp() && !match.players[i].isFell()) {
                                         
-                                        <div id="<%=match.players[i].user%>" class="tab-item-sethings-playersInMatch-item">
-                                            <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
-                                            <!-- svg sinals the match creator -->
-                                            <svg width="23" height="20" viewBox="0 0 23 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M2.5 15L0 1.25L6.875 7.5L11.25 0L15.625 7.5L22.5 1.25L20 15H2.5ZM20 18.75C20 19.5 19.5 20 18.75 20H3.75C3 20 2.5 19.5 2.5 18.75V17.5H20V18.75Z" fill="#FFD233"/>
-                                            </svg>
-                                            <div class="text-Setigns-playerName tab-item-sethings-playersInMatch-item-name"><%=match.players[i].user%></div> 
-                                        </div>
-                                
-                                    <% } else { %>
 
-                                        <div id="<%=match.players[i].user%>" class="tab-item-sethings-playersInMatch-item">
-                                            <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
-                                            <div class="text-Setigns-playerName tab-item-sethings-playersInMatch-item-name"><%=match.players[i].user%></div> 
-                                        </div>
+                                        if ( match.getLeader() != null && match.players[i].user === match.getLeader().user) { %>
+                                            
+                                            <div id="<%=match.players[i].user%>" class="tab-item-sethings-playersInMatch-item">
+                                                <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
+                                                <!-- svg sinals the match creator -->
+                                                <svg width="23" height="20" viewBox="0 0 23 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M2.5 15L0 1.25L6.875 7.5L11.25 0L15.625 7.5L22.5 1.25L20 15H2.5ZM20 18.75C20 19.5 19.5 20 18.75 20H3.75C3 20 2.5 19.5 2.5 18.75V17.5H20V18.75Z" fill="#FFD233"/>
+                                                </svg>
+                                                <div class="text-Setigns-playerName tab-item-sethings-playersInMatch-item-name"><%=match.players[i].user%></div> 
+                                            </div>
+                                    
+                                        <% } else { %>
 
-                                    <% } %>
+                                            <div id="<%=match.players[i].user%>" class="tab-item-sethings-playersInMatch-item">
+                                                <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
+                                                <div class="text-Setigns-playerName tab-item-sethings-playersInMatch-item-name"><%=match.players[i].user%></div> 
+                                            </div>
+
+                                        <%} 
+                                    }%>
 
                                 <% } %>
                                     
@@ -173,7 +177,7 @@
         
                         
                         <!-- waiting tab join -->
-                        <% if(match.status === "starting" && match.getLeader().user != player.user) { %>
+                        <% if(match.status === "starting" && match.getLeader() != null && match.getLeader().user != player.user) { %>
                         <div id="tab-wainting-lether" class="active">
                         <% } else { %>
                         <div id="tab-wainting-lether">
@@ -199,7 +203,7 @@
                         </div>
         
                         <!-- waiting tab leather  -->
-                        <% if(match.status === "starting" && match.getLeader().user === player.user) { %>
+                        <% if(match.status === "starting" && match.getLeader() != null && match.getLeader().user === player.user) { %>
                         <div id="tab-wainting-join" class="active">
                         <% } else { %>
                         <div id="tab-wainting-join">

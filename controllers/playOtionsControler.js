@@ -147,7 +147,21 @@ function getMatchByCode (code){
   return false;
 }
 
+function getPlayerInMatchByCode (user,code){
+
+  for (let i = 0; i < AllPrivateMatches.length; i++) {
+
+    console.log("getMatchByCode:"+code)
+    
+    if (AllPrivateMatches[i].joinCode === code)
+      return AllPrivateMatches[i].hasPlayer(user.username);
+      
+  }
+
+  return false;
+}
+
 
 
 //exporting the router the handler
-module.exports = { AllPrivateMatches , getMatchByCode ,playOption_JoinMatch ,playOption_CreateMatch ,playOptionsControler };
+module.exports = { AllPrivateMatches , getPlayerInMatchByCode , getMatchByCode ,playOption_JoinMatch ,playOption_CreateMatch ,playOptionsControler };

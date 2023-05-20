@@ -27,13 +27,24 @@ function Post_playGameGetMatch_handler(req, res) {
           let match = getMatchByCode(req.params.matchCode);
           if(match) {
               
-            match.playerLeft(req.user)
+            match.playerAbandon(req.user)
             res.redirect("/play/Options");
 
           } else
             res.send({success: false , errortype : "other" , error: "Cannot find any match with the code: " + req.params.matchCode });
         
-        } 
+        } else if ( req.body.formtype === "start" ){
+
+          let match = getMatchByCode(req.params.matchCode);
+          if(match) {
+            
+            match.start();
+            res.send({success:true})
+
+          } else
+            res.send({success: false , errortype : "other" , error: "Cannot find any match with the code: " + req.params.matchCode });
+
+        }
           
 
       }

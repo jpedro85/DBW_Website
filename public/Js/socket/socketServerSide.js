@@ -1,7 +1,4 @@
-const {
-  AllPrivateMatches,
-  getMatchByCode,
-} = require("../../../controllers/playOtionsControler.js");
+const {getMatchByCode,getPlayerInMatchByCode, } = require("../../../controllers/playOtionsControler.js");
 
 module.exports = serverSocket = (io) =>
   // On event connection we search any entry sockets
@@ -9,28 +6,31 @@ module.exports = serverSocket = (io) =>
     const username = socket.request.user.username;
     const param = socket.request;
 
-    socket.on("GameQuestion", (gameQuestion) => {
-      io.sockets.emit("clientGameQuestion", gameQuestion);
-    });
+    // socket.on("GameQuestion", (gameQuestion) => {
+    //   io.sockets.emit("clientGameQuestion", gameQuestion);
+    // });
 
-    socket.on("GameChat", (userAnswer) => {
-      const messageClient = {
-        username: username,
-        message: userAnswer.message,
-        timeStamp: userAnswer.timeStamp,
-      };
+    // socket.on("GameChat", (userAnswer) => {
+    //   const messageClient = {
+    //     username: username,
+    //     message: userAnswer.message,
+    //     timeStamp: userAnswer.timeStamp,
+    //   };
 
-      if (isAnswerCorrect(messageClient.message)) {
-        messageClient.status = "guess";
-      } else {
-        messageClient.status = "wrong";
-      }
+    //   if (isAnswerCorrect(messageClient.message)) {
+    //     messageClient.status = "guess";
+    //   } else {
+    //     messageClient.status = "wrong";
+    //   }
 
-      io.sockets.emit("clientGameChat", messageClient);
-    });
+    //   io.sockets.emit("clientGameChat", messageClient);
+    // });
 
     socket.on("askToJoin", (roomCode) => {
       
+      const match_player = getPlayerInMatchByCode(socket.request.user,roomCode);
+      match_player.socket = socket;
+
       socket.join(roomCode);
       console.log("🚀 ~ roomCode:", roomCode);
       
