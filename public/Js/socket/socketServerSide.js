@@ -1,24 +1,51 @@
+const {getMatchByCode,getPlayerInMatchByCode, } = require("../../../controllers/playOtionsControler.js");
+
 module.exports = serverSocket = (io) =>
   // On event connection we search any entry sockets
   io.on("connect", function (socket) {
     const username = socket.request.user.username;
-    socket.on("GameQuestion", (gameQuestion) => {
-        io.sockets.emit("clientGameQuestion", gameQuestion);
-    });
-    socket.on("GameChat", (userAnswer) => {
-      const messageClient = {
-        username: username,
-        message: userAnswer.message,
-        timeStamp: userAnswer.timeStamp,
-      };
+    const param = socket.request;
 
-      if (isAnswerCorrect(messageClient.message)) {
-        messageClient.status = "guess";
+    socket.on("GameChat-Guess-Send",(roomCode,userAnswer,timeStamp)=>{
+
+      const match = getMatchByCode(roomCode);
+
+      if(match){
+        match.playerGuess(socket.request.user,userAnswer,timeStamp);
       } else {
-        messageClient.status = "wrong";
+        io.to(socket.id).emit("Error","Match not found.")
       }
 
-      io.sockets.emit("clientGameChat", messageClient);
+    });
+
+    // socket.on("GameQuestion", (gameQuestion) => {
+    //   io.sockets.emit("clientGameQuestion", gameQuestion);
+    // });
+
+    // socket.on("GameChat", (userAnswer) => {
+    //   const messageClient = {
+    //     username: username,
+    //     message: userAnswer.message,
+    //     timeStamp: userAnswer.timeStamp,
+    //   };
+
+    //   if (isAnswerCorrect(messageClient.message)) {
+    //     messageClient.status = "guess";
+    //   } else {
+    //     messageClient.status = "wrong";
+    //   }
+
+    //   io.sockets.emit("clientGameChat", messageClient);
+    // });
+
+    socket.on("askToJoin", (roomCode) => {
+      
+      const match_player = getPlayerInMatchByCode(socket.request.user,roomCode);
+      match_player.socket = socket;
+
+      socket.join(roomCode);
+      console.log("🚀 ~ roomCode:", roomCode);
+      
     });
   });
 

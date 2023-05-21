@@ -1,52 +1,85 @@
 const socket = io();
-
-export function getQuestions(match) {
-    // Fetch from the link the resources
-    // change matchSetting for the proprieties of the class
-    fetch(`https://opentdb.com/api.php?amount=${matchSettings}&difficulty=${matchSettings}&type=${matchSettings}`)
-    // Transform the object into JSON
-    .then((res) => res.json())
-    // After its turned into an JSON adds the fetchedQuestions to the match questions
-    .then((json) =>{
-        const fetchedResults = json.results;
-        fetchedResults.forEach(result => {
-            const gameQuestion={
-                question: result.question,
-                correctAnswer: result.correct_answer,
-            }
-            roomQuestions.push(gameQuestion);
-        });
-        
-    })
-    .catch((Error)=>{
-        console.error(Error);   
-        // Handles the error server side  
-    });
-}
+// roomCode = XXX-XXX code of the match
+const roomCode = window.location.pathname.substring(11);
 
 /**
  * This function is the handler that makes the user answers go to the server
  */
 export function sendUserAnswerToServer() {
-    const userAnswer={
-        message: chatInputText.value,
-        timeStamp: formatDate(),
-    };
-    if (userAnswer.message) {
-        socket.emit("GameChat",userAnswer);
+
+    const userAnswer = chatInputText.value
+
+    if (userAnswer) {
+        socket.emit("GameChat-Guess-Send",roomCode,userAnswer,formatDate());
         chatInputText.value="";
     }
 }
+
 
 /**
  * This function is the handle that receives the data from the server 
  * and formats it and sends it to the player's Game Tab
  */
 export function receiveFromServer() {
-    socket.on("clientGameQuestion",(newGameQuestion)=>{
-        sendQuestion(newGameQuestion);
-    })
-    socket.on("clientGameChat",(messageForClient) => {
-        sendAnswer(messageForClient);
+
+    socket.on("connect" ,()=> {
+
+        askToJoin();
+
+        socket.on("GameChat-Guess-Receive",(res_Object)=>{
+            showAnswer(res_Object);
+        });
+
+        socket.on("GameChat-Guessed",(guess) => {
+            console.log("🚀 ~ guess:", guess);
+  
+        })
+
+        socket.on("Player-Joined",(res_Object) => {   
+            
+            
+            const playerAnswer = {
+                username:res_Object.user.username,
+                image:res_Object.user.img,
+                message:res_Object.info.message,
+                timeStamp:res_Object.info.timeStamp,
+            }
+            userJoinHandler(res_Object)  
+            showAnswer(playerAnswer)
+
+            console.log("🚀 ~ userJoined:", res_Object);
+        });
+        socket.on("Player-Left",(res_Object) => {
+            userLeftHandler(res_Object)
+            console.log("🚀 ~ userLeft:", res_Object.user.username);
+        });
+
+        socket.on("status",(res_Object) => {
+            console.log("🚀 ~ statuschanged:", res_Object.matchInfo.status);
+            statusChangeHandler(res_Object.matchInfo.status);
+        });
+
+        socket.on("Question-Start",(res_Object)=>{
+            Question_Start_handler(res_Object)
+            console.log("🚀 ~ Question-Start:", res_Object);
+        });
+
+        socket.on("Question-End",(res_Object)=>{
+            console.log("🚀 ~ Question-End:", res_Object);
+            Question_End_handler(res_Object)
+        });
+
+        socket.on("Error",(error) => {
+            showError(error);
+            console.error(error);
+        });
+
     });
+
 }
+
+
+function askToJoin(){
+    socket.emit("askToJoin" , roomCode);
+}
+
