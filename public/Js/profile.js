@@ -64,6 +64,7 @@ document.querySelector("#Popup-Confirm-New-Email").addEventListener("click", () 
     }
 });
 
+
 const popupImageConfirm = document.querySelector("#Popup-Confirm-Image");
 const imgUpload = document.querySelector("#img-upload");
 let base64Img = {};
@@ -100,6 +101,16 @@ popupImageConfirm.addEventListener("click", () => {
         sendRequest(reqForm, imageResponseHandler);
     }
 });
+
+const deleteAccountButton = document.querySelector("#Del-Acc-Button");
+deleteAccountButton.addEventListener("click",()=>{
+    // object represente the form
+    let reqForm = {
+        formtype: "deleteAccount",
+    };
+    sendRequest(reqForm, deleteAccountResponseHandle);
+});
+
 
 const FetchError_error = document.querySelector("#FetchError-error");
 const Popup_ErroPopUp = document.querySelector("#Popup-FetchError");
@@ -214,6 +225,15 @@ function changeEmailResponseHandler(res) {
     }
 }
 
+function deleteAccountResponseHandle(res) {
+    if (res.success) {
+        console.log(res);
+        res.redirect("/");
+    } else {
+        showError(res.error);
+    }
+}
+
 function sendRequest(reqForm, responseHandler) {
     // making the request email send
     fetch(
@@ -265,10 +285,16 @@ const popUpConfirmUsername= document.querySelector("#Popup-Confirm-New-Username"
 popUpConfirmUsername.addEventListener("click",()=>{
     popupConteiner.classList.remove("active");
     popUpConfirmUsername.classList.remove("active");
-})
+});
 
 const popUpConfirmImage = document.querySelector("#Popup-Confirm-Image");
 popUpConfirmImage.addEventListener("click",()=>{
     popupConteiner.classList.remove("active");
     popUpConfirmImage.classList.remove("active");
+});
+
+const errorPopupButton = document.querySelector("#FetchError-continue");
+errorPopupButton.addEventListener("click",()=>{
+    popupConteiner.classList.remove("active");
+    Popup_ErroPopUp.classList.remove("active");
 })

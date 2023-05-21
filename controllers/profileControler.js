@@ -65,9 +65,9 @@ function profileController(request, response) {
 
 async function updateUsername(request, response) {
     // Fetches the description from the form
-    const username = request.user.username;
-    const changedUsername = request.body.changedUsername;
     try {
+        const username = request.user.username;
+        const changedUsername = request.body.changedUsername;
         const checkUsername = is_Username_Invalid(changedUsername);
 
         if (checkUsername) {
@@ -112,9 +112,9 @@ async function updateUsername(request, response) {
 }
 
 async function updateEmail(request, response) {
-    const userEmail = request.user.email;
-    const changedEmail = request.body.changedEmail;
     try {
+        const userEmail = request.user.email;
+        const changedEmail = request.body.changedEmail;
         if (changedEmail === userEmail) {
             const responseObject = {
                 success: false,
@@ -155,17 +155,16 @@ async function updateEmail(request, response) {
             errortype: "other",
             error: updatingError.message,
         };
-        response.send(responseObject);;
+        response.send(responseObject);
     }
 }
 
 async function updateProfileImage(request, response) {
-
-    const username = request.user.username;
-    const imageCode = request.body.imageCode;
-    const imageType = request.body.imageType;
-    const validImageTypes = ["image/jpeg", "image/png", "image/jpg"]; 
+    const validImageTypes = ["image/jpeg", "image/png", "image/jpg"];
     try {
+        const username = request.user.username;
+        const imageCode = request.body.imageCode;
+        const imageType = request.body.imageType;
         if (!imageCode) {
             const responseObject = {
                 success: false,
@@ -186,7 +185,7 @@ async function updateProfileImage(request, response) {
         if (fetchedUser) {
             // Changes the user profile image code for another
             fetchedUser.profileImage = imageCode;
-            
+
             // Saves the changes made on the database
             await fetchedUser.save();
 
@@ -195,7 +194,7 @@ async function updateProfileImage(request, response) {
                 imageCode: imageCode,
             };
             response.send(responseObject);
-        }else{
+        } else {
             throw new Error("User not found");
         }
     } catch (updatingError) {
@@ -208,5 +207,47 @@ async function updateProfileImage(request, response) {
     }
 }
 
+async function deleteAccount(request, response) {
+    try {
+        const username = request.user.username;
+        const fetchedUser = fetchedDatabaseUser.findOne({ username: username });
+        const fetchedUserMetrics = fetchedDatabaseUserMetrics.findOne({ username: username });
+        if (fetchedUser && fetchedUserMetrics) {
+            // Deletes the account from all related databases
+            //await fetchedDatabaseUser.deleteOne({ username: username });
+            //await fetchedDatabaseUserMetrics.deleteOne({ username: username });
+
+            request.logout(function (logoutError) {
+                if (logoutError) {
+                    const responseObject = {
+                        success: false,
+                    };
+                    return response.send(responseObject);
+                }
+                // Destroys the session of the user
+                request.session.destroy(function (sessionError) {
+                    if (sessionError) {
+                        return next(sessionError);
+                    }
+                    const responseObject = {
+                        success: true,
+                        message: "Your account has been deleted successfully!",
+                    };
+                    response.send(responseObject);
+                });
+            });
+        } else {
+            throw new Error("User not found");
+        }
+    } catch (deleteError) {
+        const responseObject = {
+            success: false,
+            errortype: "other",
+            error: deleteError.message,
+        };
+        response.send(responseObject);
+    }
+}
+
 // exporting the handler
-module.exports = { profileController, updateUsername, updateEmail, updateProfileImage };
+module.exports = { profileController, updateUsername, updateEmail, updateProfileImage, deleteAccount };
