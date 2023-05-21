@@ -19,8 +19,6 @@ class Question {
     #correctAnswered;
 
     constructor(number,question,correctAnswered,difficulty) {
-
-        console.log("constructing");
     
         this.#question = question;
         this.#correctAnswered = correctAnswered;
@@ -34,7 +32,7 @@ class Question {
                 this.time = 40000;//40
                 break;
             case "Easy":
-                this.time = 10000;//60
+                this.time = 60000;//60
                 break;
             default :
                 this.time = 1200000000;

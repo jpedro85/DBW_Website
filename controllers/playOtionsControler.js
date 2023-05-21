@@ -137,8 +137,6 @@ function playOption_JoinMatch (req ,res) {
 function getMatchByCode (code){
 
   for (let i = 0; i < AllPrivateMatches.length; i++) {
-
-    console.log("getMatchByCode:"+code)
     
     if (AllPrivateMatches[i].joinCode === code)
       return AllPrivateMatches[i];
@@ -150,8 +148,6 @@ function getMatchByCode (code){
 function getPlayerInMatchByCode (user,code){
 
   for (let i = 0; i < AllPrivateMatches.length; i++) {
-
-    console.log("getMatchByCode:"+code)
     
     if (AllPrivateMatches[i].joinCode === code)
       return AllPrivateMatches[i].hasPlayer(user.username);

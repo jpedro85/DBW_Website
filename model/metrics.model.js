@@ -18,12 +18,6 @@ var metricsSchema = mongoose.Schema({
     unsigned:true,
     default:0,
   },
-  totalDraws:{
-    type:Number,
-    min:0,
-    unsigned:true,
-    default:0,
-  },
   totalQuits:{
     type:Number,
     min:0,
@@ -55,18 +49,6 @@ var metricsSchema = mongoose.Schema({
     unsigned:true,
     default:0,
   },
-  totalLastPlace:{
-    type:Number,
-    min:0,
-    unsigned:true,
-    default:0,
-  },
-  mostCommonPlace:{
-    type:Number,
-    min:0,
-    unsigned:true,
-    default:0,
-  },
   totalPoints:{
     type:Number,
     min:0,
@@ -80,12 +62,6 @@ var metricsSchema = mongoose.Schema({
     default:0,
   },
   totalBonusPoints:{
-    type:Number,
-    min:0,
-    unsigned:true,
-    default:0,
-  },
-  bestStreak:{
     type:Number,
     min:0,
     unsigned:true,

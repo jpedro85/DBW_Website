@@ -62,11 +62,9 @@ export function receiveFromServer() {
 
         socket.on("Question-Start",(res_Object)=>{
             Question_Start_handler(res_Object)
-            console.log("🚀 ~ Question-Start:", res_Object);
         });
 
         socket.on("Question-End",(res_Object)=>{
-            console.log("🚀 ~ Question-End:", res_Object);
             Question_End_handler(res_Object)
         });
 

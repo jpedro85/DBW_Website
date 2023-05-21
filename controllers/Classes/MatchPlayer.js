@@ -57,9 +57,9 @@ class MatchPlayer {
       // TODO: delete Metrics totalDraws and totalLastPlaces and mostCommonPlace and bestStreak
       //se draw update draw only
       const isFirst = matchPlayer.place==1 ? 0 : 1;  
-      const isDraw = matchPlayer.draw ? 1 : 0; 
+      const isDraw = matchPlayer.gaveUp() ? 1 : 0; 
       const isPodium = matchPlayer.place>0 && matchPlayer.#place<4 ? 1 : 0;
-      const wasBetter = matchPlayer.place > databaseUserMetrics.bestPlace ? 1 : 0;
+      const wasBetter = matchPlayer.place < databaseUserMetrics.bestPlace ? matchPlayer.place  : databaseUserMetrics.bestPlace;
       // * Users metrics being altered
       databaseUserMetrics.totalGames+=1;
       databaseUserMetrics.totalLost +=  isFirst;
@@ -71,7 +71,7 @@ class MatchPlayer {
       databaseUserMetrics.totalPoints += matchPlayer.points;
       databaseUserMetrics.totalStreak += matchPlayer.streak_points;
       databaseUserMetrics.totalBonusPoints+=matchPlayer.bonus_points;
-      databaseUserMetrics.bestPlace += wasBetter;
+      databaseUserMetrics.bestPlace = wasBetter;
       
       await databaseUserMetrics.save();
 
@@ -103,7 +103,7 @@ class MatchPlayer {
   
     update_Answer() {
   
-      if( this.triedGuess() ){
+      if( this.hasGuess() ){
   
         this.#answered++;
   
