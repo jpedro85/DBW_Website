@@ -29,7 +29,6 @@ function profileController(request, response) {
                 } else {
                     const userWinRate = (metricsFound.totalPodium / metricsFound.totalGames) * 100;
                     const totalWins = metricsFound.totalGames-metricsFound.totalLost ;
-                    console.log("🚀 ~ userWinRate:", metricsFound.totalGames-totalWins);
                     const totalUnanswered = metricsFound.totalQuestions - metricsFound.totalQuestionsAnswered;
                     const totalQuestionsWrong = metricsFound.totalQuestions - metricsFound.totalQuestionsRight;
                     const userData = {
