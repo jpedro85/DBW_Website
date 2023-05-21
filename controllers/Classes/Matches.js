@@ -2,6 +2,8 @@
 const {MatchPlayer} = require("./MatchPlayer.js");
 //ompor io server form index
 const {Question} = require("../Classes/Question.js")
+// Import userMetrics model
+const databaseUserMetrics = require('../../model/metrics.model.js');
 
 function formatDate() {
   // Formatting the display of the time
@@ -137,7 +139,7 @@ class Match {
      * Return true is player joined match and can join the match false case its full
      */
     playerJoin(user) {
-  
+      console.log("User~"+user);
       for(let matchPlayer of this.#players){
 
         if(matchPlayer.is(user.username)){
@@ -152,7 +154,7 @@ class Match {
               Match.class_io.to(this.#joinCode).emit("Player-Joined", 
               { 
                 matchInfo : {isleader: this.isLeader(matchPlayer), maxPlayers: this.#settings_maxPlayers , playerCount : this.getPlayerCount() }, 
-                user : {username:user.username , img:"em desenvolvimento"},
+                user : {username:user.username , img:user.profileImage},
                 info: {status:"other" ,message:"Calmed down and returned to the game !" ,timeStamp: formatDate()}
               });
 
@@ -283,13 +285,13 @@ class Match {
   
           if (matchPlayer.is(user.username) && !matchPlayer.hasGuess()){
             Match.class_io.to(matchPlayer.socket.id).emit("GameChat-Guessed",guess)
-            Match.class_io.to(this.#joinCode).emit("GameChat-Guess-Receive",{status:"guessed" ,message:"Guessed" ,timeStamp ,username:user.username ,image:user.image})
+            Match.class_io.to(this.#joinCode).emit("GameChat-Guess-Receive",{status:"guessed" ,message:"Guessed" ,timeStamp ,username:user.username ,image:user.profileImage})
             
             matchPlayer.guessed(true,this.#currentQuestion.isGuessed());
             if(this.#currentQuestion.isGuessed()) 
               this.#currentQuestion.first = false;
 
-            this.#currentQuestion.newGuess("guessed","Guessed",timeStamp,user.username,user.image);
+            this.#currentQuestion.newGuess("guessed","Guessed",timeStamp,user.username,user.profileImage);
           }
             
         });
@@ -302,7 +304,7 @@ class Match {
   
           if (matchPlayer.is(user.username) && !matchPlayer.hasGuess()){
             let msg = "Tried: "+guess;
-            Match.class_io.to(this.#joinCode).emit("GameChat-Guess-Receive",{status:"wrong" ,message:msg ,timeStamp ,username:user.username ,image:user.image});
+            Match.class_io.to(this.#joinCode).emit("GameChat-Guess-Receive",{status:"wrong" ,message:msg ,timeStamp ,username:user.username ,image:user.profileImage});
             matchPlayer.triedGuess();
             this.#currentQuestion.newGuess("wrong",msg,timeStamp,user.username,user.image);
           }
@@ -418,6 +420,18 @@ class Match {
     end(){
       this.#status = "finished";
       Match.class_io.to(this.#joinCode).emit("status",{ matchInfo : { status: this.#status , type: this.ClassName() } })
+      this.#players.forEach(player => {
+        const fetchedPlayerMetrics = databaseUserMetrics.findOne({username: player.user})
+        .then((fetchedPlayerMetrics)=>{
+          if (fetchedPlayerMetrics) {
+            MatchPlayer.updateDatabaseUser(fetchedPlayerMetrics,player);
+          }else{
+            throw new Error ("Player not found");
+          }
+        }).catch((savingError)=>{
+          Match.class_io.to(this.#joinCode).emit("Error",savingError.message);
+        })
+      });
     }
 
     getQuestion(){

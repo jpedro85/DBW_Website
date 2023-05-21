@@ -9,7 +9,6 @@ module.exports = serverSocket = (io) =>
     socket.on("GameChat-Guess-Send",(roomCode,userAnswer,timeStamp)=>{
 
       const match = getMatchByCode(roomCode);
-
       if(match){
         match.playerGuess(socket.request.user,userAnswer,timeStamp);
       } else {

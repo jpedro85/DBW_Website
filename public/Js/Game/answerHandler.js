@@ -27,7 +27,7 @@ if(playGameOnMatch){
   function formatAnswer(playerAnswer) {
     let formattedAnswer = `
           <div class="tab-game-item-fotoNome">
-              <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
+              <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("${playerAnswer.image}");'></div>
               <div class="tab-game-item-dateTime-text">
                   <div class="tab-game-item-name-text tab-item-sethings-playersInMatch-item-name">${playerAnswer.username}</div> <!-- max name lenght 25 -->
                   <div>${playerAnswer.timeStamp}</div>
