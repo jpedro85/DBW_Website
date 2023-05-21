@@ -1,4 +1,4 @@
-<% if (showChangeProfile) { %>
+<% if (showChangeProfile.value) { %>
 <div id="Popup-profileChange" class="Popup active">
     <% } else { %>
     <div id="Popup-profileChange" class="Popup">
@@ -10,7 +10,7 @@
                 Profile Change
             </div>
             <div id="SuccessfullyCreated-normal" class="SuccessfullyCreated-conteiner form-element">
-                <div>You have changed <span id="destaque2">Something</span> now you need to re-login so the changes take effect !</div>
+                <div>You have changed <span id="destaque2"><%= showChangeProfile.message %></span>, now you need to re-login so the changes take effect !</div>
             </div>
         </div>
     </div>

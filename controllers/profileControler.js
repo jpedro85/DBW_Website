@@ -14,7 +14,7 @@ function profileController(request, response) {
             showDeletedAccount: false,
             confirmstate: false,
             showIndexOnUnauthenticated: true,
-            changeOnProfile:false,
+            changeOnProfile: false,
             page: "profile",
         };
         return response.render("index", pageInfo);
@@ -27,7 +27,7 @@ function profileController(request, response) {
                 if (!metricsFound) {
                     throw new Error("User Metrics Not Found");
                 } else {
-                    const userWinRate = (metricsFound.totalWins / metricsFound.totalGames)*100;
+                    const userWinRate = (metricsFound.totalWins / metricsFound.totalGames) * 100;
                     const totalWins = metricsFound.totalGames - metricsFound.totalLost - metricsFound.totalDraws;
                     const totalUnanswered = metricsFound.totalQuestions - metricsFound.totalQuestionsAnswered;
                     const totalQuestionsWrong = metricsFound.totalQuestions - metricsFound.totalQuestionsRight;
@@ -83,7 +83,7 @@ async function updateUsername(request, response) {
         // Find the user in database by username
         const fetchedUser = await fetchedDatabaseUser.findOne({ username: username });
         const fetchedUserMetrics = await fetchedDatabaseUserMetrics.findOne({ username: username });
-        const isUsernameUsed = await fetchedDatabaseUser.findOne({username:changedUsername});
+        const isUsernameUsed = await fetchedDatabaseUser.findOne({ username: changedUsername });
         if (isUsernameUsed) {
             const responseObject = {
                 success: false,
@@ -112,7 +112,7 @@ async function updateUsername(request, response) {
                 confirmstate: false,
                 changeOnProfile: true,
                 showDeletedAccount: false,
-                showChangeProfile: true,
+                showChangeProfile: { value: true, message: "your Username" },
                 showConfirmEmail: { value: false },
             };
 
@@ -155,8 +155,8 @@ async function updateEmail(request, response) {
         if (fetchedUser) {
             // Update the users status
             fetchedUser.status = "Pending";
-            sendConfirmEmail(changedEmail, fetchedUser.confirmationCode)
-            .then(async (hasError) => {
+            fetchedUser.email = changedEmail,
+            sendConfirmEmail(changedEmail, fetchedUser.confirmationCode).then(async (hasError) => {
                 if (hasError != true) {
                     response.send({
                         success: false,
@@ -177,7 +177,7 @@ async function updateEmail(request, response) {
                         confirmstate: false,
                         changeOnProfile: true,
                         showDeletedAccount: false,
-                        showChangeProfile: false,
+                        showChangeProfile: { value: false },
                         showConfirmEmail: { value: true, changedEmail: changedEmail },
                     };
                     return response.render("index", responseObject);
@@ -234,8 +234,8 @@ async function updateProfileImage(request, response) {
                 confirmstate: false,
                 changeOnProfile: true,
                 showDeletedAccount: false,
-                showChangeProfile: true,
-                showConfirmEmail:  { value: false },
+                showChangeProfile: { value: true, message: "your Profile Picture" },
+                showConfirmEmail: { value: false },
             };
 
             return response.render("index", responseObject);
@@ -271,7 +271,7 @@ async function deleteAccount(request, response) {
                 changeOnProfile: true,
                 showDeletedAccount: true,
                 showChangeProfile: false,
-                showConfirmEmail:  { value: false },
+                showConfirmEmail: { value: false },
             };
 
             return response.render("index", responseObject);
