@@ -1,0 +1,54 @@
+.form-element{
+    display: flex !important;
+    flex-flow: column !important;
+    text-align: center !important;
+}
+
+.form-element .label{
+    display: flex !important;
+    text-align: center !important;
+    content: center !important;
+
+}
+
+.Popup{
+     min-width: 500px !important;
+     max-width: 600px !important; 
+     min-height: 350px !important;
+}
+
+.alert-button{
+    font-family: 'Roboto';
+    background: #FF4242;
+    color: #FFFFFF;
+    border-radius: 10px;
+    border: none;
+    margin-bottom: 20px;
+    height: 30px;
+}
+
+.alert-button:hover{
+    background-color: rgb(248, 99, 99);
+    box-shadow: 0 0 20px 0 rgba(248, 99, 99, 0.8);
+    color: #000000;
+}
+.normal-button{
+    font-family: 'Roboto';
+    background: #1CA1AA;
+    color: #FFFFFF;
+    border-radius: 10px;
+    border: none;
+    margin-bottom: 20px;
+    height: 30px;
+}
+
+.normal-button:hover{
+    background-color: #70f5ff;
+    box-shadow: 0 0 20px 0 #70f5ff;
+    color: black;
+}
+
+.warning{
+    color: red;
+    font-weight: bold;
+}
