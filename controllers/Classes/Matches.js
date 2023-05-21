@@ -521,9 +521,108 @@ class MatchNormal extends Match {
   
 class MatchVotedTheme extends Match {
 
-    static themes = ["Vehicles","Animals","Celebrities","Art","Politics","History","Geography","Sports","Mythology","General Knowledge"]
-    static entertainmentThemes = ["Entertainment: Cartoon & Animations","Entertainment: Japanese Anime & Manga","Entertainment: Comics","Entertainment: Board Games","Entertainment: Video Games","Entertainment: Television","Entertainment: Musicals & Theatres","Entertainment: Music","Entertainment: Film","Entertainment: Books"]
-    static scienceThemes = ["Science: Gadgets","Science: Mathematics","Science: Computers","Science & Nature"]
+    static themes = [
+      {
+        theme:"General Knowledge",
+        categoryNumber:	9,
+      },
+      {
+        theme:"Mythology",
+        categoryNumber:	20,
+      },
+      {
+        theme:"Sports",
+        categoryNumber: 21,
+      },
+      {
+        theme:"Geography",
+        categoryNumber:	22,
+      },
+      {
+        theme:"History",
+        categoryNumber:	23,
+      },
+      {
+        theme:"Politics",
+        categoryNumber:	24,
+      },
+      {
+        theme:"Art",
+        categoryNumber:	25,
+      },
+      {
+        theme:"Celebrities",
+        categoryNumber:	26,
+      },
+      {
+        theme:"Animals",
+        categoryNumber:	27,
+      },
+      {
+        theme:"Vehicles",
+        categoryNumber:	28,
+      },
+      ]
+    static entertainmentThemes = [
+      {
+        theme:"Entertainment: Books",
+        categoryNumber:	10,
+      },
+      {
+        theme:"Entertainment: Film",
+        categoryNumber:	11,
+      },
+      {
+        theme:"Entertainment: Music",
+        categoryNumber: 12,
+      },
+      {
+        theme:"Entertainment: Musicals & Theatres",
+        categoryNumber:	13,
+      },
+      {
+        theme:"Entertainment: Television",
+        categoryNumber:	14,
+      },
+      {
+        theme:"Entertainment: Video Games",
+        categoryNumber:	15,
+      },
+      {
+        theme:"Entertainment: Board Games",
+        categoryNumber:	16,
+      },
+      {
+        theme:"Entertainment: Comics",
+        categoryNumber:	29,
+      },
+      {
+        theme:"Entertainment: Japanese Anime & Manga",
+        categoryNumber:	31,
+      },
+      {
+        theme:"Entertainment: Cartoon & Animations",
+        categoryNumber:	32,
+      },
+      ]
+    static scienceThemes = [
+      {
+        theme:"Science & Nature",
+        categoryNumber:	17,
+      },
+      {
+        theme:"Science: Computers",
+        categoryNumber:	18,
+      },
+      {
+        theme:"Science: Mathematics",
+        categoryNumber:	19,
+      },
+      {
+        theme:"Science: Gadgets",
+        categoryNumber:	30,
+      },
+      ]
 
     constructor(leader,joinCode,settings_difficulty,settings_questions,settings_maxPlayers) {
         super(leader,joinCode,settings_difficulty,settings_questions,settings_maxPlayers,"Match_VotedTheme");
