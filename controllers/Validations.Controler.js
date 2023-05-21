@@ -34,13 +34,15 @@ function is_Password_Invalid(str) {
         return false;
 }   
 /**
- * returns a msg if INvalid 
+ * Returns a message in case username invalid or returns false in case the username is valid
  *
- * @param   {String}  str  
+ * @param {String} username The username thats going to be checked   
+ * 
+ * @returns {String|Boolean} Returns a error message in case username not valid
  */
-function is_Username_Invalid(str) {
+function is_Username_Invalid(username) {
 
-    if(str.length < 8 || str.length > 25  ){
+    if(username.length < 8 || username.length > 25  ){
         return "Must have at least 8 and at most 25 characters."
     }else
         return false;

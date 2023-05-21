@@ -395,10 +395,6 @@ function verifyEmail(formResult) {
         input_error_email.innerText = "Dosen't contein '@'."
         input_email.classList.add("errorBox");
     
-    }else if( indexDot <  indexArroba || indexDot == input_email.value.length - 1 ){
-        input_error_email.innerText = "Invalid domain."
-        input_email.classList.add("errorBox");
-        
     } else {
         formResult["email"] = input_email.value ;
         return true;

@@ -1,5 +1,6 @@
 const config = require("../config/smtp.config");
 const databaseUser = require("../model/user.model.js");
+const databaseUserMetrics = require("../model/metrics.model.js");
 const {sendConfirmEmail, isAccountActive } = require("../controllers/emailController");
 const verifications = require("./Validations.Controler.js");
 
@@ -9,7 +10,6 @@ const SALTROUNDS = 10;
 var jwt = require("jwt-encode");
 // Import bcrypt package to hash the password
 var bcrypt = require("bcrypt");
-const { request } = require("express");
 
 /**
  * Signup is function that going to create the user and save it on database with
@@ -35,9 +35,13 @@ const signup = async (userData, response) => {
       password: hashedPassword,
       confirmationCode: token,
     });
+
+    const newUserMetrics = new databaseUserMetrics({
+      username: userData.username,
+    });
   
     await newDatabaseUser.save()
-    
+    await newUserMetrics.save()
     sendConfirmEmail( newDatabaseUser.email , newDatabaseUser.confirmationCode )
     .then( async (semError) => {
       if (semError != true){
@@ -153,9 +157,9 @@ const renderPageWithAuthStatus = function (request, response, page, pageInfo={} 
   const isUserLogged = request.isAuthenticated();
   pageInfo["isUserLogged"] = isUserLogged;
   //shows the ejs page on the site and use the model to fill dynamically
-  if (!isUserLogged && showIndexOnUnauthenticated){
-    return response.render("index", { isUserLogged: isUserLogged , showAcountCreated : false , confirmstate : false , showIndexOnUnauthenticated , page} );
-  }else {
+  if (!isUserLogged && showIndexOnUnauthenticated)
+    return response.render("index", { isUserLogged: isUserLogged , showAccountCreated : false , confirmstate : false , showIndexOnUnauthenticated , page, changeOnProfile:false} );
+  else{
     return response.render( page , pageInfo );
   }
 };
