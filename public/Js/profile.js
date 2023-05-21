@@ -48,9 +48,9 @@ input_Email.addEventListener("keydown",() => {
 document.querySelector("#Popup-Confirm-New-Username").addEventListener("click" , () => {
     // object represents the form
     let reqForm = {
-       username: ""
+       changedUsername: "",
+       formtype: "changeUsername",
     }     
-    // Misses the hidden input
     if ( verifyNewUsername(reqForm)){
         sendRequest(reqForm,changeUsernameResponseHandler);
     } 
@@ -60,24 +60,25 @@ document.querySelector("#Popup-Confirm-New-Username").addEventListener("click" ,
 document.querySelector("#Popup-Confirm-New-Email").addEventListener("click" , () => {
     // object represente the form
     let reqForm = {
-       email: ""
+       changedEmail: "",
+       formtype: "changeEmail",
+
     }     
-   //falta hiden input
     if ( verifyNewEmail(reqForm)){
-        console.log("🚀 ~ reqForm:", reqForm);
-        // sendRequest(reqForm,loginResponseHandler);
+        sendRequest(reqForm,changeEmailResponseHandler);
         
     } 
 });
 
 const FetchError_error = document.querySelector("#FetchError-error");
+const Popup_ErroPopUp = document.querySelector("#Popup-FetchError");
 function showError (Msg){
 
     closeAllPopUps();
-
+    
+    popupConteiner.classList.add("active")
     FetchError_error.innerText = Msg;
     Popup_ErroPopUp.classList.add("active");
-    conteiner.classList.add("active");
 }
 
 // object represent the final result of the form
@@ -93,7 +94,7 @@ function verifyNewUsername(formResult) {
     else {
         input_error_new_username.innerText = "";
         input_Username.classList.remove("errorBox");
-        formResult["username"] = input_Username.value ;
+        formResult["changedUsername"] = input_Username.value ;
         return true;
     }
 
@@ -115,19 +116,15 @@ function verifyNewEmail(formResult) {
         input_error_new_email.innerText = "Dosen't contein '@'."
         input_Email.classList.add("errorBox");
     
-    }else if( indexDot <  indexArroba || indexDot == input_Email.value.length - 1 ){
-        input_error_new_email.innerText = "Invalid domain."
-        input_Email.classList.add("errorBox");
-        
-    } else {
-        formResult["email"] = input_Email.value ;
+    }else {
+        formResult["changedEmail"] = input_Email.value ;
         return true;
     }
       
     return false;
 }
 
-const usernameShowcase = document.querySelector("#JoinCode-Copy-input");
+const usernameShowcase = document.querySelector("#usernameShowcase");
 function changeUsernameResponseHandler(res) {
     
     if (res.success) {
@@ -145,6 +142,30 @@ function changeUsernameResponseHandler(res) {
         }
     }
 
+}
+
+const emailShowcase = document.querySelector("#emailShowcase");
+const popupConfirmEmail= document.querySelector("#Popup-confirmEmail");
+const popupConteiner = document.querySelector(".Popup-conteiner");
+const popupConfirmEmailEmailShowcase = document.querySelector("#Popup-confirmEmail-emailshow");
+function changeEmailResponseHandler(res) {
+    if (res.success) {
+        popupConteiner.classList.add("active")
+        popupConfirmEmail.classList.add("active");
+        popupConfirmEmailEmailShowcase.innerText=res.changedEmail;
+        
+    } else {
+
+        if ( res.errortype === "email") {
+
+            input_error_password_login.innerText = res.message.error;
+            input_username_login.classList.add("errorBox");
+            input_password_login.classList.add("errorBox");
+
+        } else {
+            showError(res.error);
+        }
+    }
 }
 
 function sendRequest(reqForm,responseHandler){

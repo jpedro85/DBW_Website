@@ -35,7 +35,6 @@ const transporter = nodemailer.createTransport({
  * trow error if email not send
  */
 const sendConfirmEmail = async function (destinationEmail, emailCode) {
-
   try {
     await transporter.sendMail({
       from: SMTP_CONFIG.user,
@@ -47,7 +46,6 @@ const sendConfirmEmail = async function (destinationEmail, emailCode) {
             <a href=http://localhost:3000/confirm/${emailCode}> Click here</a>
             </div>`,
     });
-
     return true;
   
   } catch (error) {

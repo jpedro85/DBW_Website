@@ -35,7 +35,7 @@
                     <hr class="hr2">
                     <div class="profile-item-text-conteiner">Name</div>
                     <div class="settings-options inputText ButtonDarkBlue inputtamanho">
-                        <input id="JoinCode-Copy-input" type="text" class="inputText-Input " value="<%=userData.username%>" readonly>
+                        <input id="usernameShowcase" type="text" class="inputText-Input " value="<%=userData.username%>" readonly>
                         <button id="Edit-Name" class="inputText-Button">
                             <svg width="21" height="20" viewBox="0 0 21 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M10.2538 20V17.1667L16.1021 10.1L18.4469 12.9333L12.5986 20H10.2538ZM0.322754 13.3333V10.6667H8.04689V13.3333H0.322754ZM19.2193 12L16.8745 9.16667L17.6745 8.2C17.8768 7.95555 18.1342 7.83333 18.4469 7.83333C18.7595 7.83333 19.017 7.95555 19.2193 8.2L20.0193 9.16667C20.2216 9.41111 20.3228 9.72222 20.3228 10.1C20.3228 10.4778 20.2216 10.7889 20.0193 11.0333L19.2193 12ZM0.322754 8V5.33333H12.4607V8H0.322754ZM0.322754 2.66667V0H12.4607V2.66667H0.322754Z" fill="currentColor"/>
@@ -48,7 +48,7 @@
                     <hr class="hr2">
                     <div class="profile-item-text-conteiner">Email</div>
                     <div class="settings-options inputText ButtonDarkBlue inputtamanho">
-                        <input id="JoinCode-Copy-input" type="text" class="inputText-Input" value="<%=userData.email%>" readonly>
+                        <input id="emailShowcase" type="text" class="inputText-Input" value="<%=userData.email%>" readonly>
                         <button id="Edit-Email" class="inputText-Button">
                             <svg width="21" height="20" viewBox="0 0 21 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M10.2538 20V17.1667L16.1021 10.1L18.4469 12.9333L12.5986 20H10.2538ZM0.322754 13.3333V10.6667H8.04689V13.3333H0.322754ZM19.2193 12L16.8745 9.16667L17.6745 8.2C17.8768 7.95555 18.1342 7.83333 18.4469 7.83333C18.7595 7.83333 19.017 7.95555 19.2193 8.2L20.0193 9.16667C20.2216 9.41111 20.3228 9.72222 20.3228 10.1C20.3228 10.4778 20.2216 10.7889 20.0193 11.0333L19.2193 12ZM0.322754 8V5.33333H12.4607V8H0.322754ZM0.322754 2.66667V0H12.4607V2.66667H0.322754Z" fill="currentColor"/>
@@ -306,6 +306,8 @@
                     </div>
                 </div>
             </div>
+            <%- include("../views/partials/resendEmailPopup.ejs") %>
+            <%- include("./partials/ErrorPopUp.ejs") %>
         </div>
         <% } else {%>
         <%- include("../views/partials/navBar.ejs") %>

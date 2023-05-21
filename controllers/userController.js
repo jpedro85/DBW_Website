@@ -10,7 +10,6 @@ const SALTROUNDS = 10;
 var jwt = require("jwt-encode");
 // Import bcrypt package to hash the password
 var bcrypt = require("bcrypt");
-const { request } = require("express");
 
 /**
  * Signup is function that going to create the user and save it on database with
