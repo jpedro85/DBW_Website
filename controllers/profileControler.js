@@ -243,7 +243,6 @@ async function deleteAccount(request, response) {
                 showIndexOnUnauthenticated: false,
                 confirmstate: false,
                 showDeletedAccount: true,
-                preventScript:false,
             };
             
             return response.render("index",responseObject);
