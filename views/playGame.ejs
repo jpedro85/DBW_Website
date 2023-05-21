@@ -257,101 +257,108 @@
                             <div class="tab-divisor-main tab-bottom">
                             </div>
                         </div>
-        
+                        
+                        <% console.log("ejs:"+ match.status) %>
                          <!-- game tab  -->
                         <% if(match.status === "running") { %>
-                        <div id="tab-Game" class="tab active">
-                        <% } else if(match.status === "finished") { %>
-                            <div id="tab-game-chat-conteiner">
-                                    
-                                <div class="tab-game-divisor-main tab-top tab-top-pading">
-                                    <div id="QuestionNumber" class="text-question" style="display : none"></div>
-                                    <div class="tab-princ-divisor-text" class="text-title">Match Hover</div>
-                                    <div id="questionTimer" class="text-Counter"></div>
-                                </div>
-                                <div id="QuestionText" class="tab-game-question text-title">
-                                    The match is hover !
-                                </div>
-                                <div id="tab-game-chat">
+                            <div id="tab-Game" class="tab active">
+                                <!-- <div id="calculateTime"></div> -->
+                                <% if(match.getQuestion() !=null ){ %>
 
-                                </div>
-                            
-                            </div>
-                            <div id="tab-game-divisor-bottom" style="display: none;" class="tab-divisor-main tab-bottom "><!-- Game-Corret-Guess-->
-                                <div id="tab-game-guessInput-conteiner" class="inputText ButtonDarkBlue ">
-                                    <input id="tab-game-guess-input" type="text" class="inputText-Input"/>
-                                    <button id="btn-tab-game-guess" class="inputText-Button-color inputText-Button">
-                                        Guess
-                                        <svg width="25" height="22" viewBox="0 0 25 22" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M2.25 21.5L24.0625 12.15C24.288 12.0539 24.4803 11.8937 24.6154 11.6893C24.7505 11.4848 24.8226 11.2451 24.8226 11C24.8226 10.7549 24.7505 10.5152 24.6154 10.3108C24.4803 10.1063 24.288 9.94606 24.0625 9.85L2.25 0.500001C2.06113 0.417619 1.85471 0.383555 1.64939 0.40088C1.44406 0.418205 1.24627 0.486375 1.07387 0.599241C0.901474 0.712106 0.759886 0.866116 0.661881 1.04738C0.563876 1.22864 0.512539 1.43144 0.5125 1.6375L0.5 7.4C0.5 8.025 0.9625 8.5625 1.5875 8.6375L19.25 11L1.5875 13.35C0.9625 13.4375 0.5 13.975 0.5 14.6L0.5125 20.3625C0.5125 21.25 1.425 21.8625 2.25 21.5Z" fill="currentColor"/>
-                                        </svg>                                    
-                                    </button>
-                                </div>
-                            </div>
+                                    <div id="tab-game-chat-conteiner">
 
-                        <% } else { %> 
-                        <div id="tab-Game" class="tab ">
-                        <% } %>
-
-                            <% if(match.getQuestion() !=null ){ %>
-
-                                <div id="tab-game-chat-conteiner">
-
-                                    <div class="tab-game-divisor-main tab-top tab-top-pading">
-                                        <div id="QuestionNumber" class="text-question"><%=match.getQuestion().number%></div>
-                                        <div class="tab-princ-divisor-text" class="text-title">Question</div>
-                                        <div id="questionTimer" class="text-Counter"><%=match.getQuestion().getCurrentTime()%></div>
-                                    </div>
-                                    <div id="QuestionText" class="tab-game-question text-title">
-                                        <%=match.getQuestion().question%>
-                                    </div>
-        
-                                    <div id="tab-game-chat">
+                                        <div class="tab-game-divisor-main tab-top tab-top-pading">
+                                            <div id="QuestionNumber" class="text-question"><%=match.getQuestion().number%></div>
+                                            <div od="Title-Question" class="tab-princ-divisor-text" class="text-title">Question</div>
+                                            <div id="questionTimer" class="text-Counter"><%=match.getQuestion().getCurrentTime()%></div>
+                                        </div>
+                                        <div id="QuestionText" class="tab-game-question text-title">
+                                            <%=match.getQuestion().question%>
+                                        </div>
+            
+                                        <div id="tab-game-chat">
+                                            
+                                            <% for(let chatItem = 0; chatItem < match.getQuestion().getChatLength() ;chatItem++) { %>
                                         
-                                        <% for(let chatItem = 0; chatItem < match.getQuestion().getChatLength() ;chatItem++) { %>
-                                    
-                                            <div class="tab-game-item-name-conteiner tab-game-item-dateTime-conteiner-<%=match.getQuestion().chat[chatItem].status%>">
-                                                <div class="tab-game-item-fotoNome">
-                                                    <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
-                                                    <div class="tab-game-item-dateTime-text">
-                                                        <div class="tab-game-item-name-text tab-item-sethings-playersInMatch-item-name"><%=match.getQuestion().chat[chatItem].username%></div> <!-- max name lenght 25 -->
-                                                        <div><%=match.getQuestion().chat[chatItem].timeStamp%></div>
+                                                <div class="tab-game-item-name-conteiner tab-game-item-dateTime-conteiner-<%=match.getQuestion().chat[chatItem].status%>">
+                                                    <div class="tab-game-item-fotoNome">
+                                                        <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
+                                                        <div class="tab-game-item-dateTime-text">
+                                                            <div class="tab-game-item-name-text tab-item-sethings-playersInMatch-item-name"><%=match.getQuestion().chat[chatItem].username%></div> <!-- max name lenght 25 -->
+                                                            <div><%=match.getQuestion().chat[chatItem].timeStamp%></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tab-game-item-conteinertext tab-game-item-text">
+                                                        <div><%=match.getQuestion().chat[chatItem].message%></div>
                                                     </div>
                                                 </div>
-                                                <div class="tab-game-item-conteinertext tab-game-item-text">
-                                                    <div><%=match.getQuestion().chat[chatItem].message%></div>
-                                                </div>
-                                            </div>
-                                        <%}%>
+                                            <%}%>
+                                            
+                                        </div>
+
+                                    </div>
+                                    <div id="tab-game-divisor-bottom" class="tab-divisor-main tab-bottom "><!-- Game-Corret-Guess-->
+                                        <div id="tab-game-guessInput-conteiner" class="inputText ButtonDarkBlue ">
+                                            <input id="tab-game-guess-input" type="text" class="inputText-Input"/>
+                                            <button id="btn-tab-game-guess" class="inputText-Button-color inputText-Button">
+                                                Guess
+                                                <svg width="25" height="22" viewBox="0 0 25 22" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M2.25 21.5L24.0625 12.15C24.288 12.0539 24.4803 11.8937 24.6154 11.6893C24.7505 11.4848 24.8226 11.2451 24.8226 11C24.8226 10.7549 24.7505 10.5152 24.6154 10.3108C24.4803 10.1063 24.288 9.94606 24.0625 9.85L2.25 0.500001C2.06113 0.417619 1.85471 0.383555 1.64939 0.40088C1.44406 0.418205 1.24627 0.486375 1.07387 0.599241C0.901474 0.712106 0.759886 0.866116 0.661881 1.04738C0.563876 1.22864 0.512539 1.43144 0.5125 1.6375L0.5 7.4C0.5 8.025 0.9625 8.5625 1.5875 8.6375L19.25 11L1.5875 13.35C0.9625 13.4375 0.5 13.975 0.5 14.6L0.5125 20.3625C0.5125 21.25 1.425 21.8625 2.25 21.5Z" fill="currentColor"/>
+                                                </svg>                                    
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                <%} else { %>
+                                    <div id="tab-game-chat-conteiner">
                                         
-                                    </div>
+                                        <div class="tab-game-divisor-main tab-top tab-top-pading">
+                                            <div id="QuestionNumber" class="text-question" style="display : none"></div>
+                                            <div id="Title-Question" class="tab-princ-divisor-text" class="text-title">Question</div>
+                                            <div id="questionTimer" class="text-Counter"></div>
+                                        </div>
+                                        <div id="QuestionText" class="tab-game-question text-title">
+                                            Waiting for next question !
+                                        </div>
+                                        <div id="tab-game-chat">
 
-                                </div>
-                                <div id="tab-game-divisor-bottom" class="tab-divisor-main tab-bottom "><!-- Game-Corret-Guess-->
-                                    <div id="tab-game-guessInput-conteiner" class="inputText ButtonDarkBlue ">
-                                        <input id="tab-game-guess-input" type="text" class="inputText-Input"/>
-                                        <button id="btn-tab-game-guess" class="inputText-Button-color inputText-Button">
-                                            Guess
-                                            <svg width="25" height="22" viewBox="0 0 25 22" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M2.25 21.5L24.0625 12.15C24.288 12.0539 24.4803 11.8937 24.6154 11.6893C24.7505 11.4848 24.8226 11.2451 24.8226 11C24.8226 10.7549 24.7505 10.5152 24.6154 10.3108C24.4803 10.1063 24.288 9.94606 24.0625 9.85L2.25 0.500001C2.06113 0.417619 1.85471 0.383555 1.64939 0.40088C1.44406 0.418205 1.24627 0.486375 1.07387 0.599241C0.901474 0.712106 0.759886 0.866116 0.661881 1.04738C0.563876 1.22864 0.512539 1.43144 0.5125 1.6375L0.5 7.4C0.5 8.025 0.9625 8.5625 1.5875 8.6375L19.25 11L1.5875 13.35C0.9625 13.4375 0.5 13.975 0.5 14.6L0.5125 20.3625C0.5125 21.25 1.425 21.8625 2.25 21.5Z" fill="currentColor"/>
-                                            </svg>                                    
-                                        </button>
-                                    </div>
-                                </div>
-
-                            <%} else {%>
-                                <div id="tab-game-chat-conteiner">
+                                        </div>
                                     
+                                    </div>
+                                    <div id="tab-game-divisor-bottom" style="display: none;" class="tab-divisor-main tab-bottom "><!-- Game-Corret-Guess-->
+                                        <div id="tab-game-guessInput-conteiner" class="inputText ButtonDarkBlue ">
+                                            <input id="tab-game-guess-input" type="text" class="inputText-Input"/>
+                                            <button id="btn-tab-game-guess" class="inputText-Button-color inputText-Button">
+                                                Guess
+                                                <svg width="25" height="22" viewBox="0 0 25 22" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M2.25 21.5L24.0625 12.15C24.288 12.0539 24.4803 11.8937 24.6154 11.6893C24.7505 11.4848 24.8226 11.2451 24.8226 11C24.8226 10.7549 24.7505 10.5152 24.6154 10.3108C24.4803 10.1063 24.288 9.94606 24.0625 9.85L2.25 0.500001C2.06113 0.417619 1.85471 0.383555 1.64939 0.40088C1.44406 0.418205 1.24627 0.486375 1.07387 0.599241C0.901474 0.712106 0.759886 0.866116 0.661881 1.04738C0.563876 1.22864 0.512539 1.43144 0.5125 1.6375L0.5 7.4C0.5 8.025 0.9625 8.5625 1.5875 8.6375L19.25 11L1.5875 13.35C0.9625 13.4375 0.5 13.975 0.5 14.6L0.5125 20.3625C0.5125 21.25 1.425 21.8625 2.25 21.5Z" fill="currentColor"/>
+                                                </svg>                                    
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                <%}%>
+
+                            </div>
+
+                        <%}%>
+
+                        <!-- game finished  -->
+                        <% if(match.status === "finished") { %>
+                            <div id="tab-Game" class="tab active">
+
+                                <div id="tab-game-chat-conteiner">
+                                        
                                     <div class="tab-game-divisor-main tab-top tab-top-pading">
                                         <div id="QuestionNumber" class="text-question" style="display : none"></div>
-                                        <div class="tab-princ-divisor-text" class="text-title">Question</div>
+                                        <div id="Title-Question" class="tab-princ-divisor-text" class="text-title">Match Hover</div>
                                         <div id="questionTimer" class="text-Counter"></div>
                                     </div>
                                     <div id="QuestionText" class="tab-game-question text-title">
-                                        Waiting for next question !
+                                        The match is hover !
                                     </div>
                                     <div id="tab-game-chat">
-
+    
                                     </div>
                                 
                                 </div>
@@ -366,10 +373,45 @@
                                         </button>
                                     </div>
                                 </div>
+                            </div>
 
-                            <%}%>
 
-                        </div>
+                        <% } else { %>
+
+                            <div id="tab-Game" class="tab ">
+
+                                <div id="tab-game-chat-conteiner">
+                                        
+                                    <div class="tab-game-divisor-main tab-top tab-top-pading">
+                                        <div id="QuestionNumber" class="text-question" style="display : none"></div>
+                                        <div id="Title-Question" class="tab-princ-divisor-text" class="text-title">Question</div>
+                                        <div id="questionTimer" class="text-Counter"></div>
+                                    </div>
+                                    <div id="QuestionText" class="tab-game-question text-title">
+                                        Waiting for next question !
+                                    </div>
+                                    <div id="tab-game-chat">
+    
+                                    </div>
+                                
+                                </div>
+                                <div id="tab-game-divisor-bottom" style="display: none;" class="tab-divisor-main tab-bottom "><!-- Game-Corret-Guess-->
+                                    <div id="tab-game-guessInput-conteiner" class="inputText ButtonDarkBlue ">
+                                        <input id="tab-game-guess-input" type="text" class="inputText-Input"/>
+                                        <button id="btn-tab-game-guess" class="inputText-Button-color inputText-Button">
+                                            Guess
+                                            <svg width="25" height="22" viewBox="0 0 25 22" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M2.25 21.5L24.0625 12.15C24.288 12.0539 24.4803 11.8937 24.6154 11.6893C24.7505 11.4848 24.8226 11.2451 24.8226 11C24.8226 10.7549 24.7505 10.5152 24.6154 10.3108C24.4803 10.1063 24.288 9.94606 24.0625 9.85L2.25 0.500001C2.06113 0.417619 1.85471 0.383555 1.64939 0.40088C1.44406 0.418205 1.24627 0.486375 1.07387 0.599241C0.901474 0.712106 0.759886 0.866116 0.661881 1.04738C0.563876 1.22864 0.512539 1.43144 0.5125 1.6375L0.5 7.4C0.5 8.025 0.9625 8.5625 1.5875 8.6375L19.25 11L1.5875 13.35C0.9625 13.4375 0.5 13.975 0.5 14.6L0.5125 20.3625C0.5125 21.25 1.425 21.8625 2.25 21.5Z" fill="currentColor"/>
+                                            </svg>                                    
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+
+                        <% }%>
+
+
 
                     </div>
 

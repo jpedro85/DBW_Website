@@ -119,6 +119,8 @@ if(playGameOnMatch){
     const voting_gameBoard = document.querySelector("#tab-Vote");
     const chat_gameBoard = document.querySelector("#tab-Game");
     
+
+    const title_question = document.querySelector("#Title-Question");
     const question_number = document.querySelector("#QuestionNumber");
     const question_timer = document.querySelector("#questionTimer");
     const QuestionText = document.querySelector("#QuestionText");
@@ -126,7 +128,7 @@ if(playGameOnMatch){
     const game_chat = document.querySelector("#tab-game-chat");
     
     const tab_wainting_lether_conter = document.querySelector("#tab-wainting-lether-conter");
-    tab_wainting_lether_conter.innerText = "";
+
     let stopUpCounter = {
         value : false,
     }
@@ -151,8 +153,8 @@ if(playGameOnMatch){
                 GameChat_waiting_Question();
                 break;
             case "finished":
-                console.log("aaaaaaaaaaaaaaaaaaaaaaaaa")
-                QuestionText.innerText = "Waiting for next question !"
+                title_question.innerText = "Match Over"
+                QuestionText.innerText = "The match is over !"
                 question_timer.innerText = "";
                 question_number.style = "display : none";
                 guessButton.style = "display : none";
@@ -182,7 +184,18 @@ if(playGameOnMatch){
     const info_place = document.querySelector("#info-place");
 
     
+    // const calculateTime_refresh = document.querySelector("#calculateTime");
     
+    // if(calculateTime_refresh){
+    //     let time = question_timer.innerText;
+    //     console.log("restartCountdoun:"+ time.substring(0,2) + time.substring(3))
+    //     let min = parseInt(time.substring(0,2))*60000; //min para ms
+    //     let sec = parseInt(time.substring(3))*1000;
+        
+    //     console.log("restartCountdoun:"+ min )
+
+    //      CountDownTimer(question_timer,min+sec);
+    // }
     
     
     
