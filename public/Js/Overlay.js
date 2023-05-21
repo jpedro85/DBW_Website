@@ -1,10 +1,10 @@
 // const to keep all overlays
-const OverLays = document.querySelectorAll(".Popup");
+var OverLays = document.querySelectorAll(".Popup");
 // const to keep the overlay conteiner
-const OverLayConteiner = document.querySelector(".Popup-conteiner")
+var OverLayConteiner = document.querySelector(".Popup-conteiner")
 
 // bool to activete the closing on outside of the overlay click 
-let OverlayCloseActive = true;
+var OverlayCloseActive = true;
 
 // for all overlay add function to the close button
 OverLays.forEach( (OverLay_popup) => {

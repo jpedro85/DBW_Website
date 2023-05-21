@@ -2,23 +2,23 @@ const editPic = document.querySelector("#Edit-picture");
 const editName = document.querySelector("#Edit-Name");
 const editEmail = document.querySelector("#Edit-Email");
 
-const conteiner = document.querySelector(".Popup-conteiner");
+const popUpConteiner = document.querySelector(".Popup-conteiner");
 const ImgPopup = document.querySelector("#Popup-Image");
 const NamePopup = document.querySelector("#Popup-Name");
 const EmailPopup = document.querySelector("#Popup-Email");
 
 editPic.addEventListener("click", () => {
-    conteiner.classList.toggle("active");
+    popUpConteiner.classList.toggle("active");
     ImgPopup.classList.toggle("active");
 });
 
 editName.addEventListener("click", () => {
-    conteiner.classList.toggle("active");
+    popUpConteiner.classList.toggle("active");
     NamePopup.classList.toggle("active");
 });
 
 editEmail.addEventListener("click", () => {
-    conteiner.classList.toggle("active");
+    popUpConteiner.classList.toggle("active");
     EmailPopup.classList.toggle("active");
 });
 
@@ -108,18 +108,18 @@ deleteAccountButton.addEventListener("click",()=>{
     let reqForm = {
         formtype: "deleteAccount",
     };
-    sendRequest(reqForm, deleteAccountResponseHandle);
+    sendRequest(reqForm, deleteAccountResponseHandler);
 });
 
 
-const FetchError_error = document.querySelector("#FetchError-error");
-const Popup_ErroPopUp = document.querySelector("#Popup-FetchError");
+const FetchError_errorProfile = document.querySelector("#FetchError-error");
+const Popup_ErroPopUpProfile = document.querySelector("#Popup-FetchError");
 function showError(Msg) {
     closeAllPopUps();
 
     popupConteiner.classList.add("active");
-    FetchError_error.innerText = Msg;
-    Popup_ErroPopUp.classList.add("active");
+    FetchError_errorProfile.innerText = Msg;
+    Popup_ErroPopUpProfile.classList.add("active");
 }
 
 const input_image_Error = document.querySelector("#Popup-Change-image-error");
@@ -225,12 +225,11 @@ function changeEmailResponseHandler(res) {
     }
 }
 
-function deleteAccountResponseHandle(res) {
-    if (res.success) {
-        console.log(res);
-        res.redirect("/");
-    } else {
-        showError(res.error);
+function deleteAccountResponseHandler(res) {
+    if (res.hasOwnProperty("success")) {
+         showError(res.error);
+    }else{
+        document.write(res);
     }
 }
 
@@ -245,13 +244,27 @@ function sendRequest(reqForm, responseHandler) {
         }
     )
         .then((res) => {
-            if (res.ok) return res.json();
-            else throw Error(res.status + " " + res.statusText);
+            if (res.ok){
+                console.log(res.headers.get("content-type"));
+                console.log("🚀 ~ res:", res);
+                const contentType = res.headers.get("content-type");
+                if (contentType && contentType.includes("application/json")) {
+                    return res.json();
+                }else {
+                    return res.text();
+                }
+            } 
+            else{
+                throw Error(res.status + " " + res.statusText);
+            } 
+                
         })
         .then((res_data) => {
             responseHandler(res_data);
         })
-        .catch((error) => showError(error));
+        .catch((error) => {
+            showError(error)
+        });
 }
 
 //logout ...
@@ -296,5 +309,5 @@ popUpConfirmImage.addEventListener("click",()=>{
 const errorPopupButton = document.querySelector("#FetchError-continue");
 errorPopupButton.addEventListener("click",()=>{
     popupConteiner.classList.remove("active");
-    Popup_ErroPopUp.classList.remove("active");
+    Popup_ErroPopUpProfile.classList.remove("active");
 })

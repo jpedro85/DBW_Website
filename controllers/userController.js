@@ -159,9 +159,8 @@ const renderPageWithAuthStatus = function (request, response, page, pageInfo={} 
 
   //shows the ejs page on the site and use the model to fill dynamically
   if (!isUserLogged && showIndexOnUnauthenticated)
-    return response.render("index", { isUserLogged: isUserLogged , showAcountCreated : false , confirmstate : false , showIndexOnUnauthenticated , page} );
+    return response.render("index", { isUserLogged: isUserLogged , showAccountCreated : false , confirmstate : false , showIndexOnUnauthenticated , page, showDeletedAccount:false} );
   else{
-    //console.log(pageInfo); 
     return response.render( page , pageInfo );
   }
 };

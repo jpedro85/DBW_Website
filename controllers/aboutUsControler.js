@@ -5,7 +5,7 @@ const {renderPageWithAuthStatus} = require("../controllers/userController.js");
  * The Get and Post functions if needed
  */
 const aboutUsController = function (request, response) {
-  renderPageWithAuthStatus(request, response, "aboutUS", {showAcountCreated : false , confirmstate : false , showIndexOnUnauthenticated : false , page : "debugTextOnly"});
+  renderPageWithAuthStatus(request, response, "aboutUS", {showAccountCreated : false , confirmstate : false , showIndexOnUnauthenticated : false , page : "debugTextOnly" ,showDeletedAccount:false});
 };
 
 // Export the controller functions

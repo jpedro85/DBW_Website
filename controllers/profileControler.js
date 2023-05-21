@@ -10,7 +10,8 @@ function profileController(request, response) {
     if (!isUserLogged) {
         const pageInfo = {
             isUserLogged: isUserLogged,
-            showAcountCreated: false,
+            showAccountCreated: false,
+            showDeletedAccount: false,
             confirmstate: false,
             showIndexOnUnauthenticated: true,
             page: "profile",
@@ -213,29 +214,41 @@ async function deleteAccount(request, response) {
         const fetchedUser = fetchedDatabaseUser.findOne({ username: username });
         const fetchedUserMetrics = fetchedDatabaseUserMetrics.findOne({ username: username });
         if (fetchedUser && fetchedUserMetrics) {
-            // Deletes the account from all related databases
-            //await fetchedDatabaseUser.deleteOne({ username: username });
-            //await fetchedDatabaseUserMetrics.deleteOne({ username: username });
-
             request.logout(function (logoutError) {
                 if (logoutError) {
                     const responseObject = {
                         success: false,
+                        error: logoutError.message,
                     };
                     return response.send(responseObject);
                 }
                 // Destroys the session of the user
                 request.session.destroy(function (sessionError) {
                     if (sessionError) {
-                        return next(sessionError);
+                        const responseObject = {
+                            success: false,
+                            error: sessionError.message,
+                        };
+                        return response.send(responseObject);
                     }
-                    const responseObject = {
-                        success: true,
-                        message: "Your account has been deleted successfully!",
-                    };
-                    response.send(responseObject);
                 });
             });
+
+            // Deletes the account from all related databases
+            await fetchedDatabaseUser.deleteOne({ username: username });
+            await fetchedDatabaseUserMetrics.deleteOne({ username: username });
+            const responseObject = {
+                isUserLogged: false,
+                showAccountCreated: false,
+                showIndexOnUnauthenticated: false,
+                confirmstate: false,
+                showDeletedAccount: true,
+                preventScript:false,
+            };
+            
+            return response.render("index",responseObject);
+             
+
         } else {
             throw new Error("User not found");
         }

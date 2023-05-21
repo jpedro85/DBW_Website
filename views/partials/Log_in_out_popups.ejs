@@ -1,4 +1,4 @@
-<% if (showAcountCreated || ( showIndexOnUnauthenticated && !isUserLogged ) ) { %>
+<% if (showAccountCreated || ( showIndexOnUnauthenticated && !isUserLogged ) ) { %>
 <div class="Popup-conteiner active">
 <% } else { %>
 <div class="Popup-conteiner">
@@ -94,7 +94,7 @@
       </div>
     </div>
 
-  <% if (showAcountCreated) { %>
+  <% if (showAccountCreated) { %>
     <div id="Popup-AcountCreated" class="Popup active">
   <% } else { %>
     <div id="Popup-AcountCreated" class="Popup">
@@ -115,7 +115,7 @@
         </div>
       <% } %>
 
-      <% if (showAcountCreated) { %>
+      <% if (showAccountCreated) { %>
         <div id="SuccessfullyCreated-resend" style="display: none;" class="SuccessfullyCreated-conteiner form-element ">
       <% } else { %>
         <div id="SuccessfullyCreated-resend" class="SuccessfullyCreated-conteiner form-element ">
@@ -151,6 +151,7 @@
     <% } else {%>
       <%- include("./ErrorPopUp.ejs") %>
     <% } %>
+  <%- include("./deleteAccount.ejs") %>
 </div>
 <script src="/js/Log_in_out_popups.js"></script>
 <script src="/js/Overlay.js"></script>

@@ -1,4 +1,4 @@
-let aboutUs_class = "ButtonBlack";
+let aboutUs_classLogged = "ButtonBlack";
 let play_class = "ButtonBlack";
 let play_hreft = "/play/Options";
 let profile_class = "ButtonBlack";
@@ -9,7 +9,7 @@ switch(window.location.pathname){
         break;
     case "/about-us":
         document.getElementById("navLink_AboutUs").classList.replace("ButtonBlack","ButtonBlackActive");
-        aboutUs_class = "ButtonBlackActive";
+        aboutUs_classLogged = "ButtonBlackActive";
         break;
     case "/play/Options":
     case "/play/Game":
@@ -33,12 +33,12 @@ let click = false;
 // Adicionando um EventListener para quando clicarmos no menu.
 menuButton.addEventListener("click", (event) => {
     //click faz com que o butão seja toogle
-    click = !click;
-    if (click){
+    clickNot = !clickNot;
+    if (clickNot){
         menuButton.style.backgroundColor="#70f5ff";
-        navLogedIn.insertAdjacentHTML("afterend",`
+        navNotLogedIn.insertAdjacentHTML("afterend",`
         <div id="MenuCascata" class="ButtonBlack">
-            <a class="MenuCascataButton ${aboutUs_class}" id="navLink_Home" href="/about-us" >About Us</a>
+            <a class="MenuCascataButton ${aboutUs_classLogged}" id="navLink_Home" href="/about-us" >About Us</a>
             <a class="MenuCascataButton ${profile_class}" id="navLink_Home" href="/profile" >Profile</a>
             <a class="MenuCascataButton ${play_class}" id="navLink_Home" href="${play_hreft}" >Play</a>
         </div>

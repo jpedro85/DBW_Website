@@ -10,23 +10,23 @@ switch(window.location.pathname){
         break;
 }
 
-let navLogedIn = document.getElementById("navBar");
-let menuButton = document.getElementById("navLink_Menu");
-let click = false;
+let navNotLogedIn = document.getElementById("navBar");
+let menuButtonNot = document.getElementById("navLink_Menu");
+let clickNot = false;
 
 // Adicionando um EventListener para quando clicarmos no menu.
-menuButton.addEventListener("click", (event) => {
+menuButtonNot.addEventListener("click", (event) => {
     //click faz com que o butão seja toogle
-    click = !click;
-    if (click){
-        menuButton.style.backgroundColor="#70f5ff";
-        navLogedIn.insertAdjacentHTML("afterend",`
+    clickNot = !clickNot;
+    if (clickNot){
+        menuButtonNot.style.backgroundColor="#70f5ff";
+        navNotLogedIn.insertAdjacentHTML("afterend",`
         <div id="MenuCascata" class="ButtonBlack">
             <a class="MenuCascataButton ${aboutUs_class}" id="navLink_Home" href="/about-us" >About Us</a>
         </div>
         `);
     }else{
-        menuButton.style="none";
+        menuButtonNot.style="none";
         let menu = document.getElementById("MenuCascata");
         if(menu != null)
             menu.remove();
