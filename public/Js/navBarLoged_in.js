@@ -3,6 +3,7 @@ let play_class = "ButtonBlack";
 let play_hreft = "/play/Options";
 let profile_class = "ButtonBlack";
 
+
 switch(window.location.pathname){
     case "/":
         document.getElementById("navLink_Home_content").classList.replace("ButtonBlack","ButtonBlackActive");
@@ -11,19 +12,19 @@ switch(window.location.pathname){
         document.getElementById("navLink_AboutUs").classList.replace("ButtonBlack","ButtonBlackActive");
         aboutUs_classLogged = "ButtonBlackActive";
         break;
+    case "/profile":
+        document.getElementById("navLink_Profile").classList.replace("ButtonBlack","ButtonBlackActive");
+        profile_class = "ButtonBlackActive";
+        break;
     case "/play/Options":
-    case "/play/Game":
+    default:
         let navLink_Play = document.getElementById("navLink_Play")
         navLink_Play.classList.replace("ButtonBlack","ButtonBlackActive");
         navLink_Play.href = window.location.pathname;
         play_hreft = window.location.pathname;
         play_class = "ButtonBlackActive";
-        break;
-    case "/profile":
-        document.getElementById("navLink_Profile").classList.replace("ButtonBlack","ButtonBlackActive");
-        profile_class = "ButtonBlackActive";
-        break;
 }
+
 
 const navLink_LogOut = document.getElementById("navLink_LogOut");
 const navLogedIn = document.getElementById("navBarLoged_in");

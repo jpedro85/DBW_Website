@@ -1,4 +1,4 @@
-const config = require("../config/smtp");
+const config = require("../config/smtp.config");
 const databaseUser = require("../model/user.model.js");
 const databaseUserMetrics = require("../model/metrics.model.js");
 const {sendConfirmEmail, isAccountActive } = require("../controllers/emailController");
@@ -156,7 +156,6 @@ const renderPageWithAuthStatus = function (request, response, page, pageInfo={} 
   // Check wether the user is logged or not
   const isUserLogged = request.isAuthenticated();
   pageInfo["isUserLogged"] = isUserLogged;
-
   //shows the ejs page on the site and use the model to fill dynamically
   if (!isUserLogged && showIndexOnUnauthenticated)
     return response.render("index", { isUserLogged: isUserLogged , showAccountCreated : false , confirmstate : false , showIndexOnUnauthenticated , page, changeOnProfile:false} );

@@ -54,11 +54,9 @@ const playOptionsRoute = require("./routes/playOptionsRoute");
 const playGameRoute = require("./routes/playGameRoute");
 const profileRoute = require("./routes/profileRoute");
 const authEmailRoute = require("./routes/authEmailRoute");
-// to be decided
-// const userRoute = require("./routes/userRoute");
 
 // Our anonymous function that contains our sockets
-//let serverSocket = require("./public/js/socket/socketServerSide");
+let serverSocket = require("./public/js/socket/socketServerSide.js");
 
 //////////////////
 /**
@@ -89,15 +87,15 @@ app.use(express.json({limit: '50mb'}));
  **/
 /////////////////////////
 
+const sessionMiddleware = session({
+  // Used to encrypt you session data
+  secret: "your-secret-key",
+  resave: false,
+  saveUninitialized: false,
+});
+
 // Express-session middleware. Saves the user session on the server side
-app.use(
-  session({
-    // Used to encrypt you session data
-    secret: "your-secret-key",
-    resave: false,
-    saveUninitialized: false,
-  })
-);
+app.use(sessionMiddleware);
 
 // Making the strategy to authenticate or user
 passport.use(
@@ -162,6 +160,13 @@ passport.deserializeUser((user, done) => {
   done(null, user);
 });
 
+const wrap = middleware => (socket, next) =>
+ middleware(socket.request, {}, next);
+
+io.use(wrap(sessionMiddleware));
+io.use(wrap(passport.initialize()));
+io.use(wrap(passport.session()));
+
 /////////////////////////
 /**
  * MongoDB Connection
@@ -191,10 +196,9 @@ app.use(playOptionsRoute);
 app.use(playGameRoute);
 // Create the route to the profile page
 app.use(profileRoute);
-//
+// Creates the route where confirms the email
 app.use(authEmailRoute);
-// Create route to user
-// app.use(userRoute);
+
 
 /////////////////////////
 /**
@@ -202,7 +206,15 @@ app.use(authEmailRoute);
  **/
 /////////////////////////
 
-//serverSocket(io);
+io.use((socket, next) => {
+  if (socket.request.user) {
+    next();
+  } else {
+    next(new Error('unauthorized'))
+  }
+});
+
+serverSocket(io);
 
 server.listen(PORT, function (connectionError) {
   if (connectionError)

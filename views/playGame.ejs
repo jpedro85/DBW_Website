@@ -9,520 +9,491 @@
         <link rel="stylesheet" href="/css/playGame.css" />
         <link rel="stylesheet" href="/css/buttons.css" />
         <link rel="stylesheet" href="/css/scrollBar.css" />
+        <link rel="stylesheet" href="/css/Overlay.css" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto"/>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"/>
     </head>
     <body>
         <%- include("../views/partials/navBarLoged_in.ejs") %>
         <div id="conteiner-main">
-            <div class="conteiner-main-content">
 
-                <!-- conteiner tab shows match info and players -->
-                <div id="tab-info" class="tab">
-                    <!-- conteiner tab shows match info -->
-                    <div>
-                        <div class="tab-divisor-main tab-top text-title"> 
-                            <span>Match Settings</span>
-                        </div>
-                        <div id="tab-item-sethings1" class="tab-item-sethings">
-
-                            <div class="tab-item-sethings-item-main">
-                                <div class="tab-item-sethings-item-text">
-                                    <div class="tab-item-sethings-item-title text-info-title">Type</div>
-                                    <div class="tab-item-sethings-item-value text-info-value">Voted Theme</div>
-                                </div>
-                                <hr class="tab-item-sethings-item-hr">
-                            </div>
-
-                             <div class="tab-item-sethings-item-main">
-                                <div class="tab-item-sethings-item-text">
-                                    <div class="tab-item-sethings-item-title text-info-title">Difficulty</div>
-                                    <div class="tab-item-sethings-item-value text-info-value">Hard</div>
-                                </div>
-                                <hr class="tab-item-sethings-item-hr">
-                            </div>
-
-                             <div class="tab-item-sethings-item-main">
-                                <div class="tab-item-sethings-item-text">
-                                    <div class="tab-item-sethings-item-title text-info-title">Duration</div>
-                                    <div class="tab-item-sethings-item-value text-info-value">10 Questions</div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div id="tab-item-button-conteiner">
-                            <button id="button-abandonMatch" class="ButtonRed">
-                                <span>Abandone Match</span>
-                            </button>
-                        </div>
-                    </div>
-                    <!-- conteiner tab shows player in match -->
-                    <div class="tab-divisor-main tab-midle text-title"> 
-                        <span>My Points</span>
-                    </div>
-                    <div id="tab-item-sethings-playersInMatch" >
-
-                        <div id="nome do jogador" class="tab-item-sethings-playersInMatch-item">
-                            <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
-                            <!-- svg sinals the match creator -->
-                            <svg width="23" height="20" viewBox="0 0 23 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M2.5 15L0 1.25L6.875 7.5L11.25 0L15.625 7.5L22.5 1.25L20 15H2.5ZM20 18.75C20 19.5 19.5 20 18.75 20H3.75C3 20 2.5 19.5 2.5 18.75V17.5H20V18.75Z" fill="#FFD233"/>
-                            </svg>
-                            <div class="text-Setigns-playerName tab-item-sethings-playersInMatch-item-name">01234567890134</div> <!-- max name lenght 25 -->
-                        </div>
-
-                        <div id="nome do jogador" class="tab-item-sethings-playersInMatch-item">
-                            <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
-                            <div class="text-Setigns-playerName tab-item-sethings-playersInMatch-item-name">01234567898901234</div> <!-- max name lenght 25 -->
-                        </div>
-
-                        <div id="nome do jogador" class="tab-item-sethings-playersInMatch-item">
-                            <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
-                            <div class="text-Setigns-playerName tab-item-sethings-playersInMatch-item-name">0123456745678901234</div> <!-- max name lenght 25 -->
-                        </div>
-
-                        <div id="nome do jogador" class="tab-item-sethings-playersInMatch-item">
-                            <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
-                            <div class="text-Setigns-playerName tab-item-sethings-playersInMatch-item-name">0123456789012345678901234122222</div> <!-- max name lenght 25 -->
-                        </div>
-
-                        <div id="nome do jogador" class="tab-item-sethings-playersInMatch-item">
-                            <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
-                            <div class="text-Setigns-playerName tab-item-sethings-playersInMatch-item-name">0123459012345678901234</div> <!-- max name lenght 25 -->
-                        </div>
-
-                        <div id="nome do jogador" class="tab-item-sethings-playersInMatch-item">
-                            <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
-                            <div class="text-Setigns-playerName tab-item-sethings-playersInMatch-item-name">01234567890125678901234</div> <!-- max name lenght 25 -->
-                        </div>
-
-                        <div id="nome do jogador" class="tab-item-sethings-playersInMatch-item">
-                            <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
-                            <div class="text-Setigns-playerName tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
-                        </div>
-
-                        <div id="nome do jogador" class="tab-item-sethings-playersInMatch-item">
-                            <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
-                            <div class="text-Setigns-playerName tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
-                        </div>
-
-                        <div id="nome do jogador" class="tab-item-sethings-playersInMatch-item">
-                            <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
-                            <div class="text-Setigns-playerName tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
-                        </div>
-
-                        <div id="nome do jogador" class="tab-item-sethings-playersInMatch-item">
-                            <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
-                            <div class="text-Setigns-playerName tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
-                        </div>
-
-                        <div id="nome do jogador" class="tab-item-sethings-playersInMatch-item">
-                            <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
-                            <div class="text-Setigns-playerName tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
-                        </div>
-
-                        <div id="nome do jogador" class="tab-item-sethings-playersInMatch-item">
-                            <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
-                            <div class="text-Setigns-playerName tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
-                        </div>
-
-                        <div id="nome do jogador" class="tab-item-sethings-playersInMatch-item">
-                            <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
-                            <div class="text-Setigns-playerName tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
-                        </div>
-
-                        <div id="nome do jogador" class="tab-item-sethings-playersInMatch-item">
-                            <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
-                            <div class="text-Setigns-playerName tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
-                        </div>
-
-                        <div id="nome do jogador" class="tab-item-sethings-playersInMatch-item">
-                            <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
-                            <div class="text-Setigns-playerName tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
-                        </div>
-
-                        <div id="nome do jogador" class="tab-item-sethings-playersInMatch-item">
-                            <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
-                            <div class="text-Setigns-playerName tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
-                        </div>
-
-                        <div id="nome do jogador" class="tab-item-sethings-playersInMatch-item">
-                            <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
-                            <div class="text-Setigns-playerName tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
-                        </div>
-
-                        <div id="nome do jogador" class="tab-item-sethings-playersInMatch-item">
-                            <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
-                            <div class="text-Setigns-playerName tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
-                        </div>
-
-                        <div id="nome do jogador" class="tab-item-sethings-playersInMatch-item">
-                            <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
-                            <div class="text-Setigns-playerName tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
-                        </div>
-
-                        <div id="nome do jogador" class="tab-item-sethings-playersInMatch-item">
-                            <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
-                            <div class="text-Setigns-playerName tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
-                        </div>
-                        <div id="nome do jogador" class="tab-item-sethings-playersInMatch-item">
-                            <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
-                            <div class="text-Setigns-playerName tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
-                        </div>
-
-                        <div id="nome do jogador" class="tab-item-sethings-playersInMatch-item">
-                            <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
-                            <div class="text-Setigns-playerName tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
-                        </div>
-                    </div>
-                    <div class="playersInMatchConteiner"></div>
-                    <!-- conteiner tab shows player info -->
-                    <div id="playerinfo">
-                        <div class="tab-divisor-main tab-midle text-title"> 
-                            <span>My Points</span>
-                        </div>
-                        <div  id="tab-item-sethings3" class="tab-item-sethings">
-
-                            <div class="tab-item-sethings-item-main">
-                                <div class="tab-item-sethings-item-text">
-                                    <div class="tab-item-sethings-item-title text-info-title">Total Points</div>
-                                    <div class="tab-item-sethings-item-value text-info-value">10012</div>
-                                </div>
-                                <hr class="tab-item-sethings-item-hr">
-                            </div>
-
-                             <div class="tab-item-sethings-item-main">
-                                <div class="tab-item-sethings-item-text">
-                                    <div class="tab-item-sethings-item-title text-info-title">Bonus Points</div>
-                                    <div class="tab-item-sethings-item-value text-info-value">10012</div>
-                                </div>
-                                <hr class="tab-item-sethings-item-hr">
-                            </div>
-
-                             <div class="tab-item-sethings-item-main">
-                                <div class="tab-item-sethings-item-text">
-                                    <div class="tab-item-sethings-item-title text-info-title">Streak Points</div>
-                                    <div class="tab-item-sethings-item-value text-info-value">10012</div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div id="tab-item-maypointsStats-conteiner">
-                            <div class="tab-item-maypointsStats-conteiner-item ">
-                                <div class="text-maypointsStats" >10</div>
-                                <svg width="34" height="26" viewBox="0 0 34 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M11.8955 25.4998L0.0205078 13.6248L2.98926 10.6561L11.8955 19.5623L31.0101 0.447754L33.9788 3.4165L11.8955 25.4998Z" fill="#68FF33"/>
-                                 </svg>
-                            </div>
-                            <div class="tab-item-maypointsStats-conteiner-item ">
-                                <div class="text-maypointsStats" >20</div>
-                                <svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M20.5 14.28L22.38 20.5H28.02L23.48 23.74L25.34 29.76L20.5 26.08L15.66 29.76L17.52 23.74L12.98 20.5H18.62L20.5 14.28ZM20.5 0.5L15.66 16.5H0.5L12.84 25.32L8.16 40.5L20.5 31.12L32.86 40.5L28.16 25.32L40.5 16.5H25.34L20.5 0.5Z" fill="#FFE500"/>
-                                </svg> 
-                            </div>
-                            <div class="tab-item-maypointsStats-conteiner-item ">
-                                <div class="text-maypointsStats" >10º</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-divisor-main tab-bottom"></div>
+            <% if(!match) { %>
+                
+                <div class="not-found-Cointerner">
+                    <div class="FoundError" >The match you are looking for does't exist !</div>
+                    <button id="GoTo_playOptions" class="ButtonLightBlue">Go to play</button>
                 </div>
 
+            
+            <% } else { %>      
+                <%if(!match.hasPlayer(req.user.username)) { %>
 
-                <!-- waiting tab leather -->
-                <div id="tab-wainting-lether">
-                    <div class="tab-princ-divisor-main tab-top">
-                        <div class="tab-princ-divisor-text">Waiting</div>
+                    <div class="not-found-Cointerner">
+                        <div class="FoundError" >You haven't join the match that yuo are trying to see !</div>
+                        <button id="GoTo_playOptions" class="ButtonLightBlue">Go to play</button>
                     </div>
-                    <div class="tab-wainting-content">
-                        <div class="tab-wainting-content-text">
-                            <div class="text-title">Waiting for leader to start !</div>
-                            <div id="tab-wainting-lether-conter" class="text-Counter">0:00 s</div>
-                        </div>
-                        <div class="spinner-box">
-                            <div class="circle-box">
-                                <div class="circle-core">
+
+                <% } else { %>
+                    
+                    <div class="conteiner-main-content">
+                
+                        <!-- conteiner tab shows match info and players -->
+                        <div id="tab-info" class="tab">
+                            <!-- conteiner tab shows match info -->
+                            <div>
+                                <div class="tab-divisor-main tab-top text-title"> 
+                                    <span>Match Settings</span>
+                                </div>
+                                <div id="tab-item-sethings1" class="tab-item-sethings">
+        
+                                    <div class="tab-item-sethings-item-main">
+                                        <div class="tab-item-sethings-item-text">
+                                            <div class="tab-item-sethings-item-title text-info-title">Type</div>
+                                            <div id="Settings-Match-type" class="tab-item-sethings-item-value text-info-value"><%=match.ClassName()%></div>
+                                        </div>
+                                        <hr class="tab-item-sethings-item-hr">
+                                    </div>
+        
+                                     <div class="tab-item-sethings-item-main">
+                                        <div class="tab-item-sethings-item-text">
+                                            <div class="tab-item-sethings-item-title text-info-title">Difficulty</div>
+                                            <div class="tab-item-sethings-item-value text-info-value"><%=match.settings_difficulty%></div>
+                                        </div>
+                                        <hr class="tab-item-sethings-item-hr">
+                                    </div>
+        
+                                     <div class="tab-item-sethings-item-main">
+                                        <div class="tab-item-sethings-item-text">
+                                            <div class="tab-item-sethings-item-title text-info-title">Duration</div>
+                                            <div class="tab-item-sethings-item-value text-info-value"><%=match.settings_questions%></div>
+                                        </div>
+                                        <hr class="tab-item-sethings-item-hr">
+                                    </div>
+        
+                                    <div class="tab-item-sethings-item-main">
+                                        <div class="tab-item-sethings-item-text">
+                                            <div class="tab-item-sethings-item-title text-info-title">Join code</div>
+                                            <div class="tab-item-sethings-item-value text-info-value"><%=match.joinCode%></div>
+                                        </div>
+                                    </div>
+        
+                                </div>
+                                <div id="tab-item-button-conteiner">
+                                    <button id="button-abandonMatch" class="ButtonRed">
+                                        <span>Abandone Match</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- conteiner tab shows player in match -->
+                            <div class="tab-divisor-main tab-midle text-title"> 
+                                <span>Players <%=match.getPlayers()%>/<%=match.settings_maxPlayers%></span>
+                            </div>
+                            <div id="tab-item-sethings-playersInMatch" >
+
+                                <% for(let i = 0; i < match.getPlayers() ;i++) { 
+
+                                    if(match.players[i].user === req.user.username)
+                                        player = match.players[i];
                                     
+                                    if (match.players[i].user === match.getLeader().user) { %>
+                                        
+                                        <div id="nome do jogador" class="tab-item-sethings-playersInMatch-item">
+                                            <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
+                                            <!-- svg sinals the match creator -->
+                                            <svg width="23" height="20" viewBox="0 0 23 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M2.5 15L0 1.25L6.875 7.5L11.25 0L15.625 7.5L22.5 1.25L20 15H2.5ZM20 18.75C20 19.5 19.5 20 18.75 20H3.75C3 20 2.5 19.5 2.5 18.75V17.5H20V18.75Z" fill="#FFD233"/>
+                                            </svg>
+                                            <div class="text-Setigns-playerName tab-item-sethings-playersInMatch-item-name"><%=match.players[i].user%></div> 
+                                        </div>
+                                
+                                    <% } else { %>
+
+                                        <div id="nome do jogador" class="tab-item-sethings-playersInMatch-item">
+                                            <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
+                                            <div class="text-Setigns-playerName tab-item-sethings-playersInMatch-item-name"><%=match.players[i].user%></div> 
+                                        </div>
+
+                                    <% } %>
+
+                                <% } %>
+                                    
+                            </div>
+                            <div class="playersInMatchConteiner"></div>
+                            <!-- conteiner tab shows player info -->
+                            <div id="playerinfo" style="display: block;"> <!-- a-->
+                                <div class="tab-divisor-main tab-midle text-title"> 
+                                    <span>My Points</span>
+                                </div>
+                                <div  id="tab-item-sethings3" class="tab-item-sethings">
+        
+                                    <div class="tab-item-sethings-item-main">
+                                        <div class="tab-item-sethings-item-text">
+                                            <div class="tab-item-sethings-item-title text-info-title">Total Points</div>
+                                            <div class="tab-item-sethings-item-value text-info-value"><%=player.points%></div>
+                                        </div>
+                                        <hr class="tab-item-sethings-item-hr">
+                                    </div>
+        
+                                     <div class="tab-item-sethings-item-main">
+                                        <div class="tab-item-sethings-item-text">
+                                            <div class="tab-item-sethings-item-title text-info-title">Bonus Points</div>
+                                            <div class="tab-item-sethings-item-value text-info-value"><%=player.bonus_points %></div>
+                                        </div>
+                                        <hr class="tab-item-sethings-item-hr">
+                                    </div>
+        
+                                     <div class="tab-item-sethings-item-main">
+                                        <div class="tab-item-sethings-item-text">
+                                            <div class="tab-item-sethings-item-title text-info-title">Streak Points</div>
+                                            <div class="tab-item-sethings-item-value text-info-value"><%=player.streak_points%></div>
+                                        </div>
+                                    </div>
+        
+                                </div>
+                                <div id="tab-item-maypointsStats-conteiner">
+                                    <div class="tab-item-maypointsStats-conteiner-item ">
+                                        <div class="text-maypointsStats" ><%=player.rights%></div>
+                                        <svg width="34" height="26" viewBox="0 0 34 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M11.8955 25.4998L0.0205078 13.6248L2.98926 10.6561L11.8955 19.5623L31.0101 0.447754L33.9788 3.4165L11.8955 25.4998Z" fill="#68FF33"/>
+                                         </svg>
+                                    </div>
+                                    <div class="tab-item-maypointsStats-conteiner-item ">
+                                        <div class="text-maypointsStats" ><%=player.streak%></div>
+                                        <svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M20.5 14.28L22.38 20.5H28.02L23.48 23.74L25.34 29.76L20.5 26.08L15.66 29.76L17.52 23.74L12.98 20.5H18.62L20.5 14.28ZM20.5 0.5L15.66 16.5H0.5L12.84 25.32L8.16 40.5L20.5 31.12L32.86 40.5L28.16 25.32L40.5 16.5H25.34L20.5 0.5Z" fill="#FFE500"/>
+                                        </svg> 
+                                    </div>
+                                    <div class="tab-item-maypointsStats-conteiner-item ">
+                                        <div class="text-maypointsStats" ><%=player.place%>º</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-divisor-main tab-bottom"></div>
+                        </div>
+        
+                        
+                        <!-- waiting tab join -->
+                        <% if(match.status === "starting" && match.getLeader().user != player.user) { %>
+                        <div id="tab-wainting-lether" class="active">
+                        <% } else { %>
+                        <div id="tab-wainting-lether">
+                        <% } %>
+                            <div class="tab-princ-divisor-main tab-top">
+                                <div class="tab-princ-divisor-text">Waiting</div>
+                            </div>
+                            <div class="tab-wainting-content">
+                                <div class="tab-wainting-content-text">
+                                    <div class="text-title">Waiting for leader to start !</div>
+                                    <div id="tab-wainting-lether-conter" class="text-Counter">0:00 s</div>
+                                </div>
+                                <div class="spinner-box">
+                                    <div class="circle-box">
+                                        <div class="circle-core">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-divisor-main tab-bottom">
+                            </div>
+                        </div>
+        
+                        <!-- waiting tab leather  -->
+                        <% if(match.status === "starting" && match.getLeader().user === player.user) { %>
+                        <div id="tab-wainting-join" class="active">
+                        <% } else { %>
+                        <div id="tab-wainting-join">
+                        <% } %>
+                            <div class="tab-princ-divisor-main tab-top">
+                                <div class="tab-princ-divisor-text">Waiting</div>
+                            </div>
+                            <div class="tab-wainting-content">
+                                <div class="text-title waitingtextAnim">
+                                    Waiting for you to start !
+                                </div>
+                               <button id="startMatch" class="ButtonLightBlue">Start Match</button>
+                            </div>
+                            <div class="tab-divisor-main tab-bottom">
+                            </div>
+                        </div>
+        
+        
+                        <!-- vote tab  -->
+                        <% if(match.status === "voting") { %>
+                        <div id="tab-Vote" class="active">
+                        <% } else { %>
+                        <div id="tab-Vote">
+                        <% } %>
+                            <div class="tab-princ-divisor-main tab-top">
+                                <div class="tab-princ-divisor-text">Vote</div>
+                            </div>
+                            <div class="tab-wainting-content">
+                                <div class="text-title">
+                                    Choose the theme for the next question !
+                                </div>
+                                <div id="tab-Vote-OpnMenu">
+                                    <div class="tab-vote-button-conteiner">
+                                        <button id="tab-Vote-Optn1" class="tab-Vote-Button ButtonLightBlue">Start Match</button>
+                                        <div id="tab-Vote-Optn1-text" class="text-title" >0</div>
+                                    </div>
+                                    <div class="tab-vote-button-conteiner">
+                                        <button id="tab-Vote-Optn2" class="tab-Vote-Button ButtonLightBlue">Start Match</button>
+                                        <div id="tab-Vote-Optn1-text" class="text-title" >0</div>
+                                    </div>
+                                    <div class="tab-vote-button-conteiner">
+                                        <button id="tab-Vote-Optn3" class="tab-Vote-Button ButtonLightBlue">Start Match</button>
+                                        <div id="tab-Vote-Optn1-text" class="text-title" >0</div>
+                                    </div>
+                                    <div class="tab-vote-button-conteiner">
+                                        <button id="tab-Vote-Optn4" class="tab-Vote-Button ButtonLightBlue">Start Match</button>
+                                        <div id="tab-Vote-Optn1-text" class="text-title" >0</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-divisor-main tab-bottom">
+                            </div>
+                        </div>
+        
+                         <!-- game tab  -->
+                        <% if(match.status === "running") { %>
+                        <div id="tab-Game" class="tab active">
+                        <% } else { %>
+                        <div id="tab-Game" class="tab ">
+                        <% } %>
+                            <div id="tab-game-chat-conteiner">
+                                <div class="tab-game-divisor-main tab-top tab-top-pading">
+                                    <div id="QuestionNumber" class="text-question">99</div>
+                                    <div class="tab-princ-divisor-text" class="text-title">Question</div>
+                                    <div id="questionTimer" class="text-Counter">0:00</div>
+                                </div>
+                                <div class="tab-game-question text-title">
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident ipsam dicta fugiat esse tempore dolorem molestias placeat, vitae ullam iure est numquam saepe et laborum dolores in ex quos neque? This is the Question ?
+                                </div>
+        
+                                <div id="tab-game-chat">
+        
+                                    <div class="tab-game-item-name-conteiner tab-game-item-dateTime-conteiner-wrong">
+                                        <div class="tab-game-item-fotoNome">
+                                            <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
+                                            <div class="tab-game-item-dateTime-text">
+                                                <div class="tab-game-item-name-text tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
+                                                <div>24 - 11 - 200? 00:00</div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-game-item-conteinertext tab-game-item-text">
+                                            <div>Tried:</div>
+                                            <div>Lorem ipsum dolor sit amet consectetur adipisicing </div>
+                                        </div>
+                                    </div>
+        
+                                    <div class="tab-game-item-name-conteiner tab-game-item-dateTime-conteiner-wrong">
+                                        <div class="tab-game-item-fotoNome">
+                                            <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
+                                            <div class="tab-game-item-dateTime-text">
+                                                <div class="tab-game-item-name-text tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
+                                                <div>24 - 11 - 200? 00:00</div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-game-item-conteinertext tab-game-item-text">
+                                            <div>Tried:</div>
+                                            <div>Lorem ipsum dolor sit amet consectetur adipisicing </div>
+                                        </div>
+                                    </div>
+        
+        
+                                    <div class="tab-game-item-name-conteiner tab-game-item-dateTime-conteiner-wrong">
+                                        <div class="tab-game-item-fotoNome">
+                                            <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
+                                            <div class="tab-game-item-dateTime-text">
+                                                <div class="tab-game-item-name-text tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
+                                                <div>24 - 11 - 200? 00:00</div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-game-item-conteinertext tab-game-item-text">
+                                            <div>Tried:</div>
+                                            <div>Lorem ipsum dolor sit amet consectetur adipisicing </div>
+                                        </div>
+                                    </div>
+        
+        
+                                    <div class="tab-game-item-name-conteiner tab-game-item-dateTime-conteiner-wrong">
+                                        <div class="tab-game-item-fotoNome">
+                                            <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
+                                            <div class="tab-game-item-dateTime-text">
+                                                <div class="tab-game-item-name-text tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
+                                                <div>24 - 11 - 200? 00:00</div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-game-item-conteinertext tab-game-item-text">
+                                            <div>Tried:</div>
+                                            <div>Lorem ipsum dolor sit amet consectetur adipisicing </div>
+                                        </div>
+                                    </div>
+        
+        
+                                    <div class="tab-game-item-name-conteiner tab-game-item-dateTime-conteiner-wrong">
+                                        <div class="tab-game-item-fotoNome">
+                                            <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
+                                            <div class="tab-game-item-dateTime-text">
+                                                <div class="tab-game-item-name-text tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
+                                                <div>24 - 11 - 200? 00:00</div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-game-item-conteinertext tab-game-item-text">
+                                            <div>Tried:</div>
+                                            <div>Lorem ipsum dolor sit amet consectetur adipisicing </div>
+                                        </div>
+                                    </div>
+        
+        
+                                    <div class="tab-game-item-name-conteiner tab-game-item-dateTime-conteiner-wrong">
+                                        <div class="tab-game-item-fotoNome">
+                                            <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
+                                            <div class="tab-game-item-dateTime-text">
+                                                <div class="tab-game-item-name-text tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
+                                                <div>24 - 11 - 200? 00:00</div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-game-item-conteinertext tab-game-item-text">
+                                            <div>Tried:</div>
+                                            <div>Lorem ipsum dolor sit amet consectetur adipisicing </div>
+                                        </div>
+                                    </div>
+        
+                                    <div class="tab-game-item-name-conteiner tab-game-item-dateTime-conteiner-wrong">
+                                        <div class="tab-game-item-fotoNome">
+                                            <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
+                                            <div class="tab-game-item-dateTime-text">
+                                                <div class="tab-game-item-name-text tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
+                                                <div>24 - 11 - 200? 00:00</div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-game-item-conteinertext tab-game-item-text">
+                                            <div>Tried:</div>
+                                            <div>Lorem ipsum dolor sit amet consectetur adipisicing </div>
+                                        </div>
+                                    </div>
+        
+                                    <div class="tab-game-item-name-conteiner tab-game-item-dateTime-conteiner-wrong">
+                                        <div class="tab-game-item-fotoNome">
+                                            <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
+                                            <div class="tab-game-item-dateTime-text">
+                                                <div class="tab-game-item-name-text tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
+                                                <div>24 - 11 - 200? 00:00</div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-game-item-conteinertext tab-game-item-text">
+                                            <div>Tried:</div>
+                                            <div>Lorem ipsum dolor sit amet consectetur adipisicing </div>
+                                        </div>
+                                    </div>
+        
+                                    <div class="tab-game-item-name-conteiner tab-game-item-dateTime-conteiner-guessed">
+                                        <div class="tab-game-item-fotoNome">
+                                            <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
+                                            <div class="tab-game-item-dateTime-text">
+                                                <div class="tab-game-item-name-text tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
+                                                <div>24 - 11 - 200? 00:00</div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-game-item-conteinertext tab-game-item-text">
+                                            <div>Tried:</div>
+                                            <div>Lorem ipsum dolor sit amet consectetur adipisicing </div>
+                                        </div>
+                                    </div>
+        
+                                    <div class="tab-game-item-name-conteiner tab-game-item-dateTime-conteiner-other">
+                                        <div class="tab-game-item-fotoNome">
+                                            <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
+                                            <div class="tab-game-item-dateTime-text">
+                                                <div class="tab-game-item-name-text tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
+                                                <div>24 - 11 - 200? 00:00</div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-game-item-conteinertext tab-game-item-text">
+                                            <div>Did not handled the pressure and left the match </div>
+                                        </div>
+                                    </div>
+        
+                                    <div class="tab-game-item-name-conteiner tab-game-item-dateTime-conteiner-wrong">
+                                        <div class="tab-game-item-fotoNome">
+                                            <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
+                                            <div class="tab-game-item-dateTime-text">
+                                                <div class="tab-game-item-name-text tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
+                                                <div>24 - 11 - 200? 00:00</div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-game-item-conteinertext tab-game-item-text">
+                                            <div>Tried:</div>
+                                            <div>Lorem ipsum dolor sit amet consectetur adipisicing </div>
+                                        </div>
+                                    </div>
+        
+                                    <div class="tab-game-item-name-conteiner tab-game-item-dateTime-conteiner-wrong">
+                                        <div class="tab-game-item-fotoNome">
+                                            <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
+                                            <div class="tab-game-item-dateTime-text">
+                                                <div class="tab-game-item-name-text tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
+                                                <div>24 - 11 - 200? 00:00</div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-game-item-conteinertext tab-game-item-text">
+                                            <div>Tried:</div>
+                                            <div>Lorem ipsum dolor sit amet consectetur adipisicing </div>
+                                        </div>
+                                    </div>
+        
+                                    <div class="tab-game-item-name-conteiner tab-game-item-dateTime-conteiner-wrong">
+                                        <div class="tab-game-item-fotoNome">
+                                            <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
+                                            <div class="tab-game-item-dateTime-text">
+                                                <div class="tab-game-item-name-text tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
+                                                <div>24 - 11 - 200? 00:00</div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-game-item-conteinertext tab-game-item-text">
+                                            <div>Tried:</div>
+                                            <div>Lorem ipsum dolor sit amet consectetur adipisicing </div>
+                                        </div>
+                                    </div>
+        
+        
+        
+        
+                                </div>
+        
+                            </div>
+                            <div id="tab-game-divisor-bottom" class="tab-divisor-main tab-bottom "><!-- Game-Corret-Guess-->
+                                <div id="tab-game-guessInput-conteiner" class="inputText ButtonDarkBlue ">
+                                    <input id="tab-game-guess-input" type="text" class="inputText-Input"/>
+                                    <button id="btn-tab-game-guess" class="inputText-Button-color inputText-Button">
+                                        Guess
+                                        <svg width="25" height="22" viewBox="0 0 25 22" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M2.25 21.5L24.0625 12.15C24.288 12.0539 24.4803 11.8937 24.6154 11.6893C24.7505 11.4848 24.8226 11.2451 24.8226 11C24.8226 10.7549 24.7505 10.5152 24.6154 10.3108C24.4803 10.1063 24.288 9.94606 24.0625 9.85L2.25 0.500001C2.06113 0.417619 1.85471 0.383555 1.64939 0.40088C1.44406 0.418205 1.24627 0.486375 1.07387 0.599241C0.901474 0.712106 0.759886 0.866116 0.661881 1.04738C0.563876 1.22864 0.512539 1.43144 0.5125 1.6375L0.5 7.4C0.5 8.025 0.9625 8.5625 1.5875 8.6375L19.25 11L1.5875 13.35C0.9625 13.4375 0.5 13.975 0.5 14.6L0.5125 20.3625C0.5125 21.25 1.425 21.8625 2.25 21.5Z" fill="currentColor"/>
+                                        </svg>                                    
+                                    </button>
                                 </div>
                             </div>
                         </div>
+        
                     </div>
-                    <div class="tab-divisor-main tab-bottom">
-                    </div>
-                </div>
 
-                <!-- waiting tab join -->
-                <div id="tab-wainting-join">
-                    <div class="tab-princ-divisor-main tab-top">
-                        <div class="tab-princ-divisor-text">Waiting</div>
-                    </div>
-                    <div class="tab-wainting-content">
-                        <div class="text-title waitingtextAnim">
-                            Waiting for you to start !
-                        </div>
-                       <button id="startMatch" class="ButtonLightBlue">Start Match</button>
-                    </div>
-                    <div class="tab-divisor-main tab-bottom">
-                    </div>
-                </div>
+                <% }%>
 
-
-                <!-- vote tab  -->
-                <div id="tab-Vote">
-                    <div class="tab-princ-divisor-main tab-top">
-                        <div class="tab-princ-divisor-text">Vote</div>
-                    </div>
-                    <div class="tab-wainting-content">
-                        <div class="text-title">
-                            Choose the theme for the next question !
-                        </div>
-                        <div id="tab-Vote-OpnMenu">
-                            <div class="tab-vote-button-conteiner">
-                                <button id="tab-Vote-Optn1" class="tab-Vote-Button ButtonLightBlue">Start Match</button>
-                                <div id="tab-Vote-Optn1-text" class="text-title" >0</div>
-                            </div>
-                            <div class="tab-vote-button-conteiner">
-                                <button id="tab-Vote-Optn2" class="tab-Vote-Button ButtonLightBlue">Start Match</button>
-                                <div id="tab-Vote-Optn1-text" class="text-title" >0</div>
-                            </div>
-                            <div class="tab-vote-button-conteiner">
-                                <button id="tab-Vote-Optn3" class="tab-Vote-Button ButtonLightBlue">Start Match</button>
-                                <div id="tab-Vote-Optn1-text" class="text-title" >0</div>
-                            </div>
-                            <div class="tab-vote-button-conteiner">
-                                <button id="tab-Vote-Optn4" class="tab-Vote-Button ButtonLightBlue">Start Match</button>
-                                <div id="tab-Vote-Optn1-text" class="text-title" >0</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-divisor-main tab-bottom">
-                    </div>
-                </div>
-
-                 <!-- game tab  -->
-                 <div id="tab-Game" class="tab ">
-                     
-                    <div id="tab-game-chat-conteiner">
-                        <div class="tab-game-divisor-main tab-top tab-top-pading">
-                            <div id="QuestionNumber" class="text-question">99</div>
-                            <div class="tab-princ-divisor-text" class="text-title">Question</div>
-                            <div id="questionTimer" class="text-Counter">0:00</div>
-                        </div>
-                        <div class="tab-game-question text-title">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident ipsam dicta fugiat esse tempore dolorem molestias placeat, vitae ullam iure est numquam saepe et laborum dolores in ex quos neque? This is the Question ?
-                        </div>
-
-                        <div id="tab-game-chat">
-
-                            <div class="tab-game-item-name-conteiner tab-game-item-dateTime-conteiner-wrong">
-                                <div class="tab-game-item-fotoNome">
-                                    <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
-                                    <div class="tab-game-item-dateTime-text">
-                                        <div class="tab-game-item-name-text tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
-                                        <div>24 - 11 - 200? 00:00</div>
-                                    </div>
-                                </div>
-                                <div class="tab-game-item-conteinertext tab-game-item-text">
-                                    <div>Tried:</div>
-                                    <div>Lorem ipsum dolor sit amet consectetur adipisicing </div>
-                                </div>
-                            </div>
-
-                            <div class="tab-game-item-name-conteiner tab-game-item-dateTime-conteiner-wrong">
-                                <div class="tab-game-item-fotoNome">
-                                    <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
-                                    <div class="tab-game-item-dateTime-text">
-                                        <div class="tab-game-item-name-text tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
-                                        <div>24 - 11 - 200? 00:00</div>
-                                    </div>
-                                </div>
-                                <div class="tab-game-item-conteinertext tab-game-item-text">
-                                    <div>Tried:</div>
-                                    <div>Lorem ipsum dolor sit amet consectetur adipisicing </div>
-                                </div>
-                            </div>
-
-
-                            <div class="tab-game-item-name-conteiner tab-game-item-dateTime-conteiner-wrong">
-                                <div class="tab-game-item-fotoNome">
-                                    <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
-                                    <div class="tab-game-item-dateTime-text">
-                                        <div class="tab-game-item-name-text tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
-                                        <div>24 - 11 - 200? 00:00</div>
-                                    </div>
-                                </div>
-                                <div class="tab-game-item-conteinertext tab-game-item-text">
-                                    <div>Tried:</div>
-                                    <div>Lorem ipsum dolor sit amet consectetur adipisicing </div>
-                                </div>
-                            </div>
-
-
-                            <div class="tab-game-item-name-conteiner tab-game-item-dateTime-conteiner-wrong">
-                                <div class="tab-game-item-fotoNome">
-                                    <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
-                                    <div class="tab-game-item-dateTime-text">
-                                        <div class="tab-game-item-name-text tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
-                                        <div>24 - 11 - 200? 00:00</div>
-                                    </div>
-                                </div>
-                                <div class="tab-game-item-conteinertext tab-game-item-text">
-                                    <div>Tried:</div>
-                                    <div>Lorem ipsum dolor sit amet consectetur adipisicing </div>
-                                </div>
-                            </div>
-
-
-                            <div class="tab-game-item-name-conteiner tab-game-item-dateTime-conteiner-wrong">
-                                <div class="tab-game-item-fotoNome">
-                                    <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
-                                    <div class="tab-game-item-dateTime-text">
-                                        <div class="tab-game-item-name-text tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
-                                        <div>24 - 11 - 200? 00:00</div>
-                                    </div>
-                                </div>
-                                <div class="tab-game-item-conteinertext tab-game-item-text">
-                                    <div>Tried:</div>
-                                    <div>Lorem ipsum dolor sit amet consectetur adipisicing </div>
-                                </div>
-                            </div>
-
-
-                            <div class="tab-game-item-name-conteiner tab-game-item-dateTime-conteiner-wrong">
-                                <div class="tab-game-item-fotoNome">
-                                    <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
-                                    <div class="tab-game-item-dateTime-text">
-                                        <div class="tab-game-item-name-text tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
-                                        <div>24 - 11 - 200? 00:00</div>
-                                    </div>
-                                </div>
-                                <div class="tab-game-item-conteinertext tab-game-item-text">
-                                    <div>Tried:</div>
-                                    <div>Lorem ipsum dolor sit amet consectetur adipisicing </div>
-                                </div>
-                            </div>
-
-                            <div class="tab-game-item-name-conteiner tab-game-item-dateTime-conteiner-wrong">
-                                <div class="tab-game-item-fotoNome">
-                                    <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
-                                    <div class="tab-game-item-dateTime-text">
-                                        <div class="tab-game-item-name-text tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
-                                        <div>24 - 11 - 200? 00:00</div>
-                                    </div>
-                                </div>
-                                <div class="tab-game-item-conteinertext tab-game-item-text">
-                                    <div>Tried:</div>
-                                    <div>Lorem ipsum dolor sit amet consectetur adipisicing </div>
-                                </div>
-                            </div>
-
-                            <div class="tab-game-item-name-conteiner tab-game-item-dateTime-conteiner-wrong">
-                                <div class="tab-game-item-fotoNome">
-                                    <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
-                                    <div class="tab-game-item-dateTime-text">
-                                        <div class="tab-game-item-name-text tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
-                                        <div>24 - 11 - 200? 00:00</div>
-                                    </div>
-                                </div>
-                                <div class="tab-game-item-conteinertext tab-game-item-text">
-                                    <div>Tried:</div>
-                                    <div>Lorem ipsum dolor sit amet consectetur adipisicing </div>
-                                </div>
-                            </div>
-
-                            <div class="tab-game-item-name-conteiner tab-game-item-dateTime-conteiner-guessed">
-                                <div class="tab-game-item-fotoNome">
-                                    <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
-                                    <div class="tab-game-item-dateTime-text">
-                                        <div class="tab-game-item-name-text tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
-                                        <div>24 - 11 - 200? 00:00</div>
-                                    </div>
-                                </div>
-                                <div class="tab-game-item-conteinertext tab-game-item-text">
-                                    <div>Tried:</div>
-                                    <div>Lorem ipsum dolor sit amet consectetur adipisicing </div>
-                                </div>
-                            </div>
-
-                            <div class="tab-game-item-name-conteiner tab-game-item-dateTime-conteiner-other">
-                                <div class="tab-game-item-fotoNome">
-                                    <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
-                                    <div class="tab-game-item-dateTime-text">
-                                        <div class="tab-game-item-name-text tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
-                                        <div>24 - 11 - 200? 00:00</div>
-                                    </div>
-                                </div>
-                                <div class="tab-game-item-conteinertext tab-game-item-text">
-                                    <div>Did not handled the pressure and left the match </div>
-                                </div>
-                            </div>
-
-                            <div class="tab-game-item-name-conteiner tab-game-item-dateTime-conteiner-wrong">
-                                <div class="tab-game-item-fotoNome">
-                                    <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
-                                    <div class="tab-game-item-dateTime-text">
-                                        <div class="tab-game-item-name-text tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
-                                        <div>24 - 11 - 200? 00:00</div>
-                                    </div>
-                                </div>
-                                <div class="tab-game-item-conteinertext tab-game-item-text">
-                                    <div>Tried:</div>
-                                    <div>Lorem ipsum dolor sit amet consectetur adipisicing </div>
-                                </div>
-                            </div>
-
-                            <div class="tab-game-item-name-conteiner tab-game-item-dateTime-conteiner-wrong">
-                                <div class="tab-game-item-fotoNome">
-                                    <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
-                                    <div class="tab-game-item-dateTime-text">
-                                        <div class="tab-game-item-name-text tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
-                                        <div>24 - 11 - 200? 00:00</div>
-                                    </div>
-                                </div>
-                                <div class="tab-game-item-conteinertext tab-game-item-text">
-                                    <div>Tried:</div>
-                                    <div>Lorem ipsum dolor sit amet consectetur adipisicing </div>
-                                </div>
-                            </div>
-
-                            <div class="tab-game-item-name-conteiner tab-game-item-dateTime-conteiner-wrong">
-                                <div class="tab-game-item-fotoNome">
-                                    <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
-                                    <div class="tab-game-item-dateTime-text">
-                                        <div class="tab-game-item-name-text tab-item-sethings-playersInMatch-item-name">012345345678901234</div> <!-- max name lenght 25 -->
-                                        <div>24 - 11 - 200? 00:00</div>
-                                    </div>
-                                </div>
-                                <div class="tab-game-item-conteinertext tab-game-item-text">
-                                    <div>Tried:</div>
-                                    <div>Lorem ipsum dolor sit amet consectetur adipisicing </div>
-                                </div>
-                            </div>
-
-
-
-
-                        </div>
-
-                    </div>
-                    <div id="tab-game-divisor-bottom" class="tab-divisor-main tab-bottom "><!-- Game-Corret-Guess-->
-                        <div id="tab-game-guessInput-conteiner" class="inputText ButtonDarkBlue ">
-                            <input id="tab-game-guess-input" type="text" class="inputText-Input"/>
-                            <button id="btn-tab-game-guess" class="inputText-Button-color inputText-Button">
-                                Guess
-                                <svg width="25" height="22" viewBox="0 0 25 22" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M2.25 21.5L24.0625 12.15C24.288 12.0539 24.4803 11.8937 24.6154 11.6893C24.7505 11.4848 24.8226 11.2451 24.8226 11C24.8226 10.7549 24.7505 10.5152 24.6154 10.3108C24.4803 10.1063 24.288 9.94606 24.0625 9.85L2.25 0.500001C2.06113 0.417619 1.85471 0.383555 1.64939 0.40088C1.44406 0.418205 1.24627 0.486375 1.07387 0.599241C0.901474 0.712106 0.759886 0.866116 0.661881 1.04738C0.563876 1.22864 0.512539 1.43144 0.5125 1.6375L0.5 7.4C0.5 8.025 0.9625 8.5625 1.5875 8.6375L19.25 11L1.5875 13.35C0.9625 13.4375 0.5 13.975 0.5 14.6L0.5125 20.3625C0.5125 21.25 1.425 21.8625 2.25 21.5Z" fill="currentColor"/>
-                                </svg>                                    
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+            <% } %>
+        </div>
+        <div class="Popup-conteiner">
+            <%- include("../views/partials/ErrorPopUp.ejs") %>
         </div>
         <%- include("../views/partials/footer.ejs") %>
+        <script src="/js/Overlay.js"></script>
+        <script src="/js/ErrorPopUp.js"></script>
         <!-- <script src="/js/buttons.js"></script> -->
-        <script src="/js/playGame.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/js/Game/playGame.js"></script>
+        <script src="/js/Game/answerHandler.js"></script>
+        <script src="/js/Game/questionHandler.js"></script>
+        <script type="module" src="/js/socket/socketMain.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.4.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     </body>

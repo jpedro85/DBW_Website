@@ -14,6 +14,7 @@
   background-color: #0b4649;
 
   /* Font CSS */
+  z-index: 999;
   line-height: 18px !important;
   letter-spacing: -0.05em !important;
   color: #ffffff !important;

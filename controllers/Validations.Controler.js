@@ -67,7 +67,25 @@ function validateObject(object,...properties) {
 
     return true
 }
+/**
+ * Return true if value is one of the enumeration_values, false otherwise.
+ *
+ * @param   {any}  value               
+ * @param   {any}  enumeration_values  
+ *
+ * @return  {boolean}                  
+ */
+function validateEnum(value,...enumeration_values) {
+
+    for(let enum_value of enumeration_values ){
+
+        if (value === enum_value ) 
+            return true;
+    }
+
+    return false
+}
             
-module.exports = {validateObject , strContain_UperAndLower , strContain_Numbers , strContain_Symbols , is_Password_Invalid ,  is_Username_Invalid }
+module.exports = {validateEnum ,validateObject , strContain_UperAndLower , strContain_Numbers , strContain_Symbols , is_Password_Invalid ,  is_Username_Invalid }
 
 
