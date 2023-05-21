@@ -27,7 +27,7 @@ function profileController(request, response) {
                 if (!metricsFound) {
                     throw new Error("User Metrics Not Found");
                 } else {
-                    const userWinRate = metricsFound.totalWins / metricsFound.totalGames;
+                    const userWinRate = (metricsFound.totalWins / metricsFound.totalGames)*100;
                     const totalWins = metricsFound.totalGames - metricsFound.totalLost - metricsFound.totalDraws;
                     const totalUnanswered = metricsFound.totalQuestions - metricsFound.totalQuestionsAnswered;
                     const totalQuestionsWrong = metricsFound.totalQuestions - metricsFound.totalQuestionsRight;
