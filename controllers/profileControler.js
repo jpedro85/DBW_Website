@@ -1,12 +1,12 @@
 const fetchedDatabaseUserMetrics = require("../model/metrics.model.js");
 const fetchedDatabaseUser = require("../model/user.model.js");
-const {is_Username_Invalid} = require('./Validations.Controler.js');
-const {sendConfirmEmail} = require('./emailController.js');
+const { is_Username_Invalid } = require("./Validations.Controler.js");
+const { sendConfirmEmail } = require("./emailController.js");
 
 // creating the profile handler
 function profileController(request, response) {
     const isUserLogged = request.isAuthenticated();
-    //shows the ejs page on the site and use the model to fill dynamically
+    // shows the ejs page on the site and use the model to fill dynamically
     if (!isUserLogged) {
         const pageInfo = {
             isUserLogged: isUserLogged,
@@ -15,7 +15,7 @@ function profileController(request, response) {
             showIndexOnUnauthenticated: true,
             page: "profile",
         };
-        return response.render("index",  pageInfo );
+        return response.render("index", pageInfo);
     } else {
         const metricsFound = fetchedDatabaseUserMetrics
             .findOne({
@@ -33,6 +33,7 @@ function profileController(request, response) {
                         isUserLogged: isUserLogged,
                         username: request.user.username,
                         email: request.user.email,
+                        profileImage: request.user.profileImage,
                         totalGames: metricsFound.totalGames,
                         totalLost: metricsFound.totalLost,
                         totalDraws: metricsFound.totalDraws,
@@ -65,96 +66,147 @@ function profileController(request, response) {
 async function updateUsername(request, response) {
     // Fetches the description from the form
     const username = request.user.username;
-    const changedUsername = request.body.changedUsername
+    const changedUsername = request.body.changedUsername;
     try {
         const checkUsername = is_Username_Invalid(changedUsername);
 
         if (checkUsername) {
-            const responseObject={
-                success:false,
+            const responseObject = {
+                success: false,
                 errortype: "username",
                 error: checkUsername,
-            }
+            };
             return response.send(responseObject);
         }
         // Find the user in database by username
         const fetchedUser = await fetchedDatabaseUser.findOne({ username: username });
-        const fetchedUserMetrics = await fetchedDatabaseUserMetrics.findOne({username:username}) 
-        
-        if (fetchedUser && fetchedUserMetrics) {
+        const fetchedUserMetrics = await fetchedDatabaseUserMetrics.findOne({ username: username });
 
+        if (fetchedUser && fetchedUserMetrics) {
             // Update the the fetchedUser username locally
             fetchedUser.username = changedUsername;
             // Update the the fetchedUserMetrics username locally
-            fetchedUserMetrics.username= changedUsername;
-            
+            fetchedUserMetrics.username = changedUsername;
+
             // Saves the changes made on the DB
-            //await fetchedUser.save();
-            //await fetchedUserMetrics.save();
+            await fetchedUser.save();
+            await fetchedUserMetrics.save();
 
             // Redirects to the index page after the process is done
-            const responseObject ={
-                success:true,
+            const responseObject = {
+                success: true,
                 changedUsername: changedUsername,
-            }
+            };
             response.send(responseObject);
         } else {
             throw new Error("User Not Found");
         }
     } catch (updateError) {
-        const responseObject={
-            success:false,
-            errortype:"other",
+        const responseObject = {
+            success: false,
+            errortype: "other",
             error: updateError.message,
-        }
-        response.send(responseObject)
+        };
+        response.send(responseObject);
     }
 }
 
-async function updateEmail(request,response) {
+async function updateEmail(request, response) {
     const userEmail = request.user.email;
     const changedEmail = request.body.changedEmail;
     try {
-
-        if (changedEmail===userEmail) {
-            const responseObject={
-                success:false,
+        if (changedEmail === userEmail) {
+            const responseObject = {
+                success: false,
                 errortype: "email",
                 error: "It's the same email!",
-            }
+            };
             return response.send(responseObject);
         }
-        const fetchedUser = await fetchedDatabaseUser.findOne({email:userEmail});
+        const fetchedUser = await fetchedDatabaseUser.findOne({ email: userEmail });
 
-        if (fetchedUser){
+        if (fetchedUser) {
             // creates a new JSON web Token based on the new email
             // Update the users status
             fetchedUser.status = "Pending";
-            sendConfirmEmail(changedEmail,fetchedUser.confirmationCode)
-            .then(async (hasError)=>{
-                if (hasError != true){
+            sendConfirmEmail(changedEmail, fetchedUser.confirmationCode).then(async (hasError) => {
+                if (hasError != true) {
                     response.send({
-                      success: false,
-                      email: changedEmail,
-                      errortype: "email",
-                      error: "Invalid email",
+                        success: false,
+                        email: changedEmail,
+                        errortype: "email",
+                        error: "Invalid email",
                     });
                 } else {
                     // saves the changes made on the database
-                    //await fetchedUser.save();
-                    const responseObject ={
-                        success:true,
+                    await fetchedUser.save();
+                    const responseObject = {
+                        success: true,
                         changedEmail: changedEmail,
                         message: "Check the EmailBox it was sent a confirmation code to reactivate your account",
-                    }
+                    };
                     response.send(responseObject);
                 }
             });
         }
     } catch (updatingError) {
-        console.log(updatingError.keyPattern);
+        const responseObject = {
+            success: false,
+            errortype: "other",
+            error: updatingError.message,
+        };
+        response.send(responseObject);;
+    }
+}
+
+async function updateProfileImage(request, response) {
+
+    const username = request.user.username;
+    const imageCode = request.body.imageCode;
+    const imageType = request.body.imageType;
+    const validImageTypes = ["image/jpeg", "image/png", "image/jpg"]; 
+    try {
+        if (!imageCode) {
+            const responseObject = {
+                success: false,
+                errortype: "image",
+                error: "No image was given!",
+            };
+            return response.send(responseObject);
+        }
+        if (!validImageTypes.includes(imageType)) {
+            const responseObject = {
+                success: false,
+                errortype: "image",
+                error: "Must be jpeg / png / jpg image format any others are not valid!",
+            };
+            return response.send(responseObject);
+        }
+        const fetchedUser = await fetchedDatabaseUser.findOne({ username: username });
+        if (fetchedUser) {
+            // Changes the user profile image code for another
+            fetchedUser.profileImage = imageCode;
+            
+            // Saves the changes made on the database
+            await fetchedUser.save();
+
+            const responseObject = {
+                success: true,
+                imageCode: imageCode,
+            };
+            response.send(responseObject);
+        }else{
+            throw new Error("User not found");
+        }
+    } catch (updatingError) {
+        const responseObject = {
+            success: false,
+            errortype: "other",
+            error: updatingError.message,
+        };
+        response.send(responseObject);
     }
 }
 
 // exporting the handler
-module.exports = { profileController, updateUsername ,updateEmail};
+module.exports = { profileController, updateUsername, updateEmail, updateProfileImage };

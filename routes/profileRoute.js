@@ -1,7 +1,7 @@
 //importing router
 const router = require("express").Router();
 //importing the handler
-const {profileController, updateUsername, updateEmail} = require("../controllers/profileControler.js");
+const {profileController, updateUsername, updateEmail, updateProfileImage} = require("../controllers/profileControler.js");
 
 const {validateObject} = require('../controllers/Validations.Controler.js');
 
@@ -14,6 +14,8 @@ router.post("/Profile", (request,response)=>{
             updateUsername(request,response);
         } else if (formType === "changeEmail") {
             updateEmail(request,response);
+        }else if (formType==="changeImg") {
+            updateProfileImage(request,response);
         }
     }
 });

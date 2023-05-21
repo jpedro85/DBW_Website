@@ -77,11 +77,11 @@ app.use(express.static(__dirname + "/public"));
  * This a middleware function is from the framework Express.js for Node.js
  * This function is used to analyze the data from html form that is sent to the server
  */
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({limit: '50mb', extended: true }));
 // Uses the method-override middleware
 app.use(methodOverride("_method"));
 // Transform JSON to object
-app.use(express.json());
+app.use(express.json({limit: '50mb'}));
 
 /////////////////////////
 /**

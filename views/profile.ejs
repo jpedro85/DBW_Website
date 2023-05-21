@@ -21,7 +21,7 @@
             <div id="myProfile" >
                 <div id="myProfileTitle" class="text-title2" >My Profile</div>
                 <div id="Profile-picture-conteiner">
-                    <div id="Profile-picture">
+                    <div id="Profile-picture" style="background-image: url(<%=userData.profileImage%>);">
                         <button id="Edit-picture">
                             <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="25" cy="25" r="24.5" fill="currentColor" stroke="white"/>
@@ -246,11 +246,12 @@
                     </div>
                     <div class="form-element">
                         <div class="form-element-img-choose">
-                            <input type="text" name="image">
-                            <input type="submit" value="Upload">
-                            <!-- <label for="email">Choose Image</label> -->
-                            <!-- <label for="input-file">Update Image</label> -->
-                            <!-- <input id="img-upload" type="file" accept="image/jpeg, image/png, image/jpg"> -->
+                            <!-- <input type="text" name="image">
+                            <input type="submit" value="Upload"> -->
+                            <!-- <label for="email">Choose Image</label>
+                            <label for="input-file">Update Image</label> -->
+                            <input id="img-upload" type="file" accept="image/jpeg, image/png, image/jpg" size="10485760">
+                            <div id="Popup-Change-image-error" class="form-element textErrorConteiner textError"></div>
                             <!-- <input type="text"> -->
                             <!-- <button class="Button-Popup ButtonDarkBlue" id="Popup-Choose-Image">Choose Img</button>  -->
                         </div>

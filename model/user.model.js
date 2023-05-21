@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const defaultImage = require('../config/defaultImage');
 
 var userSchema = mongoose.Schema({
   username: String,
@@ -17,6 +18,10 @@ var userSchema = mongoose.Schema({
     type: String,
     unique: true,
   },
+  profileImage:{
+    type: String,
+    default:defaultImage,
+  }
 });
 
 module.exports =  mongoose.model("User", userSchema);
