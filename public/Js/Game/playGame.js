@@ -95,7 +95,7 @@ if(playGameOnMatch){
         if(res_Object.matchInfo.isleader){
 
             newPlayer.innerHTML = `
-                <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("/images/Logo-Inactive.png");'></div>
+                <div class="tab-item-sethings-playersInMatch-item-mask" style='background-image: url("${res_Object.user.img}");'></div>
                 <svg width="23" height="20" viewBox="0 0 23 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M2.5 15L0 1.25L6.875 7.5L11.25 0L15.625 7.5L22.5 1.25L20 15H2.5ZM20 18.75C20 19.5 19.5 20 18.75 20H3.75C3 20 2.5 19.5 2.5 18.75V17.5H20V18.75Z" fill="#FFD233"/>
                 </svg>

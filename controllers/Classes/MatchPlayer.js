@@ -8,6 +8,7 @@ class MatchPlayer {
     static max_cheats = 2;
 
     #user;
+    #image;
     #points;
     #bonus_points;
     #streak_points;
@@ -29,6 +30,7 @@ class MatchPlayer {
     constructor(user,place){
   
       this.#user = user.username;
+      this.#image = user.profileImage;
       this.#points = 0;
       this.#bonus_points = 0;
       this.#streak_points = 0;
@@ -51,8 +53,28 @@ class MatchPlayer {
       this.tryGuess = false;
     }
   
-    static updateDatabaseUser (databaseUser) {
+    static async updateDatabaseUser (databaseUserMetrics, matchPlayer) {
+      // TODO: delete Metrics totalDraws and totalLastPlaces and mostCommonPlace and bestStreak
       //se draw update draw only
+      const isFirst = matchPlayer.place==1 ? 0 : 1;  
+      const isDraw = matchPlayer.draw ? 1 : 0; 
+      const isPodium = matchPlayer.place>0 && matchPlayer.#place<4 ? 1 : 0;
+      const wasBetter = matchPlayer.place > databaseUserMetrics.bestPlace ? 1 : 0;
+      // * Users metrics being altered
+      databaseUserMetrics.totalGames+=1;
+      databaseUserMetrics.totalLost +=  isFirst;
+      databaseUserMetrics.totalQuits += isDraw;
+      databaseUserMetrics.totalQuestions += matchPlayer.answered + matchPlayer.unanswered;
+      databaseUserMetrics.totalQuestionsAnswered += matchPlayer.answered;
+      databaseUserMetrics.totalQuestionsRight += matchPlayer.rights;
+      databaseUserMetrics.totalPodium += isPodium;
+      databaseUserMetrics.totalPoints += matchPlayer.points;
+      databaseUserMetrics.totalStreak += matchPlayer.streak_points;
+      databaseUserMetrics.totalBonusPoints+=matchPlayer.bonus_points;
+      databaseUserMetrics.bestPlace += wasBetter;
+      
+      await databaseUserMetrics.save();
+
     } 
   
     get lastGuess () {
@@ -137,6 +159,26 @@ class MatchPlayer {
   
     get rights () {
       return this.#rights;
+    }
+
+    get answered () {
+      return this.#answered;
+    }
+
+    get unanswered () {
+      return this.#unanswered;
+    }
+
+    get wrongs () {
+      return this.#wrongs;
+    }
+
+    get guesses () {
+      return this.#guesses;
+    }
+
+    get image () {
+      return this.#image;
     }
 
     automaticGaveUp(){

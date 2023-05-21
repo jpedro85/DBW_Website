@@ -27,6 +27,7 @@ export function receiveFromServer() {
         askToJoin();
 
         socket.on("GameChat-Guess-Receive",(res_Object)=>{
+            console.log("🚀 ~ guess",res_Object);
             showAnswer(res_Object);
         });
 
@@ -36,7 +37,7 @@ export function receiveFromServer() {
         })
 
         socket.on("Player-Joined",(res_Object) => {   
-            
+            console.log("🚀 ~ res_Object:", res_Object);
             
             const playerAnswer = {
                 username:res_Object.user.username,
