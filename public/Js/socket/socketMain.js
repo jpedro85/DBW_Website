@@ -7,6 +7,14 @@ if(playGameOnMatch){
       event.preventDefault();
       sendUserAnswerToServer();
    });
+
+   chatInputText.addEventListener("keypress", function(event) {
+
+      if (event.key === "Enter") {
+        event.preventDefault();
+        sendButton.click();
+      }    
+   });
    
    receiveFromServer();
 }

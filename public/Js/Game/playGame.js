@@ -151,12 +151,22 @@ if(playGameOnMatch){
                 GameChat_waiting_Question();
                 break;
             case "finished":
+                console.log("aaaaaaaaaaaaaaaaaaaaaaaaa")
+                QuestionText.innerText = "Waiting for next question !"
+                question_timer.innerText = "";
+                question_number.style = "display : none";
+                guessButton.style = "display : none";
                 break;
         }
     }
 
+    function htmlDecode(value) {
+        return html(value).text();
+    }
+
     function Question_Start_handler(res_Object){
-        QuestionText.innerText = res_Object.question;
+
+        QuestionText.innerText= res_Object.question;
         question_number.style = "display : flex";
         question_number.innerText = res_Object.number;
         guessButton.style = "display : flex";
@@ -164,9 +174,32 @@ if(playGameOnMatch){
         CountDownTimer(question_timer,res_Object.time)
     }
 
+    const info_totalPoints = document.querySelector("#info-totalPoints");
+    const info_bonus = document.querySelector("#info-bonus");
+    const info_streakPoints = document.querySelector("#info-streakPoints");
+    const info_rights = document.querySelector("#info-rights");
+    const info_streak = document.querySelector("#info-streak");
+    const info_place = document.querySelector("#info-place");
+
+    
+    
+    
+    
+    
     function Question_End_handler(res_Object){
 
+        console.log("endedn refreshig");
+
         GameChat_waiting_Question();
+    
+        info_totalPoints.innerText=res_Object.playerPoints.point_total;
+        info_bonus.innerText=res_Object.playerPoints.point_bonus;
+        info_streakPoints.innerText=res_Object.playerPoints.point_streak;
+        info_rights.innerText=res_Object.playerPoints.rights;
+        info_streak.innerText=res_Object.playerPoints.streak;
+        info_place.innerText=res_Object.playerPoints.place+"º";
+
+
     }
 
     function clearGameChat() {
@@ -203,5 +236,6 @@ if(playGameOnMatch){
     }
 
     function pad(i) { return ('0'+i).slice(-2); }
+
 
 }

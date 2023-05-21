@@ -7,18 +7,14 @@ const roomCode = window.location.pathname.substring(11);
  */
 export function sendUserAnswerToServer() {
 
-    socket.emit("GameChat" , roomCode , guess);
+    const userAnswer = chatInputText.value
 
-    const userAnswer={
-        message: chatInputText.value,
-        timeStamp: formatDate(),
-    };
-
-    if (userAnswer.message) {
-        socket.emit("GameChat-Guess",roomCode,userAnswer);
+    if (userAnswer) {
+        socket.emit("GameChat-Guess-Send",roomCode,userAnswer,formatDate());
         chatInputText.value="";
     }
 }
+
 
 /**
  * This function is the handle that receives the data from the server 
@@ -30,17 +26,28 @@ export function receiveFromServer() {
 
         askToJoin();
 
-        socket.on("GameChat-Guessed",(res_Object)=>{
-
+        socket.on("GameChat-Guess-Receive",(res_Object)=>{
+            showAnswer(res_Object);
         });
 
-        socket.on("clientGameChat",(messageForClient) => {
-            sendAnswer(messageForClient);
-        });
+        socket.on("GameChat-Guessed",(guess) => {
+            console.log("🚀 ~ guess:", guess);
+  
+        })
 
-        socket.on("Player-Joined",(res_Object) => {
-            userJoinHandler(res_Object)
-            console.log("🚀 ~ userJoined:", res_Object.user.username);
+        socket.on("Player-Joined",(res_Object) => {   
+            
+            
+            const playerAnswer = {
+                username:res_Object.user.username,
+                image:res_Object.user.img,
+                message:res_Object.info.message,
+                timeStamp:res_Object.info.timeStamp,
+            }
+            userJoinHandler(res_Object)  
+            showAnswer(playerAnswer)
+
+            console.log("🚀 ~ userJoined:", res_Object);
         });
         socket.on("Player-Left",(res_Object) => {
             userLeftHandler(res_Object)
@@ -48,8 +55,8 @@ export function receiveFromServer() {
         });
 
         socket.on("status",(res_Object) => {
-            statusChangeHandler(res_Object.matchInfo.status);
             console.log("🚀 ~ statuschanged:", res_Object.matchInfo.status);
+            statusChangeHandler(res_Object.matchInfo.status);
         });
 
         socket.on("Question-Start",(res_Object)=>{
@@ -59,6 +66,7 @@ export function receiveFromServer() {
 
         socket.on("Question-End",(res_Object)=>{
             console.log("🚀 ~ Question-End:", res_Object);
+            Question_End_handler(res_Object)
         });
 
         socket.on("Error",(error) => {

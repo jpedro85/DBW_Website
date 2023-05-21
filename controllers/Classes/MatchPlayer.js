@@ -1,5 +1,8 @@
 class MatchPlayer {
 
+    static Bonus_Firs = 10;
+    static Right_points = 25;
+
     static max_falls = 3;
     // here cheats means look at another page / lose focus
     static max_cheats = 2;
@@ -43,7 +46,9 @@ class MatchPlayer {
       this.#disconnected = false;
       this.#cheatCount = 0;
       this.#lastGuess = null; // null in this case represents not guessed 
+      this.first =false;
       this.socket = null;
+      this.tryGuess = false;
     }
   
     static updateDatabaseUser (databaseUser) {
@@ -80,18 +85,30 @@ class MatchPlayer {
   
         this.#answered++;
   
-        if (this.lastGuess){
+        if (this.#lastGuess){
           this.#rights++;
           this.#streak++;
+
+          if(this.first)
+            this.#bonus_points+=MatchPlayer.Bonus_Firs;
+
+          this.#points += MatchPlayer.Right_points;
+
+          if(this.#streak > 3)
+            this.#streak_points += this.#streak*2;
+
         } else {
           this.#wrongs++;
           this.#streak = 0;
         }
+        
   
       } else {
         this.#unanswered++;
         this.#streak = 0;
       }
+
+      this.#lastGuess = null;
     }
   
     set update_Place (place) {
@@ -179,12 +196,18 @@ class MatchPlayer {
       return this.#disconnected;
     }
 
-    guessed(right) {
+    guessed(right,first) {
       this.#lastGuess = right;
+      this.first = first;
+      this.triedGuess();
+    }
+
+    hasGuess(){
+      return this.#lastGuess != null;
     }
   
     triedGuess() {
-      return this.lastGuess != null
+      return this.tryGuess = true;
     }
 } 
   

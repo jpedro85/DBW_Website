@@ -3,6 +3,60 @@ const {MatchPlayer} = require("./MatchPlayer.js");
 //ompor io server form index
 const {Question} = require("../Classes/Question.js")
 
+function formatDate() {
+  // Formatting the display of the time
+  const date = new Date();
+  const month = date.getMonth();
+  const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
+  const year = date.getFullYear();
+  const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
+  const minutes =
+    date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
+
+  return `${day} - ${month} - ${year} ${hours}:${minutes}`;
+}
+
+function mergeSort(array) {
+  if (array.length <= 1) {
+    return array;
+  }
+
+  const mid = Math.floor(array.length / 2);
+  const left = array.slice(0, mid);
+  const right = array.slice(mid);
+
+  return merge(mergeSort(left), mergeSort(right));
+}
+
+function merge(left, right) {
+  const result = [];
+
+  let i = 0;
+  let j = 0;
+
+  while (i < left.length && j < right.length) {
+    if (left[i].points > right[j].points) {
+      result.push(left[i]);
+      i++;
+    } else {
+      result.push(right[j]);
+      j++;
+    }
+  }
+
+  while (i < left.length) {
+    result.push(left[i]);
+    i++;
+  }
+
+  while (j < right.length) {
+    result.push(right[j]);
+    j++;
+  }
+
+  return result;
+}
+
 class Match {
 
     static class_io  = null;
@@ -74,6 +128,10 @@ class Match {
     get status() {
       return this.#status;
     }
+
+    set status(array){
+      this.#status = array;
+    }
   
     /**
      * Return true is player joined match and can join the match false case its full
@@ -91,7 +149,12 @@ class Match {
               if(!this.hasLeader())
                 this.#players = newPlayer;
               
-              Match.class_io.to(this.#joinCode).emit("Player-Joined", { matchInfo : {isleader: this.isLeader(matchPlayer), maxPlayers: this.#settings_maxPlayers , playerCount : this.getPlayerCount() }, user : {username:user.username , img:"em desenvolvimento"} } );
+              Match.class_io.to(this.#joinCode).emit("Player-Joined", 
+              { 
+                matchInfo : {isleader: this.isLeader(matchPlayer), maxPlayers: this.#settings_maxPlayers , playerCount : this.getPlayerCount() }, 
+                user : {username:user.username , img:"em desenvolvimento"},
+                info: {status:"other" ,message:"Calmed down and returned to the game !" ,timeStamp: formatDate()}
+              });
 
               return {success : matchPlayer.rejoined() , errortype: "limitRetched" , error: "Reached max rejoins, 3 !" }
             }
@@ -107,7 +170,12 @@ class Match {
           this.#players = newPlayer;
           
         this.#players.push(newPlayer);
-        Match.class_io.to(this.#joinCode).emit("Player-Joined",  { matchInfo : {isleader: this.isLeader(newPlayer), maxPlayers: this.#settings_maxPlayers , playerCount : this.getPlayerCount() }, user : {username:user.username , img:"em desenvolvimento"} });
+        Match.class_io.to(this.#joinCode).emit("Player-Joined",  
+          { 
+            matchInfo : {isleader: this.isLeader(newPlayer), maxPlayers: this.#settings_maxPlayers , playerCount : this.getPlayerCount() }, 
+            user : {username:user.username , img:"em desenvolvimento"},
+            info: {status:"other" ,message:"Calmed down and returned to the game !" ,timeStamp: formatDate()}
+          });
         return {success : true };
       }
   
@@ -125,7 +193,12 @@ class Match {
               this.leaderLeft();
 
             this.#playersDraw++;~
-            Match.class_io.to(this.#joinCode).emit("Player-Left",  { matchInfo : {isleader: this.isLeader(matchPlayer), maxPlayers: this.#settings_maxPlayers , playerCount : this.getPlayerCount() }, user : {username:user.username} });
+            Match.class_io.to(this.#joinCode).emit("Player-Left",  
+              { 
+                matchInfo : {isleader: this.isLeader(matchPlayer), maxPlayers: this.#settings_maxPlayers , playerCount : this.getPlayerCount() }, 
+                user : {username:user.username , img:"em desenvolvimento"},
+                info: {status:"other" ,message:"Did not handled the pressure and left the match !" ,timeStamp: formatDate()},
+              });
             break;
           }
         }
@@ -144,7 +217,12 @@ class Match {
           // return true and draw is called if max falls reached else return false
           if(matchPlayer.fell()){
             this.#playersDraw++;
-            Match.class_io.to(this.#joinCode).emit("Player-Left",  { matchInfo : {isleader: this.isLeader(matchPlayer), maxPlayers: this.#settings_maxPlayers , playerCount : this.getPlayerCount() }, user : {username:user.username} });
+            Match.class_io.to(this.#joinCode).emit("Player-Left",  
+              { 
+                matchInfo : {isleader: this.isLeader(matchPlayer), maxPlayers: this.#settings_maxPlayers , playerCount : this.getPlayerCount() }, 
+                user : {username:user.username , img:"em desenvolvimento"},
+                info: {status:"other" ,message:"Did not handled the pressure and left the match !" ,timeStamp: formatDate()},
+              });
             break;     
           }     
         }
@@ -162,7 +240,12 @@ class Match {
             
             matchPlayer.draw() 
             this.#playersDraw++;
-            Match.class_io.to(this.#joinCode).emit("Player-Left",  { matchInfo : {isleader: this.isLeader(matchPlayer), maxPlayers: this.#settings_maxPlayers , playerCount : this.getPlayerCount() }, user : {username:user.username} });
+            Match.class_io.to(this.#joinCode).emit("Player-Left",  
+              { 
+                matchInfo : {isleader: this.isLeader(matchPlayer), maxPlayers: this.#settings_maxPlayers , playerCount : this.getPlayerCount() }, 
+                user : {username:user.username , img:"em desenvolvimento"},
+                info: {status:"other" ,message:"Did not handled the pressure and left the match !" ,timeStamp: formatDate()},
+              });
             break;
         }
       }
@@ -188,24 +271,47 @@ class Match {
       // this.#leader = null;;
     }
    
-    playerGuess(user,guess) {
+    playerGuess(user,guess,timeStamp) {
+
+      guess = guess.toLowerCase();
+
+      console.log("🚀 ~ #currentQuestion:", this.#currentQuestion);
   
       if(this.#currentQuestion.correctAnswered === guess) {
-  
+        
         this.#players.forEach( (matchPlayer) => {
   
-          if (matchPlayer.is(user.username))
-            matchPlayer.guessed(true);
-          else
-            matchPlayer.guessed(false);
+          if (matchPlayer.is(user.username) && !matchPlayer.hasGuess()){
+            Match.class_io.to(matchPlayer.socket.id).emit("GameChat-Guessed",guess)
+            Match.class_io.to(this.#joinCode).emit("GameChat-Guess-Receive",{status:"guessed" ,message:"Guessed" ,timeStamp ,username:user.username ,image:user.image})
+            
+            matchPlayer.guessed(true,this.#currentQuestion.isGuessed());
+            if(this.#currentQuestion.isGuessed()) 
+              this.#currentQuestion.first = false;
+
+            this.#currentQuestion.newGuess("guessed","Guessed",timeStamp,user.username,user.image);
+          }
             
         });
-  
+
         return true;
         
       } else {
+
+        this.#players.forEach( (matchPlayer) => {
+  
+          if (matchPlayer.is(user.username) && !matchPlayer.hasGuess()){
+            let msg = "Tried: "+guess;
+            Match.class_io.to(this.#joinCode).emit("GameChat-Guess-Receive",{status:"wrong" ,message:msg ,timeStamp ,username:user.username ,image:user.image});
+            matchPlayer.triedGuess();
+            this.#currentQuestion.newGuess("wrong",msg,timeStamp,user.username,user.image);
+          }
+            
+        });
+
         return false
       }
+
     }
   
     /**
@@ -263,14 +369,17 @@ class Match {
 
       console.log("seding -end");
 
-      const playerPoints = [];
+      //this.#players.sort((a, b) => b.points - a.points);
+
+      // let t  = mergeSort(this.#players);
+      // console.log("🚀 ~ mergeSort(this.#players);:", t);
+      // this.#status = t;
 
       this.#players.forEach( (matchPlayer) => {
         
         matchPlayer.update_Answer();
         
-        playerPoints.push(
-          {
+        const playerPoints = {
             username:matchPlayer.user,
             point_total:matchPlayer.points,
             point_bonus:matchPlayer.bonus_points,
@@ -278,10 +387,16 @@ class Match {
             rights:matchPlayer.rights,
             streak:matchPlayer.streak,
             place:matchPlayer.place
-          });
+          }
+        console.log("🚀 ~ playerPoints:", playerPoints);
+        
+
+        Match.class_io.to(matchPlayer.socket.id).emit("Question-End",{matchInfo , playerPoints })
       });
 
-      Match.class_io.to(this.#joinCode).emit("Question-End",{matchInfo , playerPoints });
+      this.resetQ();
+
+      //Match.class_io.to(this.#joinCode).emit("Question-End",{matchInfo , playerPoints });
     }
   
     isLastQuestion(){
@@ -304,6 +419,15 @@ class Match {
       this.#status = "finished";
       Match.class_io.to(this.#joinCode).emit("status",{ matchInfo : { status: this.#status , type: this.ClassName() } })
     }
+
+    getQuestion(){
+      return this.#currentQuestion;
+    }
+
+    resetQ(){
+      this.#currentQuestion = null;
+    }
+
 }
 
 
@@ -314,10 +438,11 @@ class Match {
   
 class MatchNormal extends Match {
 
-  try_counter;
+  
 
   constructor(leader,joinCode,settings_difficulty,settings_questions,settings_maxPlayers) {
     super(leader,joinCode,settings_difficulty,settings_questions,settings_maxPlayers,"Match_Normal");
+    this.try_counter;
   }
 
   start(){
@@ -341,38 +466,51 @@ class MatchNormal extends Match {
   }
 
   ifSucces(fetchedResult,match){
-    console.log("🚀 ~ fetchedResult:", fetchedResult);
-    console.log("succes");
     
-    match.SuperNewQuestion( new Question(match.currentQuestionNumber,fetchedResult.question,fetchedResult.correct_answer,match.settings_difficulty) );
-    setTimeout((jjj) => 
-      {
-        console.log("ending"+match.ClassName());
+    const temp = new Question(match.currentQuestionNumber,atob(fetchedResult.question),atob(fetchedResult.correct_answer).toLowerCase(),match.settings_difficulty);
+    console.log("🚀 ~ temp:", temp.toString());
+    
+    match.SuperNewQuestion(temp);
+    
+    setTimeout(()=>{match.aux(match,match.currentQuestion.time);},1000);
+    
+  }
+
+  async aux(match,time){
+    if(match.currentQuestion.time==0){
+      match.currentQuestion.time = 0;
+      console.log("ending"+match.ClassName());
         match.SuperQuestionEnd();
         //nexQuestion
-        match.newQuestion();
-      }
-    ,match.currentQuestion.time)
+        setTimeout(()=>{match.newQuestion()},5000);
+
+    } else{
+      match.currentQuestion.time-=1000;
+      setTimeout(()=>{match.aux(match,time)},1000);
+    }
+
   }
+
 
   ifError(error,match){
 
+    console.log("rising error",error);
     if(match.try_counter>2){
-      console.log("rising error");
       match.emitError({error})
     }else{
       console.log("trying again");
-      try_counter++;
-      Question.fetchQuestionAPI(match,match.settings_difficulty,ifSucces,ifError);
+      match.try_counter++;
+      Question.fetchQuestionAPI(match,match.settings_difficulty,match.ifSucces,match.ifError);
     }
 
   }
 
   questionEnd(){
-    console.log("ending"+this.ClassName());
-    this.SuperQuestionEnd();
-    //nexQuestion
-    this.newQuestion();
+
+    // this.SuperQuestionEnd();
+    // //nexQuestion
+    // setTimeout(this.newQuestion(),10000);
+    // console.log("endingFim:"+this.ClassName());
   }
   
 }

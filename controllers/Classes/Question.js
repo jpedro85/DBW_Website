@@ -5,7 +5,7 @@ class Question {
         if(type)
             type = "&category="+type; //0-23
 
-        fetch(`https://opentdb.com/api.php?amount=1&difficulty=${difficulty.toLowerCase()}&type=multiple${type}`)
+        fetch(`https://opentdb.com/api.php?amount=1&difficulty=${difficulty.toLowerCase()}&type=multiple${type}&encode=base64`)
         .then((res) => res.json())// Transform the object into JSON 
         .then((json) => { 
             callback_success(json.results[0],match) }) // After its turned into an JSON adds the fetchedQuestions to the match questions
@@ -39,7 +39,9 @@ class Question {
             default :
                 this.time = 1200000000;
         } 
-   
+
+        this.chat = [];
+        this.first = true;
     }
 
     get correctAnswered() {
@@ -53,6 +55,46 @@ class Question {
     get number(){
         return this.#number;
     }
+
+    /**
+     * 
+     * object_guess = {
+     *  status:"wrong" 
+     * ,message:guess 
+     * ,timeStamp 
+     * ,username:user.username 
+     * ,image:user.image
+     * }
+     */
+    newGuess(status,guess,timeStamp,username,image){
+        const object_guess = {
+                status:status,
+                message:guess,
+                timeStamp ,
+                username ,
+                image
+            }
+        this.chat.push(object_guess)
+    }
+
+    getChatLength(){
+        return this.chat.length;
+    }
+
+    getCurrentTime(){
+        let d = new Date(1000*Math.round(this.time/1000)); // round to nearest second
+        return pad(d.getUTCMinutes()) + ':' + pad(d.getUTCSeconds());
+    }
+
+    isGuessed(){
+        return this.first 
+    }
+
+    toString(){
+        return this.#question + ":R: " + this.#correctAnswered;
+    }
 }
+
+function pad(i) { return ('0'+i).slice(-2); }
 
 module.exports = { Question };
