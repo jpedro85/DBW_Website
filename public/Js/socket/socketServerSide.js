@@ -6,6 +6,16 @@ module.exports = serverSocket = (io) =>
     const username = socket.request.user.username;
     const param = socket.request;
 
+    socket.on("GameChat-Guess",(roomCode,userAnswer)=>{
+      const match = getMatchByCode(roomCode);
+      if(match){
+        match.pla
+      } else {
+        io.to(socket.id).emit("Error","Match not found")
+      }
+      io.to(socket.id).emit("Error","Match not found")
+    });
+
     // socket.on("GameQuestion", (gameQuestion) => {
     //   io.sockets.emit("clientGameQuestion", gameQuestion);
     // });

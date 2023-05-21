@@ -1,39 +1,21 @@
 const socket = io();
-
-export function getQuestions(match) {
-    // Fetch from the link the resources
-    // change matchSetting for the proprieties of the class
-    fetch(`https://opentdb.com/api.php?amount=${matchSettings}&difficulty=${matchSettings}&type=${matchSettings}`)
-    // Transform the object into JSON
-    .then((res) => res.json())
-    // After its turned into an JSON adds the fetchedQuestions to the match questions
-    .then((json) =>{
-        const fetchedResults = json.results;
-        fetchedResults.forEach(result => {
-            const gameQuestion={
-                question: result.question,
-                correctAnswer: result.correct_answer,
-            }
-            roomQuestions.push(gameQuestion);
-        });
-        
-    })
-    .catch((Error)=>{
-        console.error(Error);   
-        // Handles the error server side  
-    });
-}
+// roomCode = XXX-XXX code of the match
+const roomCode = window.location.pathname.substring(11);
 
 /**
  * This function is the handler that makes the user answers go to the server
  */
 export function sendUserAnswerToServer() {
+
+    socket.emit("GameChat" , roomCode , guess);
+
     const userAnswer={
         message: chatInputText.value,
         timeStamp: formatDate(),
     };
+
     if (userAnswer.message) {
-        socket.emit("GameChat",userAnswer);
+        socket.emit("GameChat-Guess",roomCode,userAnswer);
         chatInputText.value="";
     }
 }
@@ -48,12 +30,14 @@ export function receiveFromServer() {
 
         askToJoin();
 
-        socket.on("clientGameQuestion",(newGameQuestion)=>{
-            sendQuestion(newGameQuestion);
+        socket.on("GameChat-Guessed",(res_Object)=>{
+
         });
+
         socket.on("clientGameChat",(messageForClient) => {
             sendAnswer(messageForClient);
         });
+
         socket.on("Player-Joined",(res_Object) => {
             userJoinHandler(res_Object)
             console.log("🚀 ~ userJoined:", res_Object.user.username);
@@ -62,17 +46,32 @@ export function receiveFromServer() {
             userLeftHandler(res_Object)
             console.log("🚀 ~ userLeft:", res_Object.user.username);
         });
+
+        socket.on("status",(res_Object) => {
+            statusChangeHandler(res_Object.matchInfo.status);
+            console.log("🚀 ~ statuschanged:", res_Object.matchInfo.status);
+        });
+
+        socket.on("Question-Start",(res_Object)=>{
+            Question_Start_handler(res_Object)
+            console.log("🚀 ~ Question-Start:", res_Object);
+        });
+
+        socket.on("Question-End",(res_Object)=>{
+            console.log("🚀 ~ Question-End:", res_Object);
+        });
+
+        socket.on("Error",(error) => {
+            showError(error);
+            console.error(error);
+        });
+
     });
 
 }
 
+
 function askToJoin(){
-    const roomCode = window.location.pathname.substring(11);
     socket.emit("askToJoin" , roomCode);
-}
-
-
-export function listenSocketEvents() {
-
 }
 

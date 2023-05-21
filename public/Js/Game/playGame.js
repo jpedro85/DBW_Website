@@ -112,4 +112,96 @@ if(playGameOnMatch){
         // Adds the element
         allPlayers_container.appendChild(newPlayer);
     }
+
+    
+    const waitingLeader_gameBoard = document.querySelector("#tab-wainting-join");
+    const waitingJoin_gameBoard = document.querySelector("#tab-wainting-lether");
+    const voting_gameBoard = document.querySelector("#tab-Vote");
+    const chat_gameBoard = document.querySelector("#tab-Game");
+    
+    const question_number = document.querySelector("#QuestionNumber");
+    const question_timer = document.querySelector("#questionTimer");
+    const QuestionText = document.querySelector("#QuestionText");
+    const guessButton = document.querySelector("#tab-game-divisor-bottom");
+    const game_chat = document.querySelector("#tab-game-chat");
+    
+    const tab_wainting_lether_conter = document.querySelector("#tab-wainting-lether-conter");
+    tab_wainting_lether_conter.innerText = "";
+    let stopUpCounter = {
+        value : false,
+    }
+    CountUpTimer(tab_wainting_lether_conter,0,stopUpCounter)
+    
+
+    function statusChangeHandler(status){
+        switch(status){
+            case "starting":
+                //nothing 
+                break;
+            case "voting":
+                waitingLeader_gameBoard.classList.remove("active");
+                waitingJoin_gameBoard.classList.remove("active");
+                voting_gameBoard.classList.add("active")
+                break;
+            case "running":
+                waitingLeader_gameBoard.classList.remove("active");
+                waitingJoin_gameBoard.classList.remove("active");
+                chat_gameBoard.classList.add("active");
+                stopUpCounter.value=true;
+                GameChat_waiting_Question();
+                break;
+            case "finished":
+                break;
+        }
+    }
+
+    function Question_Start_handler(res_Object){
+        QuestionText.innerText = res_Object.question;
+        question_number.style = "display : flex";
+        question_number.innerText = res_Object.number;
+        guessButton.style = "display : flex";
+
+        CountDownTimer(question_timer,res_Object.time)
+    }
+
+    function Question_End_handler(res_Object){
+
+        GameChat_waiting_Question();
+    }
+
+    function clearGameChat() {
+        gameChat.innerHTML="";
+    }
+
+    function GameChat_waiting_Question(){
+        QuestionText.innerText = "Waiting for next question !"
+        question_timer.innerText = "";
+        question_number.style = "display : none";
+        guessButton.style = "display : none";
+        clearGameChat();
+    }
+
+    function CountDownTimer(where,time){
+        if(time<0)
+            console.log("contagem_Acabou");
+        else{
+            var d = new Date(1000*Math.round(time/1000)); // round to nearest second
+            where.innerText = pad(d.getUTCMinutes()) + ':' + pad(d.getUTCSeconds());
+            time-=1000;
+            setTimeout(() => { CountDownTimer(where,time);},1000);
+        } 
+    }
+
+    function CountUpTimer(where,time,stopUpCounter){
+        
+        if(!stopUpCounter.value || time==0){
+            time +=1000;
+            var d = new Date(1000*Math.round(time/1000)); // round to nearest second
+            where.innerText = pad(d.getUTCMinutes()) + ':' + pad(d.getUTCSeconds());
+            setTimeout(() => {CountUpTimer(where,time,stopUpCounter);},1000);
+        } 
+    }
+
+    function pad(i) { return ('0'+i).slice(-2); }
+
 }

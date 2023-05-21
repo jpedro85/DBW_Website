@@ -1,6 +1,7 @@
 //importing necessary classes
 const {MatchPlayer} = require("./MatchPlayer.js");
 //ompor io server form index
+const {Question} = require("../Classes/Question.js")
 
 class Match {
 
@@ -17,9 +18,10 @@ class Match {
     #players;
     #playersDraw;
     #currentQuestion;
+    #currentQuestionNumber;
     #ClassName;
     #leader;
-    #status; // {starting ,voting, running , finished}
+    #status; // {starting ,voting, running , ssssssssssssssssss       }
   
     constructor(leader,joinCode,settings_difficulty,settings_questions,settings_maxPlayers,type=null){
       this.#joinCode = joinCode;
@@ -33,11 +35,13 @@ class Match {
       this.#leader = temp ;
 
       this.#currentQuestion = null;
+      this.#currentQuestionNumber = 1;
+
       this.#ClassName = (type==null) ? "Match" : type ;
       this.#status = "starting"; 
       this.#playersDraw = 0;
     }
-  
+
     ClassName() {
       // class type - Match
       return this.#ClassName.substring(6);
@@ -236,16 +240,34 @@ class Match {
     }
 
     start(){
-      Match.class_io.to(this.#joinCode).emit("",{ matchInfo : { status: "running" , type: this.ClassName() } })
+      this.#status = "running";
+      Match.class_io.to(this.#joinCode).emit("status",{ matchInfo : { status: this.#status  , type: this.ClassName() } })
+      console.log("exit start main");
+    }
+
+    SuperNewQuestion (question){
+      console.log("🚀 ~ question:", question);
+      console.log("🚀 ~ question:", question.question);
+      this.#currentQuestion = question;
+      this.#currentQuestionNumber++;
+      Match.class_io.to(this.#joinCode).emit("Question-Start",
+        {
+          type: this.ClassName(), 
+          question:this.#currentQuestion.question, 
+          number:this.#currentQuestion.number,
+          time:this.#currentQuestion.time,
+        });
     }
    
-    questionEnd(matchInfo) {
+    SuperQuestionEnd(matchInfo=null) {
 
-      playerPoints = [];
+      console.log("seding -end");
+
+      const playerPoints = [];
 
       this.#players.forEach( (matchPlayer) => {
         
-        matchPlayer.update_Answer()
+        matchPlayer.update_Answer();
         
         playerPoints.push(
           {
@@ -256,20 +278,32 @@ class Match {
             rights:matchPlayer.rights,
             streak:matchPlayer.streak,
             place:matchPlayer.place
-          })
+          });
       });
 
       Match.class_io.to(this.#joinCode).emit("Question-End",{matchInfo , playerPoints });
     }
   
-    newQuestion(question) {
-      this.#currentQuestion = question;
+    isLastQuestion(){
+      return this.#currentQuestionNumber > this.#settings_questions;
     }
 
-    questionEnd() {
-      this.#players.forEach( (matchPlayer) => {matchPlayer.update_Answer()} );
+    get currentQuestionNumber(){
+      return this.#currentQuestionNumber;
     }
 
+    get currentQuestion(){
+      return this.#currentQuestion;
+    }
+
+    emitError(error){
+      Match.class_io.to(this.#joinCode).emit("Error",error);
+    }
+
+    end(){
+      this.#status = "finished";
+      Match.class_io.to(this.#joinCode).emit("status",{ matchInfo : { status: this.#status , type: this.ClassName() } })
+    }
 }
 
 
@@ -280,37 +314,66 @@ class Match {
   
 class MatchNormal extends Match {
 
-    constructor(leader,joinCode,settings_difficulty,settings_questions,settings_maxPlayers) {
-      super(leader,joinCode,settings_difficulty,settings_questions,settings_maxPlayers,"Match_Normal");
-  
+  try_counter;
+
+  constructor(leader,joinCode,settings_difficulty,settings_questions,settings_maxPlayers) {
+    super(leader,joinCode,settings_difficulty,settings_questions,settings_maxPlayers,"Match_Normal");
+  }
+
+  start(){
+    super.start();
+    this.newQuestion();
+  }
+
+  newQuestion() {
+
+    this.try_counter=0;
+    if(!this.isLastQuestion()){
+
+      console.log("executing new question");
+      Question.fetchQuestionAPI(this,this.settings_difficulty,this.ifSucces,this.ifError)
+
+    }else{
+      console.log("raising ending");
+      super.end();
     }
 
-    start(){
-      super.start();
+  }
 
-      setInterval
-      
+  ifSucces(fetchedResult,match){
+    console.log("🚀 ~ fetchedResult:", fetchedResult);
+    console.log("succes");
+    
+    match.SuperNewQuestion( new Question(match.currentQuestionNumber,fetchedResult.question,fetchedResult.correct_answer,match.settings_difficulty) );
+    setTimeout((jjj) => 
+      {
+        console.log("ending"+match.ClassName());
+        match.SuperQuestionEnd();
+        //nexQuestion
+        match.newQuestion();
+      }
+    ,match.currentQuestion.time)
+  }
 
+  ifError(error,match){
+
+    if(match.try_counter>2){
+      console.log("rising error");
+      match.emitError({error})
+    }else{
+      console.log("trying again");
+      try_counter++;
+      Question.fetchQuestionAPI(match,match.settings_difficulty,ifSucces,ifError);
     }
-  
-    newQuestion() {
 
+  }
 
-
-
-      question = "porFazer";
-      super.newQuestion(question);
-
-      setTimeout(this.questionEnd,120000);
-    }
-
-
-    questionEnd(){
-      super.questionEnd();
-
-      if(this.q)
-
-    }
+  questionEnd(){
+    console.log("ending"+this.ClassName());
+    this.SuperQuestionEnd();
+    //nexQuestion
+    this.newQuestion();
+  }
   
 }
 
