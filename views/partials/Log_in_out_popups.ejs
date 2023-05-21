@@ -1,4 +1,4 @@
-<% if (showDeletedAccount ||showAccountCreated || ( showIndexOnUnauthenticated && !isUserLogged )) { %>
+<% if (changeOnProfile ||showAccountCreated || ( showIndexOnUnauthenticated && !isUserLogged )) { %>
 <div class="Popup-conteiner active">
 <% } else { %>
 <div class="Popup-conteiner">
@@ -151,7 +151,12 @@
     <% } else {%>
       <%- include("./ErrorPopUp.ejs") %>
     <% } %>
-  <%- include("./deleteAccount.ejs") %>
+    <% if (changeOnProfile) { %>
+      <%- include("./deleteAccount.ejs") %>
+      <%- include("./profileChangePopup.ejs") %> 
+      <%- include("./resendEmailPopup.ejs") %>
+      <script src="/js/profilePopups.js"></script>
+    <% } %>
 </div>
 <script src="/js/Log_in_out_popups.js"></script>
 <script src="/js/Overlay.js"></script>

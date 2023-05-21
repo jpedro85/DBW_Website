@@ -406,7 +406,6 @@ function verifyEmail(formResult) {
 // object represent the final result of the form
 function verifyPasswordCriterios(formResult) {
 
-    console.log(input_password.value.length)
     if (input_password.value.length < 8 || input_password.value.length  > 64) {
         input_error_password.innerText = "Must have at least 8 and at most 64 characters."
         input_password.classList.add("errorBox");

@@ -117,7 +117,7 @@ const Popup_ErroPopUpProfile = document.querySelector("#Popup-FetchError");
 function showError(Msg) {
     closeAllPopUps();
 
-    popupConteiner.classList.add("active");
+    popUpConteiner.classList.add("active");
     FetchError_errorProfile.innerText = Msg;
     Popup_ErroPopUpProfile.classList.add("active");
 }
@@ -180,49 +180,39 @@ function verifyNewEmail(formResult) {
     return false;
 }
 
-const profilePic = document.querySelector("#Profile-picture");
 function imageResponseHandler(res) {
-    if (res.success) {
-
-        popUpConfirmImage.classList.remove("active");
-        ImgPopup.classList.remove("active");
-
-        profilePic.style.backgroundImage = `url(${res.imageCode})`;
-    } else {
-        // TODO: Needs to be changed
+    if (res.hasOwnProperty("success")) {
         showError(res.error);
-    }
+   }else{
+       document.write(res);
+   }
 }
 
-const usernameShowcase = document.querySelector("#usernameShowcase");
 function changeUsernameResponseHandler(res) {
-    if (res.success) {
-        popUpConfirmUsername.classList.remove("active");
-        NamePopup.classList.remove("active");
-
-        usernameShowcase.value = res.changedUsername;
-    } else {
-        showError(res.error);
-    }
+    if (res.hasOwnProperty("success")) {
+        if (res.errortype==="username") {
+            input_error_new_username.innerText=res.error;
+            input_Username.classList.add("errorBox")
+        }else{
+            showError(res.error);
+        }
+   }else{
+       document.write(res);
+   }
+    
 }
 
-const emailShowcase = document.querySelector("#emailShowcase");
-const popupConfirmEmail = document.querySelector("#Popup-confirmEmail");
-const popupConteiner = document.querySelector(".Popup-conteiner");
-const popupConfirmEmailEmailShowcase = document.querySelector("#Popup-confirmEmail-emailshow");
 function changeEmailResponseHandler(res) {
-    if (res.success) {
-        
-        EmailPopup.classList.remove("active");
-        popupConfirmEmail.classList.remove("active");
-
-        popupConteiner.classList.add("active");
-        popupConfirmEmail.classList.add("active");
-
-        popupConfirmEmailEmailShowcase.value = res.changedEmail;
-    } else {
-        showError(res.error);
-    }
+    if (res.hasOwnProperty("success")) {
+        if (res.errortype==="email") {
+            input_error_new_email.innerText=res.error;
+            input_Email.classList.add("errorBox")
+        }else{
+            showError(res.error);
+        }
+   }else{
+       document.write(res);
+   }
 }
 
 function deleteAccountResponseHandler(res) {
@@ -245,8 +235,6 @@ function sendRequest(reqForm, responseHandler) {
     )
         .then((res) => {
             if (res.ok){
-                console.log(res.headers.get("content-type"));
-                console.log("🚀 ~ res:", res);
                 const contentType = res.headers.get("content-type");
                 if (contentType && contentType.includes("application/json")) {
                     return res.json();
@@ -286,24 +274,6 @@ logOut.addEventListener("click", () => {
             window.location.href = "/";
         }
     });
-});
-
-const popUpConfirmEmailButton = document.querySelector("#Popup-confirmEmailBttn");
-popUpConfirmEmailButton.addEventListener("click", () => {
-    popupConteiner.classList.remove("active");
-    popupConfirmEmail.classList.remove("active");
-});
-
-const popUpConfirmUsername= document.querySelector("#Popup-Confirm-New-Username");
-popUpConfirmUsername.addEventListener("click",()=>{
-    popupConteiner.classList.remove("active");
-    popUpConfirmUsername.classList.remove("active");
-});
-
-const popUpConfirmImage = document.querySelector("#Popup-Confirm-Image");
-popUpConfirmImage.addEventListener("click",()=>{
-    popupConteiner.classList.remove("active");
-    popUpConfirmImage.classList.remove("active");
 });
 
 const errorPopupButton = document.querySelector("#FetchError-continue");

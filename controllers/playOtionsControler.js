@@ -61,7 +61,8 @@ class MatchPlayer {
 
 // functionn to handler the request
 const playOptionsControler = function playOptionsControler(request, response) {
-
+  console.log("🚀 ~ request:", request.user.username);
+  
   let code = "";
   do {
     code = generateJoinCode()

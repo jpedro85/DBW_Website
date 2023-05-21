@@ -14,6 +14,7 @@ function profileController(request, response) {
             showDeletedAccount: false,
             confirmstate: false,
             showIndexOnUnauthenticated: true,
+            changeOnProfile:false,
             page: "profile",
         };
         return response.render("index", pageInfo);
@@ -82,7 +83,15 @@ async function updateUsername(request, response) {
         // Find the user in database by username
         const fetchedUser = await fetchedDatabaseUser.findOne({ username: username });
         const fetchedUserMetrics = await fetchedDatabaseUserMetrics.findOne({ username: username });
-
+        const isUsernameUsed = await fetchedDatabaseUser.findOne({username:changedUsername});
+        if (isUsernameUsed) {
+            const responseObject = {
+                success: false,
+                errortype: "username",
+                error: "Username already Taken",
+            };
+            return response.send(responseObject);
+        }
         if (fetchedUser && fetchedUserMetrics) {
             // Update the the fetchedUser username locally
             fetchedUser.username = changedUsername;
@@ -93,12 +102,21 @@ async function updateUsername(request, response) {
             await fetchedUser.save();
             await fetchedUserMetrics.save();
 
+            profileLogout(request, response);
+
             // Redirects to the index page after the process is done
             const responseObject = {
-                success: true,
-                changedUsername: changedUsername,
+                isUserLogged: false,
+                showAccountCreated: false,
+                showIndexOnUnauthenticated: false,
+                confirmstate: false,
+                changeOnProfile: true,
+                showDeletedAccount: false,
+                showChangeProfile: true,
+                showConfirmEmail: { value: false },
             };
-            response.send(responseObject);
+
+            return response.render("index", responseObject);
         } else {
             throw new Error("User Not Found");
         }
@@ -125,12 +143,20 @@ async function updateEmail(request, response) {
             return response.send(responseObject);
         }
         const fetchedUser = await fetchedDatabaseUser.findOne({ email: userEmail });
-
+        const fetchedUserEmail = await fetchedDatabaseUser.findOne({ email: changedEmail });
+        if (fetchedUserEmail) {
+            return response.send({
+                success: false,
+                email: changedEmail,
+                errortype: "email",
+                error: "Email already in use!",
+            });
+        }
         if (fetchedUser) {
-            // creates a new JSON web Token based on the new email
             // Update the users status
             fetchedUser.status = "Pending";
-            sendConfirmEmail(changedEmail, fetchedUser.confirmationCode).then(async (hasError) => {
+            sendConfirmEmail(changedEmail, fetchedUser.confirmationCode)
+            .then(async (hasError) => {
                 if (hasError != true) {
                     response.send({
                         success: false,
@@ -141,12 +167,20 @@ async function updateEmail(request, response) {
                 } else {
                     // saves the changes made on the database
                     await fetchedUser.save();
+
+                    profileLogout(request, response);
+
                     const responseObject = {
-                        success: true,
-                        changedEmail: changedEmail,
-                        message: "Check the EmailBox it was sent a confirmation code to reactivate your account",
+                        isUserLogged: false,
+                        showAccountCreated: false,
+                        showIndexOnUnauthenticated: false,
+                        confirmstate: false,
+                        changeOnProfile: true,
+                        showDeletedAccount: false,
+                        showChangeProfile: false,
+                        showConfirmEmail: { value: true, changedEmail: changedEmail },
                     };
-                    response.send(responseObject);
+                    return response.render("index", responseObject);
                 }
             });
         }
@@ -190,11 +224,21 @@ async function updateProfileImage(request, response) {
             // Saves the changes made on the database
             await fetchedUser.save();
 
+            // Logs out the user
+            profileLogout(request, response);
+
             const responseObject = {
-                success: true,
-                imageCode: imageCode,
+                isUserLogged: false,
+                showAccountCreated: false,
+                showIndexOnUnauthenticated: false,
+                confirmstate: false,
+                changeOnProfile: true,
+                showDeletedAccount: false,
+                showChangeProfile: true,
+                showConfirmEmail:  { value: false },
             };
-            response.send(responseObject);
+
+            return response.render("index", responseObject);
         } else {
             throw new Error("User not found");
         }
@@ -214,25 +258,7 @@ async function deleteAccount(request, response) {
         const fetchedUser = fetchedDatabaseUser.findOne({ username: username });
         const fetchedUserMetrics = fetchedDatabaseUserMetrics.findOne({ username: username });
         if (fetchedUser && fetchedUserMetrics) {
-            request.logout(function (logoutError) {
-                if (logoutError) {
-                    const responseObject = {
-                        success: false,
-                        error: logoutError.message,
-                    };
-                    return response.send(responseObject);
-                }
-                // Destroys the session of the user
-                request.session.destroy(function (sessionError) {
-                    if (sessionError) {
-                        const responseObject = {
-                            success: false,
-                            error: sessionError.message,
-                        };
-                        return response.send(responseObject);
-                    }
-                });
-            });
+            profileLogout(request, response);
 
             // Deletes the account from all related databases
             await fetchedDatabaseUser.deleteOne({ username: username });
@@ -242,12 +268,13 @@ async function deleteAccount(request, response) {
                 showAccountCreated: false,
                 showIndexOnUnauthenticated: false,
                 confirmstate: false,
+                changeOnProfile: true,
                 showDeletedAccount: true,
+                showChangeProfile: false,
+                showConfirmEmail:  { value: false },
             };
-            
-            return response.render("index",responseObject);
-             
 
+            return response.render("index", responseObject);
         } else {
             throw new Error("User not found");
         }
@@ -259,6 +286,28 @@ async function deleteAccount(request, response) {
         };
         response.send(responseObject);
     }
+}
+
+function profileLogout(request, response) {
+    request.logout(function (logoutError) {
+        if (logoutError) {
+            const responseObject = {
+                success: false,
+                error: logoutError.message,
+            };
+            return response.send(responseObject);
+        }
+        // Destroys the session of the user
+        request.session.destroy(function (sessionError) {
+            if (sessionError) {
+                const responseObject = {
+                    success: false,
+                    error: sessionError.message,
+                };
+                return response.send(responseObject);
+            }
+        });
+    });
 }
 
 // exporting the handler
