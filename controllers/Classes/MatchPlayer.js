@@ -57,7 +57,7 @@ class MatchPlayer {
       // TODO: delete Metrics totalDraws and totalLastPlaces and mostCommonPlace and bestStreak
       //se draw update draw only
       const isFirst = matchPlayer.place==1 ? 0 : 1;  
-      const isDraw = matchPlayer.draw ? 1 : 0; 
+      const isDraw = matchPlayer.gaveUp() ? 1 : 0; 
       const isPodium = matchPlayer.place>0 && matchPlayer.#place<4 ? 1 : 0;
       const wasBetter = matchPlayer.place < databaseUserMetrics.bestPlace ? matchPlayer.place  : databaseUserMetrics.bestPlace;
       // * Users metrics being altered
