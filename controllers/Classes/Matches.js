@@ -276,8 +276,6 @@ class Match {
     playerGuess(user,guess,timeStamp) {
 
       guess = guess.toLowerCase();
-
-      console.log("🚀 ~ #currentQuestion:", this.#currentQuestion);
   
       if(this.#currentQuestion.correctAnswered === guess) {
         
@@ -354,8 +352,6 @@ class Match {
     }
 
     SuperNewQuestion (question){
-      console.log("🚀 ~ question:", question);
-      console.log("🚀 ~ question:", question.question);
       this.#currentQuestion = question;
       this.#currentQuestionNumber++;
       Match.class_io.to(this.#joinCode).emit("Question-Start",
@@ -368,8 +364,6 @@ class Match {
     }
    
     SuperQuestionEnd(matchInfo=null) {
-
-      console.log("seding -end");
 
       //this.#players.sort((a, b) => b.points - a.points);
 
@@ -389,9 +383,7 @@ class Match {
             rights:matchPlayer.rights,
             streak:matchPlayer.streak,
             place:matchPlayer.place
-          }
-        console.log("🚀 ~ playerPoints:", playerPoints);
-        
+          }        
 
         Match.class_io.to(matchPlayer.socket.id).emit("Question-End",{matchInfo , playerPoints })
       });
@@ -469,7 +461,6 @@ class MatchNormal extends Match {
     this.try_counter=0;
     if(!this.isLastQuestion()){
 
-      console.log("executing new question");
       Question.fetchQuestionAPI(this,this.settings_difficulty,this.ifSucces,this.ifError)
 
     }else{
@@ -482,7 +473,7 @@ class MatchNormal extends Match {
   ifSucces(fetchedResult,match){
     
     const temp = new Question(match.currentQuestionNumber,atob(fetchedResult.question),atob(fetchedResult.correct_answer).toLowerCase(),match.settings_difficulty);
-    console.log("🚀 ~ temp:", temp.toString());
+    console.log("🚀 ~ Question:", temp.toString());
     
     match.SuperNewQuestion(temp);
     

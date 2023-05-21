@@ -19,8 +19,6 @@ class Question {
     #correctAnswered;
 
     constructor(number,question,correctAnswered,difficulty) {
-
-        console.log("constructing");
     
         this.#question = question;
         this.#correctAnswered = correctAnswered;

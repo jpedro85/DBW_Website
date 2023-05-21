@@ -27,8 +27,9 @@ function profileController(request, response) {
                 if (!metricsFound) {
                     throw new Error("User Metrics Not Found");
                 } else {
-                    const userWinRate = (metricsFound.totalWins / metricsFound.totalGames) * 100;
-                    const totalWins = metricsFound.totalGames - metricsFound.totalLost - metricsFound.totalDraws;
+                    const userWinRate = (metricsFound.totalPodium / metricsFound.totalGames) * 100;
+                    const totalWins = metricsFound.totalGames-metricsFound.totalLost ;
+                    console.log("🚀 ~ userWinRate:", metricsFound.totalGames-totalWins);
                     const totalUnanswered = metricsFound.totalQuestions - metricsFound.totalQuestionsAnswered;
                     const totalQuestionsWrong = metricsFound.totalQuestions - metricsFound.totalQuestionsRight;
                     const userData = {
@@ -38,20 +39,17 @@ function profileController(request, response) {
                         profileImage: request.user.profileImage,
                         totalGames: metricsFound.totalGames,
                         totalLost: metricsFound.totalLost,
-                        totalDraws: metricsFound.totalDraws,
                         totalQuits: metricsFound.totalQuits,
                         totalQuestions: metricsFound.totalQuestions,
                         totalQuestionsAnswered: metricsFound.totalQuestionsAnswered,
                         totalQuestionsRight: metricsFound.totalQuestionsRight,
                         totalPodium: metricsFound.totalPodium,
-                        totalLastPlace: metricsFound.totalLastPlace == 0 ? "N/A" : metricsFound.totalLastPlace + "º",
-                        mostCommonPlace: metricsFound.mostCommonPlace == 0 ? "N/A" : metricsFound.mostCommonPlace + "º",
                         totalPoints: metricsFound.totalPoints,
                         totalStreak: metricsFound.totalStreak,
                         totalBonusPoints: metricsFound.totalBonusPoints,
                         bestStreak: metricsFound.bestStreak,
                         bestPlace: metricsFound.bestPlace == 0 ? "N/A" : metricsFound.bestPlace + "º",
-                        winRate: userWinRate === "NaN" ? userWinRate : 0.0,
+                        winRate: (userWinRate === "NaN" || userWinRate>0.00) ? userWinRate : 0.0,
                         wins: totalWins,
                         unanswered: totalUnanswered,
                         questionsWrong: totalQuestionsWrong,
